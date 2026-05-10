@@ -7,6 +7,8 @@
     "test:all": "nx run-many -t test",
     "lint:all": "nx run-many -t lint",
     "dev:all": "nx run-many -t serve --parallel",
+    "format": "nx format:write",
+    "migrate": "nx migrate latest",
     "serve:admin": "nx serve @vibe/admin-cms",
     "serve:backend": "nx serve @vibe/backend",
     "serve:tiktok": "nx serve @vibe/tiktok-client"
