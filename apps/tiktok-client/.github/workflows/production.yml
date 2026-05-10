@@ -1,0 +1,56 @@
+name: CI/CD FRONTEND MOBILE TIKTOK APPLICATION
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-runner:
+    runs-on: self-hosted
+    environment: hukan-tiktok-client
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Install & Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+
+      - name: Deploy & Restart PM2
+        run: |
+          DEPLOY_DIR=/home/vibecode/tiktok-shop-mobile
+          APP_NAME="tiktok-shop-mobile"
+          PORT=3033
+
+          mkdir -p $DEPLOY_DIR
+
+          # Sync toàn bộ code sang thư mục chạy thật (bỏ qua những thư mục nặng không cần thiết)
+          rsync -a --delete \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            ./ $DEPLOY_DIR/
+
+          cd $DEPLOY_DIR
+
+          # Cài đặt thư viện production trên thư mục chạy thật
+          pnpm install --frozen-lockfile --prod
+
+          # Clear port in case of orphaned child processes
+          fuser -k -n tcp $PORT || true
+
+          # Khởi động lại ứng dụng trên port chỉ định (mặc định 3033)
+          if pm2 describe $APP_NAME > /dev/null 2>&1; then
+            # Restart, truyền lại biến PORT
+            PORT=$PORT pm2 restart $APP_NAME --update-env
+          else
+            # Khởi tạo mới với PORT. Gọi thẳng executable của next để PM2 quản lý trực tiếp tiến trình node, tránh mồ côi (orphaned)
+            PORT=$PORT pm2 start node_modules/next/dist/bin/next --name $APP_NAME -- start --port $PORT
+          fi
+
+          pm2 save
+          echo "Deploy completed on port $PORT!"

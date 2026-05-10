@@ -1,0 +1,21 @@
+{
+  "name": "@vibe/tiktok-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "dotenv -e .env -- sh -c 'next dev -p $PORT'",
+    "build": "NODE_OPTIONS=--max_old_space_size=8192 next build",
+    "start": "NODE_OPTIONS=--max_old_space_size=8192 next start",
+    "build:dev": "vite build --mode development",
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "prettier --write .",
+    "gen:api": "npx openapi-typescript http://localhost:3333/api/docs-json -o src/docs/api-types.ts",
+    "gen:client": "openapi-ts"
+  },
+  "dependencies": {
+    "@vibe/shared": "workspace:*"
+  }
+}

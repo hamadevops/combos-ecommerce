@@ -1,0 +1,48 @@
+{
+  "name": "@vibe/backend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "bundle": "node esbuild.config.js",
+    "obfuscate": "node obfuscate.js",
+    "build:prod": "pnpm build && pnpm bundle && pnpm obfuscate",
+    "build:exe": "pnpm build:prod && pnpm run pack",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "dev": "nest start --watch",
+    "debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:up": "mikro-orm migration:up",
+    "db:down": "mikro-orm migration:down",
+    "db:create": "npx mikro-orm migration:create",
+    "mikro-orm": "mikro-orm",
+    "seeder": "mikro-orm seeder:run",
+    "pack": "pkg . --out-path dist-exe --compress GZip"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/**/*.js",
+      "node_modules/**/*.cjs",
+      "node_modules/**/*.mjs",
+      "node_modules/**/*.json",
+      "node_modules/**/*.node",
+      "node_modules/**/*.css",
+      "node_modules/**/*.html",
+      "node_modules/**/*.png",
+      "node_modules/**/*.svg",
+      "node_modules/**/*.ico",
+      "dist/database/migrations/*.js"
+    ],
+    "targets": [
+      "node20-linux-x64"
+    ]
+  },
+  "bin": "dist/main.js"
+}

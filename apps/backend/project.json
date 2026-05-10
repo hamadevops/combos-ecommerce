@@ -1,0 +1,33 @@
+{
+  "name": "@vibe/backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/backend/src",
+  "targets": {
+    "build": {
+      "command": "pnpm run build",
+      "options": {
+        "cwd": "apps/backend"
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/backend"]
+    },
+    "serve": {
+      "command": "pnpm run dev",
+      "options": {
+        "cwd": "apps/backend"
+      }
+    },
+    "test": {
+      "command": "jest",
+      "options": {
+        "cwd": "apps/backend"
+      }
+    },
+    "lint": {
+      "command": "eslint .",
+      "options": {
+        "cwd": "apps/backend"
+      }
+    }
+  }
+}

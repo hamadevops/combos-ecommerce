@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@vibe/shared": ["./libs/shared/src/index.ts"],
+      "@vibe/backend/*": ["./apps/backend/src/*"],
+      "@vibe/admin-cms/*": ["./apps/admin-cms/src/*"],
+      "@vibe/tiktok-client/*": ["./apps/tiktok-client/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,361 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hukan Shop Design System */
+
+@layer base {
+  :root {
+    --body-bg: 240 5.9% 10%; /* Dark body background for Light app mode */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    /* TikTok signature red/pink */
+    --primary: 348 97% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 348 97% 56%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 348 97% 56%;
+
+    --radius: 0.75rem;
+
+    /* Custom TikTok colors */
+    --tiktok-red: 348 97% 56%;
+    --tiktok-cyan: 180 100% 50%;
+    --tiktok-yellow: 45 100% 50%;
+    --tiktok-orange: 25 100% 55%;
+    --tiktok-green: 142 76% 36%;
+    --sale-badge: 348 97% 56%;
+    --star-yellow: 45 93% 58%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --body-bg: 0 0% 96%; /* Light body background for Dark app mode */
+    /* TikTok Shop Dark Theme */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    /* TikTok signature red/pink */
+    --primary: 348 97% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 348 97% 56%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 14%;
+    --ring: 348 97% 56%;
+
+    /* Custom TikTok colors */
+    --tiktok-red: 348 97% 56%;
+    --tiktok-cyan: 180 100% 50%;
+    --tiktok-yellow: 45 100% 50%;
+    --tiktok-orange: 25 100% 55%;
+    --tiktok-green: 142 76% 36%;
+    --sale-badge: 348 97% 56%;
+    --star-yellow: 45 93% 58%;
+
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 12 76% 61%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 12 76% 61%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background-color: hsl(var(--body-bg));
+    @apply text-foreground antialiased;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent Radix Dialog from adding padding-right that shifts fixed elements */
+    padding-right: 0 !important;
+  }
+
+  /* Prevent body scroll lock from shifting layout */
+  body[data-scroll-locked] {
+    overflow: clip !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Prevent react-remove-scroll from shifting fixed elements */
+  [data-scroll-locked-ignore] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Mobile viewport optimization */
+  html {
+    @apply scroll-smooth;
+  }
+
+  /* Reset Chrome Autofill Background */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+  }
+
+  /* Prevent iOS Safari from auto-zooming on input focus by forcing 16px font-size on mobile */
+  @media screen and (max-width: 767px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@layer components {
+  /* TikTok Shop specific styles */
+  .tiktok-card {
+    @apply bg-card rounded-xl overflow-hidden;
+  }
+
+  .tiktok-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+  }
+
+  .tiktok-badge-sale {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .tiktok-badge-new {
+    @apply bg-tiktok-cyan text-background;
+  }
+
+  .tiktok-badge-hot {
+    @apply bg-tiktok-orange text-background;
+  }
+
+  .tiktok-nav-item {
+    @apply flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors;
+  }
+
+  .tiktok-nav-item.active {
+    @apply text-primary;
+  }
+
+  .tiktok-search {
+    @apply bg-secondary rounded-full px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground;
+  }
+
+  .tiktok-price {
+    @apply text-primary font-bold;
+  }
+
+  .tiktok-price-original {
+    @apply text-muted-foreground line-through text-sm;
+  }
+
+  .tiktok-button {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold text-base;
+  }
+
+  .tiktok-button-outline {
+    @apply border border-primary text-primary px-6 py-3 rounded-full font-semibold text-base;
+  }
+
+  .tiktok-header {
+    @apply fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border;
+
+    @media (min-width: 768px) {
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 28rem;
+    }
+  }
+
+  .tiktok-bottom-nav {
+    @apply fixed bottom-0 w-full z-50 bg-background/95 backdrop-blur-sm border-t border-border;
+
+    @media (min-width: 768px) {
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 28rem;
+    }
+  }
+
+  .tiktok-category-scroll {
+    @apply flex overflow-x-auto gap-3 px-4 py-3 scrollbar-hide;
+  }
+
+  .tiktok-banner-carousel {
+    @apply overflow-x-auto snap-x snap-mandatory flex gap-3 px-4 scrollbar-hide;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer components {
+  /* Rich Text Content & Editor Styles */
+  .rich-text-content,
+  .ck-content {
+    @apply text-foreground leading-relaxed;
+  }
+
+  .rich-text-content > *:first-child,
+  .ck-content > *:first-child {
+    @apply mt-0;
+  }
+
+  .rich-text-content h1,
+  .ck-content h1 {
+    @apply text-4xl font-bold mt-10 mb-6 tracking-tight;
+  }
+
+  .rich-text-content h2,
+  .ck-content h2 {
+    @apply text-3xl font-semibold mt-10 mb-5 tracking-tight border-b pb-2;
+  }
+
+  .rich-text-content h3,
+  .ck-content h3 {
+    @apply text-2xl font-semibold mt-8 mb-4 tracking-tight;
+  }
+
+  .rich-text-content h4,
+  .ck-content h4 {
+    @apply text-xl font-semibold mt-6 mb-3;
+  }
+
+  .rich-text-content p,
+  .ck-content p {
+    @apply text-base mb-6 leading-7 text-gray-700 dark:text-gray-300;
+  }
+
+  .rich-text-content ul,
+  .ck-content ul {
+    @apply list-disc list-outside mb-6 ml-6 space-y-1;
+  }
+
+  .rich-text-content ol,
+  .ck-content ol {
+    @apply list-decimal list-outside mb-6 ml-6 space-y-1;
+  }
+
+  .rich-text-content li,
+  .ck-content li {
+    @apply pl-1;
+  }
+
+  .rich-text-content blockquote,
+  .ck-content blockquote {
+    @apply border-l-4 border-accent pl-6 py-1 my-6 italic text-muted-foreground bg-accent/5 rounded-r-lg;
+  }
+
+  .rich-text-content img,
+  .ck-content img {
+    @apply rounded-xl shadow-md my-8 w-full h-auto;
+  }
+
+  .rich-text-content figure,
+  .ck-content figure {
+    @apply my-8;
+  }
+
+  .rich-text-content figcaption,
+  .ck-content figcaption {
+    @apply text-center text-sm text-muted-foreground mt-2 italic;
+  }
+
+  .rich-text-content a,
+  .ck-content a {
+    @apply text-accent font-medium underline underline-offset-4 hover:opacity-80 transition-opacity;
+  }
+
+  .rich-text-content strong,
+  .ck-content strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .rich-text-content code,
+  .ck-content code {
+    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-accent-foreground;
+  }
+
+  .rich-text-content pre,
+  .ck-content pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto my-6 border;
+  }
+
+  .rich-text-content pre code,
+  .ck-content pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
+}

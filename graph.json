@@ -1,0 +1,902 @@
+{
+  "graph": {
+    "nodes": {
+      "tiktok-client": {
+        "name": "tiktok-client",
+        "type": "app",
+        "data": {
+          "root": "apps/tiktok-client",
+          "targets": {
+            "eslint:lint": {
+              "cache": true,
+              "options": {
+                "cwd": "apps/tiktok-client",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/apps/tiktok-client/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "NODE_OPTIONS=--max_old_space_size=8192 next dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build:dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build:dev"
+              },
+              "metadata": {
+                "scriptContent": "vite build --mode development",
+                "runCommand": "pnpm run build:dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test"
+              },
+              "metadata": {
+                "scriptContent": "vitest run",
+                "runCommand": "pnpm run test"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/vitest.config.ts"
+              ],
+              "cache": true
+            },
+            "test:watch": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:watch"
+              },
+              "metadata": {
+                "scriptContent": "vitest",
+                "runCommand": "pnpm run test:watch"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "format": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format"
+              },
+              "metadata": {
+                "scriptContent": "prettier --write .",
+                "runCommand": "pnpm run format"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "gen:api": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "gen:api"
+              },
+              "metadata": {
+                "scriptContent": "npx openapi-typescript http://localhost:3333/api/docs-json -o src/docs/api-types.ts",
+                "runCommand": "pnpm run gen:api"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "gen:client": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "gen:client"
+              },
+              "metadata": {
+                "scriptContent": "openapi-ts",
+                "runCommand": "pnpm run gen:client"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "options": {
+                "cwd": "apps/tiktok-client",
+                "command": "pnpm run build"
+              },
+              "outputs": [
+                "{workspaceRoot}/apps/tiktok-client/.next"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "options": {
+                "cwd": "apps/tiktok-client",
+                "command": "pnpm run dev"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "start": {
+              "options": {
+                "cwd": "apps/tiktok-client",
+                "command": "next start"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "options": {
+                "cwd": "apps/tiktok-client",
+                "command": "eslint ."
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore"
+              ],
+              "cache": true
+            }
+          },
+          "name": "tiktok-client",
+          "projectType": "application",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build:dev",
+                "test",
+                "test:watch",
+                "format",
+                "gen:api",
+                "gen:client"
+              ]
+            },
+            "js": {
+              "packageName": "vite_react_shadcn_ts",
+              "packageVersion": "0.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "apps/tiktok-client",
+          "implicitDependencies": []
+        }
+      },
+      "admin-cms": {
+        "name": "admin-cms",
+        "type": "app",
+        "data": {
+          "root": "apps/admin-cms",
+          "targets": {
+            "eslint:lint": {
+              "cache": true,
+              "options": {
+                "cwd": "apps/admin-cms",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/apps/admin-cms/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "vite",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build:dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build:dev"
+              },
+              "metadata": {
+                "scriptContent": "vite build --mode development",
+                "runCommand": "pnpm run build:dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "vite preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:watch": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:watch"
+              },
+              "metadata": {
+                "scriptContent": "vitest",
+                "runCommand": "pnpm run test:watch"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "format": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format"
+              },
+              "metadata": {
+                "scriptContent": "prettier --write .",
+                "runCommand": "pnpm run format"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "gen:client": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "gen:client"
+              },
+              "metadata": {
+                "scriptContent": "openapi-ts",
+                "runCommand": "pnpm run gen:client"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "options": {
+                "cwd": "apps/admin-cms",
+                "command": "pnpm run build"
+              },
+              "outputs": [
+                "{workspaceRoot}/apps/admin-cms/dist"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "options": {
+                "cwd": "apps/admin-cms",
+                "command": "pnpm run dev"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "apps/admin-cms",
+                "command": "vitest run"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/vitest.config.ts"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "options": {
+                "cwd": "apps/admin-cms",
+                "command": "eslint ."
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore"
+              ],
+              "cache": true
+            }
+          },
+          "name": "admin-cms",
+          "projectType": "application",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "dev",
+                "build:dev",
+                "preview",
+                "test:watch",
+                "format",
+                "gen:client"
+              ]
+            },
+            "js": {
+              "packageName": "vite_react_shadcn_ts",
+              "packageVersion": "0.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "apps/admin-cms/src",
+          "implicitDependencies": []
+        }
+      },
+      "backend": {
+        "name": "backend",
+        "type": "app",
+        "data": {
+          "root": "apps/backend",
+          "targets": {
+            "eslint:lint": {
+              "cache": true,
+              "options": {
+                "cwd": "apps/backend",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/apps/backend/eslint.config.mjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "bundle": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "bundle"
+              },
+              "metadata": {
+                "scriptContent": "node esbuild.config.js",
+                "runCommand": "pnpm run bundle"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "obfuscate": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "obfuscate"
+              },
+              "metadata": {
+                "scriptContent": "node obfuscate.js",
+                "runCommand": "pnpm run obfuscate"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build:prod": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build:prod"
+              },
+              "metadata": {
+                "scriptContent": "pnpm build && pnpm bundle && pnpm obfuscate",
+                "runCommand": "pnpm run build:prod"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build:exe": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build:exe"
+              },
+              "metadata": {
+                "scriptContent": "pnpm build:prod && pnpm run pack",
+                "runCommand": "pnpm run build:exe"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "format": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "format"
+              },
+              "metadata": {
+                "scriptContent": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+                "runCommand": "pnpm run format"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "start": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start"
+              },
+              "metadata": {
+                "scriptContent": "nest start",
+                "runCommand": "pnpm run start"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "nest start --watch",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "debug": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "debug"
+              },
+              "metadata": {
+                "scriptContent": "nest start --debug --watch",
+                "runCommand": "pnpm run debug"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "start:prod": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start:prod"
+              },
+              "metadata": {
+                "scriptContent": "node dist/main",
+                "runCommand": "pnpm run start:prod"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:watch": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:watch"
+              },
+              "metadata": {
+                "scriptContent": "jest --watch",
+                "runCommand": "pnpm run test:watch"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:cov": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:cov"
+              },
+              "metadata": {
+                "scriptContent": "jest --coverage",
+                "runCommand": "pnpm run test:cov"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:debug": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:debug"
+              },
+              "metadata": {
+                "scriptContent": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+                "runCommand": "pnpm run test:debug"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test:e2e": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "test:e2e"
+              },
+              "metadata": {
+                "scriptContent": "jest --config ./test/jest-e2e.json",
+                "runCommand": "pnpm run test:e2e"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "db:up": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "db:up"
+              },
+              "metadata": {
+                "scriptContent": "mikro-orm migration:up",
+                "runCommand": "pnpm run db:up"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "db:down": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "db:down"
+              },
+              "metadata": {
+                "scriptContent": "mikro-orm migration:down",
+                "runCommand": "pnpm run db:down"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "db:create": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "db:create"
+              },
+              "metadata": {
+                "scriptContent": "npx mikro-orm migration:create",
+                "runCommand": "pnpm run db:create"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "mikro-orm": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "mikro-orm"
+              },
+              "metadata": {
+                "scriptContent": "mikro-orm",
+                "runCommand": "pnpm run mikro-orm"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "seeder": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "seeder"
+              },
+              "metadata": {
+                "scriptContent": "mikro-orm seeder:run",
+                "runCommand": "pnpm run seeder"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "pack": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "pack"
+              },
+              "metadata": {
+                "scriptContent": "pkg . --out-path dist-exe --compress GZip",
+                "runCommand": "pnpm run pack"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "options": {
+                "cwd": "apps/backend",
+                "command": "pnpm run build"
+              },
+              "outputs": [
+                "{workspaceRoot}/apps/backend/dist"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ],
+              "cache": true
+            },
+            "serve": {
+              "options": {
+                "cwd": "apps/backend",
+                "command": "pnpm run dev"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "apps/backend",
+                "command": "jest"
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/vitest.config.ts"
+              ],
+              "cache": true
+            },
+            "lint": {
+              "options": {
+                "cwd": "apps/backend",
+                "command": "eslint ."
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore"
+              ],
+              "cache": true
+            }
+          },
+          "name": "backend",
+          "projectType": "application",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": [
+                "bundle",
+                "obfuscate",
+                "build:prod",
+                "build:exe",
+                "format",
+                "start",
+                "dev",
+                "debug",
+                "start:prod",
+                "test:watch",
+                "test:cov",
+                "test:debug",
+                "test:e2e",
+                "db:up",
+                "db:down",
+                "db:create",
+                "mikro-orm",
+                "seeder",
+                "pack"
+              ]
+            },
+            "description": "",
+            "js": {
+              "packageName": "ecommerce-app",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "apps/backend/src",
+          "implicitDependencies": []
+        }
+      },
+      "shared": {
+        "name": "shared",
+        "type": "lib",
+        "data": {
+          "root": "libs/shared",
+          "targets": {
+            "eslint:lint": {
+              "cache": true,
+              "options": {
+                "cwd": "libs/shared",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/libs/shared/eslint.config.cjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/libs/shared",
+                "main": "libs/shared/src/index.ts",
+                "tsConfig": "libs/shared/tsconfig.lib.json",
+                "assets": [
+                  "libs/shared/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            }
+          },
+          "name": "shared",
+          "projectType": "library",
+          "tags": [
+            "npm:private"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@vibe/shared",
+              "packageVersion": "0.0.1",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "libs/shared/src",
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "tiktok-client": [],
+      "admin-cms": [],
+      "backend": [
+        {
+          "source": "backend",
+          "target": "shared",
+          "type": "static"
+        }
+      ],
+      "shared": []
+    }
+  }
+}
