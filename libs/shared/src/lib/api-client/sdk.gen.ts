@@ -5,8 +5,8 @@ import {
   formDataBodySerializer,
   type Options as Options2,
   type TDataShape,
-} from "./client";
-import { client } from "./client.gen";
+} from './client';
+import { client } from './client.gen';
 import type {
   AppGetHelloData,
   AppGetHelloResponses,
@@ -53,6 +53,78 @@ import type {
   CustomersUpdateResponses,
   DashboardGetStatsData,
   DashboardGetStatsResponses,
+  EmCampaignCancelData,
+  EmCampaignCancelResponses,
+  EmCampaignCreateData,
+  EmCampaignCreateResponses,
+  EmCampaignFindAllData,
+  EmCampaignFindAllResponses,
+  EmCampaignFindOneData,
+  EmCampaignFindOneResponses,
+  EmCampaignGetLogsData,
+  EmCampaignGetLogsResponses,
+  EmCampaignRemoveData,
+  EmCampaignRemoveResponses,
+  EmCampaignScheduleData,
+  EmCampaignScheduleResponses,
+  EmCampaignSendTestData,
+  EmCampaignSendTestResponses,
+  EmCampaignUpdateData,
+  EmCampaignUpdateResponses,
+  EmConfigFindAllData,
+  EmConfigFindAllResponses,
+  EmConfigSendTestData,
+  EmConfigSendTestResponses,
+  EmConfigUpdateBatchData,
+  EmConfigUpdateBatchResponses,
+  EmContactCreateData,
+  EmContactCreateResponses,
+  EmContactFindAllData,
+  EmContactFindAllResponses,
+  EmContactFindOneData,
+  EmContactFindOneResponses,
+  EmContactImportCsvData,
+  EmContactImportCsvResponses,
+  EmContactRemoveData,
+  EmContactRemoveResponses,
+  EmContactUpdateData,
+  EmContactUpdateResponses,
+  EmSegmentAssignContactsData,
+  EmSegmentAssignContactsResponses,
+  EmSegmentCreateData,
+  EmSegmentCreateResponses,
+  EmSegmentFindAllData,
+  EmSegmentFindAllResponses,
+  EmSegmentFindOneData,
+  EmSegmentFindOneResponses,
+  EmSegmentRemoveContactsData,
+  EmSegmentRemoveContactsResponses,
+  EmSegmentRemoveData,
+  EmSegmentRemoveResponses,
+  EmSegmentUpdateData,
+  EmSegmentUpdateResponses,
+  EmTemplateCreateData,
+  EmTemplateCreateResponses,
+  EmTemplateDuplicateData,
+  EmTemplateDuplicateResponses,
+  EmTemplateFindAllData,
+  EmTemplateFindAllResponses,
+  EmTemplateFindOneData,
+  EmTemplateFindOneResponses,
+  EmTemplatePreviewData,
+  EmTemplatePreviewResponses,
+  EmTemplateRemoveData,
+  EmTemplateRemoveResponses,
+  EmTemplateSendTestData,
+  EmTemplateSendTestResponses,
+  EmTemplateUpdateData,
+  EmTemplateUpdateResponses,
+  EmTrackingTrackClickData,
+  EmTrackingTrackClickResponses,
+  EmTrackingTrackOpenData,
+  EmTrackingTrackOpenResponses,
+  EmTrackingUnsubscribeData,
+  EmTrackingUnsubscribeResponses,
   FaqsCreateData,
   FaqsCreateResponses,
   FaqsFindAllAdminData,
@@ -311,7 +383,7 @@ import type {
   WebhooksUpdateData,
   WebhooksUpdateErrors,
   WebhooksUpdateResponses,
-} from "./types.gen";
+} from './types.gen';
 
 export type Options<
   TData extends TDataShape = TDataShape,
@@ -337,7 +409,7 @@ export const appGetHello = <ThrowOnError extends boolean = false>(
   options?: Options<AppGetHelloData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<AppGetHelloResponses, unknown, ThrowOnError>({
-    url: "/api/v1",
+    url: '/api/v1',
     ...options,
   });
 
@@ -348,10 +420,10 @@ export const userRegister = <ThrowOnError extends boolean = false>(
   options: Options<UserRegisterData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<UserRegisterResponses, unknown, ThrowOnError>({
-    url: "/api/v1/users/register",
+    url: '/api/v1/users/register',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -363,10 +435,10 @@ export const userUpdateProfile = <ThrowOnError extends boolean = false>(
   options: Options<UserUpdateProfileData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<UserUpdateProfileResponses, unknown, ThrowOnError>({
-    url: "/api/v1/users/profile",
+    url: '/api/v1/users/profile',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -379,10 +451,10 @@ export const userUpdateAvatar = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).patch<UserUpdateAvatarResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    url: "/api/v1/users/profile/avatar",
+    url: '/api/v1/users/profile/avatar',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -395,10 +467,10 @@ export const userUpdateBackground = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).patch<UserUpdateBackgroundResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    url: "/api/v1/users/profile/background",
+    url: '/api/v1/users/profile/background',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -410,11 +482,11 @@ export const userChangePassword = <ThrowOnError extends boolean = false>(
   options: Options<UserChangePasswordData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<UserChangePasswordResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/change-password",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/change-password',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -426,8 +498,8 @@ export const userFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<UserFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<UserFindAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users',
     ...options,
   });
 
@@ -439,11 +511,11 @@ export const userCreate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<UserCreateResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -455,8 +527,8 @@ export const userDelete = <ThrowOnError extends boolean = false>(
   options: Options<UserDeleteData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<UserDeleteResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{id}',
     ...options,
   });
 
@@ -467,8 +539,8 @@ export const userFindOne = <ThrowOnError extends boolean = false>(
   options: Options<UserFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<UserFindOneResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{id}',
     ...options,
   });
 
@@ -480,11 +552,11 @@ export const userUpdate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).patch<UserUpdateResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{id}',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -496,11 +568,11 @@ export const userUpdateUserRole = <ThrowOnError extends boolean = false>(
   options: Options<UserUpdateUserRoleData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<UserUpdateUserRoleResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{id}/role",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{id}/role',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -512,8 +584,8 @@ export const userGetUserWithPermissions = <ThrowOnError extends boolean = false>
   options: Options<UserGetUserWithPermissionsData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<UserGetUserWithPermissionsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{id}/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{id}/permissions',
     ...options,
   });
 
@@ -524,10 +596,10 @@ export const authLogin = <ThrowOnError extends boolean = false>(
   options: Options<AuthLoginData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<AuthLoginResponses, unknown, ThrowOnError>({
-    url: "/api/v1/auth/login",
+    url: '/api/v1/auth/login',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -539,8 +611,8 @@ export const authGetProfile = <ThrowOnError extends boolean = false>(
   options?: Options<AuthGetProfileData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<AuthGetProfileResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/auth/profile",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/auth/profile',
     ...options,
   });
 
@@ -552,11 +624,11 @@ export const uploadUploadFile = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<UploadUploadFileResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/upload/file",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/upload/file',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -568,11 +640,11 @@ export const uploadUploadFromUrl = <ThrowOnError extends boolean = false>(
   options: Options<UploadUploadFromUrlData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<UploadUploadFromUrlResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/upload/url",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/upload/url',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -584,7 +656,7 @@ export const productsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<ProductsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<ProductsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/products",
+    url: '/api/v1/products',
     ...options,
   });
 
@@ -595,11 +667,11 @@ export const productsCreate = <ThrowOnError extends boolean = false>(
   options: Options<ProductsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<ProductsCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -611,8 +683,8 @@ export const productsRemove = <ThrowOnError extends boolean = false>(
   options: Options<ProductsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<ProductsRemoveResponses, ProductsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}',
     ...options,
   });
 
@@ -623,7 +695,7 @@ export const productsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<ProductsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<ProductsFindOneResponses, ProductsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/products/{id}",
+    url: '/api/v1/products/{id}',
     ...options,
   });
 
@@ -634,11 +706,11 @@ export const productsUpdate = <ThrowOnError extends boolean = false>(
   options: Options<ProductsUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<ProductsUpdateResponses, ProductsUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -653,7 +725,7 @@ export const productsFindBySlug = <ThrowOnError extends boolean = false>(
     ProductsFindBySlugResponses,
     ProductsFindBySlugErrors,
     ThrowOnError
-  >({ url: "/api/v1/products/slug/{slug}", ...options });
+  >({ url: '/api/v1/products/slug/{slug}', ...options });
 
 /**
  * Sắp xếp thứ tự hiển thị sản phẩm
@@ -662,11 +734,11 @@ export const productsUpdateDisplayOrder = <ThrowOnError extends boolean = false>
   options: Options<ProductsUpdateDisplayOrderData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<ProductsUpdateDisplayOrderResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/display-order",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/display-order',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -679,11 +751,11 @@ export const productsUpdateImages = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<ProductsUpdateImagesResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/images",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/images',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -696,11 +768,11 @@ export const productsAddVideo = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<ProductsAddVideoResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/videos",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/videos',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -712,11 +784,11 @@ export const productsReorderImages = <ThrowOnError extends boolean = false>(
   options: Options<ProductsReorderImagesData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<ProductsReorderImagesResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/images/order",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/images/order',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -728,8 +800,8 @@ export const productsDeleteImage = <ThrowOnError extends boolean = false>(
   options: Options<ProductsDeleteImageData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<ProductsDeleteImageResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/images/{imageId}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/images/{imageId}',
     ...options,
   });
 
@@ -740,8 +812,8 @@ export const productsDeleteVideo = <ThrowOnError extends boolean = false>(
   options: Options<ProductsDeleteVideoData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<ProductsDeleteVideoResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/videos/{videoId}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/videos/{videoId}',
     ...options,
   });
 
@@ -752,8 +824,8 @@ export const productsUpdateVideoVisibility = <ThrowOnError extends boolean = fal
   options: Options<ProductsUpdateVideoVisibilityData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<ProductsUpdateVideoVisibilityResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/videos/{videoId}/visibility",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/videos/{videoId}/visibility',
     ...options,
   });
 
@@ -764,11 +836,11 @@ export const productsUpdateVariants = <ThrowOnError extends boolean = false>(
   options: Options<ProductsUpdateVariantsData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<ProductsUpdateVariantsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/variants",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/variants',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -780,8 +852,8 @@ export const productsUpdateSeo = <ThrowOnError extends boolean = false>(
   options: Options<ProductsUpdateSeoData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<ProductsUpdateSeoResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/seo",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/seo',
     ...options,
   });
 
@@ -796,8 +868,8 @@ export const tierVariationsGetTierVariations = <ThrowOnError extends boolean = f
     TierVariationsGetTierVariationsErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/tier-variations",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/tier-variations',
     ...options,
   });
 
@@ -822,11 +894,11 @@ export const tierVariationsSetTierVariations = <ThrowOnError extends boolean = f
     TierVariationsSetTierVariationsErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/tier-variations",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/tier-variations',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -847,11 +919,11 @@ export const tierVariationsGenerateVariants = <ThrowOnError extends boolean = fa
     TierVariationsGenerateVariantsErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/generate-variants",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/generate-variants',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -869,11 +941,11 @@ export const tierVariationsBulkUpdateVariants = <ThrowOnError extends boolean = 
     TierVariationsBulkUpdateVariantsErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/variants/bulk",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/variants/bulk',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -891,11 +963,11 @@ export const tierVariationsApplyToAllVariants = <ThrowOnError extends boolean = 
     TierVariationsApplyToAllVariantsErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/products/{id}/variants/apply-all",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/products/{id}/variants/apply-all',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -907,7 +979,7 @@ export const categoriesFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<CategoriesFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<CategoriesFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/categories",
+    url: '/api/v1/categories',
     ...options,
   });
 
@@ -919,11 +991,11 @@ export const categoriesCreate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<CategoriesCreateResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/categories",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/categories',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -935,7 +1007,7 @@ export const categoriesFindTree = <ThrowOnError extends boolean = false>(
   options?: Options<CategoriesFindTreeData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<CategoriesFindTreeResponses, unknown, ThrowOnError>({
-    url: "/api/v1/categories/tree",
+    url: '/api/v1/categories/tree',
     ...options,
   });
 
@@ -950,8 +1022,8 @@ export const categoriesRemove = <ThrowOnError extends boolean = false>(
     CategoriesRemoveErrors,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/categories/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/categories/{id}',
     ...options,
   });
 
@@ -962,7 +1034,7 @@ export const categoriesFindOne = <ThrowOnError extends boolean = false>(
   options: Options<CategoriesFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<CategoriesFindOneResponses, CategoriesFindOneErrors, ThrowOnError>(
-    { url: "/api/v1/categories/{id}", ...options },
+    { url: '/api/v1/categories/{id}', ...options },
   );
 
 /**
@@ -974,11 +1046,11 @@ export const categoriesUpdate = <ThrowOnError extends boolean = false>(
   (options.client ?? client).patch<CategoriesUpdateResponses, CategoriesUpdateErrors, ThrowOnError>(
     {
       ...formDataBodySerializer,
-      security: [{ scheme: "bearer", type: "http" }],
-      url: "/api/v1/categories/{id}",
+      security: [{ scheme: 'bearer', type: 'http' }],
+      url: '/api/v1/categories/{id}',
       ...options,
       headers: {
-        "Content-Type": null,
+        'Content-Type': null,
         ...options.headers,
       },
     },
@@ -991,8 +1063,8 @@ export const categoriesRemoveImage = <ThrowOnError extends boolean = false>(
   options: Options<CategoriesRemoveImageData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<CategoriesRemoveImageResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/categories/{id}/image",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/categories/{id}/image',
     ...options,
   });
 
@@ -1004,11 +1076,11 @@ export const categoriesUploadImage = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<CategoriesUploadImageResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/categories/{id}/image",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/categories/{id}/image',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -1020,7 +1092,7 @@ export const topicsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<TopicsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<TopicsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/topics",
+    url: '/api/v1/topics',
     ...options,
   });
 
@@ -1031,11 +1103,11 @@ export const topicsCreate = <ThrowOnError extends boolean = false>(
   options: Options<TopicsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<TopicsCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/topics",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/topics',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1047,7 +1119,7 @@ export const topicsFindTree = <ThrowOnError extends boolean = false>(
   options?: Options<TopicsFindTreeData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<TopicsFindTreeResponses, unknown, ThrowOnError>({
-    url: "/api/v1/topics/tree",
+    url: '/api/v1/topics/tree',
     ...options,
   });
 
@@ -1058,8 +1130,8 @@ export const topicsRemove = <ThrowOnError extends boolean = false>(
   options: Options<TopicsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<TopicsRemoveResponses, TopicsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/topics/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/topics/{id}',
     ...options,
   });
 
@@ -1070,7 +1142,7 @@ export const topicsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<TopicsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<TopicsFindOneResponses, TopicsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/topics/{id}",
+    url: '/api/v1/topics/{id}',
     ...options,
   });
 
@@ -1081,11 +1153,11 @@ export const topicsUpdate = <ThrowOnError extends boolean = false>(
   options: Options<TopicsUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<TopicsUpdateResponses, TopicsUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/topics/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/topics/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1099,7 +1171,7 @@ export const postsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<PostsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PostsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/posts",
+    url: '/api/v1/posts',
     ...options,
   });
 
@@ -1111,11 +1183,11 @@ export const postsCreate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<PostsCreateResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -1127,7 +1199,7 @@ export const postsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<PostsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PostsFindOneResponses, PostsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/posts/{idOrSlug}",
+    url: '/api/v1/posts/{idOrSlug}',
     ...options,
   });
 
@@ -1138,8 +1210,8 @@ export const postsRemove = <ThrowOnError extends boolean = false>(
   options: Options<PostsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PostsRemoveResponses, PostsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}',
     ...options,
   });
 
@@ -1151,11 +1223,11 @@ export const postsUpdate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).patch<PostsUpdateResponses, PostsUpdateErrors, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -1167,8 +1239,8 @@ export const postsPublish = <ThrowOnError extends boolean = false>(
   options: Options<PostsPublishData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PostsPublishResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}/publish",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}/publish',
     ...options,
   });
 
@@ -1179,11 +1251,11 @@ export const postsSchedule = <ThrowOnError extends boolean = false>(
   options: Options<PostsScheduleData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PostsScheduleResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}/schedule",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}/schedule',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1195,8 +1267,8 @@ export const postsRemoveThumbnail = <ThrowOnError extends boolean = false>(
   options: Options<PostsRemoveThumbnailData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PostsRemoveThumbnailResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}/thumbnail",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}/thumbnail',
     ...options,
   });
 
@@ -1208,11 +1280,11 @@ export const postsUploadThumbnail = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<PostsUploadThumbnailResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/posts/{id}/thumbnail",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/posts/{id}/thumbnail',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -1224,7 +1296,7 @@ export const tagsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<TagsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<TagsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/tags",
+    url: '/api/v1/tags',
     ...options,
   });
 
@@ -1235,11 +1307,11 @@ export const tagsCreate = <ThrowOnError extends boolean = false>(
   options: Options<TagsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<TagsCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/tags",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/tags',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1251,8 +1323,8 @@ export const tagsRemove = <ThrowOnError extends boolean = false>(
   options: Options<TagsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<TagsRemoveResponses, TagsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/tags/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/tags/{id}',
     ...options,
   });
 
@@ -1263,7 +1335,7 @@ export const tagsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<TagsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<TagsFindOneResponses, TagsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/tags/{id}",
+    url: '/api/v1/tags/{id}',
     ...options,
   });
 
@@ -1274,11 +1346,11 @@ export const tagsUpdate = <ThrowOnError extends boolean = false>(
   options: Options<TagsUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<TagsUpdateResponses, TagsUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/tags/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/tags/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1290,7 +1362,7 @@ export const popupsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<PopupsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PopupsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/popups",
+    url: '/api/v1/popups',
     ...options,
   });
 
@@ -1302,11 +1374,11 @@ export const popupsCreate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).post<PopupsCreateResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/popups",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/popups',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
   });
@@ -1318,7 +1390,7 @@ export const popupsFindActive = <ThrowOnError extends boolean = false>(
   options?: Options<PopupsFindActiveData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PopupsFindActiveResponses, unknown, ThrowOnError>({
-    url: "/api/v1/popups/active",
+    url: '/api/v1/popups/active',
     ...options,
   });
 
@@ -1329,8 +1401,8 @@ export const popupsRemove = <ThrowOnError extends boolean = false>(
   options: Options<PopupsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PopupsRemoveResponses, PopupsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/popups/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/popups/{id}',
     ...options,
   });
 
@@ -1341,7 +1413,7 @@ export const popupsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<PopupsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PopupsFindOneResponses, PopupsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/popups/{id}",
+    url: '/api/v1/popups/{id}',
     ...options,
   });
 
@@ -1353,13 +1425,511 @@ export const popupsUpdate = <ThrowOnError extends boolean = false>(
 ) =>
   (options.client ?? client).patch<PopupsUpdateResponses, PopupsUpdateErrors, ThrowOnError>({
     ...formDataBodySerializer,
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/popups/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/popups/{id}',
     ...options,
     headers: {
-      "Content-Type": null,
+      'Content-Type': null,
       ...options.headers,
     },
+  });
+
+/**
+ * Lấy tất cả cấu hình SMTP
+ */
+export const emConfigFindAll = <ThrowOnError extends boolean = false>(
+  options?: Options<EmConfigFindAllData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<EmConfigFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/config',
+    ...options,
+  });
+
+/**
+ * Cập nhật hàng loạt cấu hình SMTP
+ */
+export const emConfigUpdateBatch = <ThrowOnError extends boolean = false>(
+  options: Options<EmConfigUpdateBatchData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<EmConfigUpdateBatchResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/config',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Gửi email test với cấu hình SMTP hiện tại
+ */
+export const emConfigSendTest = <ThrowOnError extends boolean = false>(
+  options: Options<EmConfigSendTestData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmConfigSendTestResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/config/test',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Danh sách contacts
+ */
+export const emContactFindAll = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactFindAllData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmContactFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts',
+    ...options,
+  });
+
+/**
+ * Tạo contact
+ */
+export const emContactCreate = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmContactCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Xóa contact
+ */
+export const emContactRemove = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<EmContactRemoveResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts/{id}',
+    ...options,
+  });
+
+/**
+ * Chi tiết contact
+ */
+export const emContactFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmContactFindOneResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts/{id}',
+    ...options,
+  });
+
+/**
+ * Cập nhật contact
+ */
+export const emContactUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<EmContactUpdateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Import contacts từ CSV
+ */
+export const emContactImportCsv = <ThrowOnError extends boolean = false>(
+  options: Options<EmContactImportCsvData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmContactImportCsvResponses, unknown, ThrowOnError>({
+    ...formDataBodySerializer,
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/contacts/import',
+    ...options,
+    headers: {
+      'Content-Type': null,
+      ...options.headers,
+    },
+  });
+
+/**
+ * Danh sách segments
+ */
+export const emSegmentFindAll = <ThrowOnError extends boolean = false>(
+  options?: Options<EmSegmentFindAllData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<EmSegmentFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments',
+    ...options,
+  });
+
+/**
+ * Tạo segment
+ */
+export const emSegmentCreate = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmSegmentCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Xóa segment
+ */
+export const emSegmentRemove = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<EmSegmentRemoveResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments/{id}',
+    ...options,
+  });
+
+/**
+ * Chi tiết segment + contacts
+ */
+export const emSegmentFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmSegmentFindOneResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments/{id}',
+    ...options,
+  });
+
+/**
+ * Cập nhật segment
+ */
+export const emSegmentUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<EmSegmentUpdateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Gỡ contacts khỏi segment
+ */
+export const emSegmentRemoveContacts = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentRemoveContactsData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<EmSegmentRemoveContactsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments/{id}/contacts',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Gán contacts vào segment
+ */
+export const emSegmentAssignContacts = <ThrowOnError extends boolean = false>(
+  options: Options<EmSegmentAssignContactsData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmSegmentAssignContactsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/segments/{id}/contacts',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Danh sách templates
+ */
+export const emTemplateFindAll = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateFindAllData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmTemplateFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates',
+    ...options,
+  });
+
+/**
+ * Tạo template
+ */
+export const emTemplateCreate = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmTemplateCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Xóa template
+ */
+export const emTemplateRemove = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<EmTemplateRemoveResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}',
+    ...options,
+  });
+
+/**
+ * Chi tiết template (kèm designData)
+ */
+export const emTemplateFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmTemplateFindOneResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}',
+    ...options,
+  });
+
+/**
+ * Cập nhật template
+ */
+export const emTemplateUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<EmTemplateUpdateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Preview template với sample data
+ */
+export const emTemplatePreview = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplatePreviewData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmTemplatePreviewResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}/preview',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Nhân bản template
+ */
+export const emTemplateDuplicate = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateDuplicateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmTemplateDuplicateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}/duplicate',
+    ...options,
+  });
+
+/**
+ * Gửi email test
+ */
+export const emTemplateSendTest = <ThrowOnError extends boolean = false>(
+  options: Options<EmTemplateSendTestData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmTemplateSendTestResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/templates/{id}/send-test',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Danh sách campaigns
+ */
+export const emCampaignFindAll = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignFindAllData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmCampaignFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns',
+    ...options,
+  });
+
+/**
+ * Tạo campaign (DRAFT)
+ */
+export const emCampaignCreate = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmCampaignCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Xóa campaign (chỉ DRAFT/CANCELLED)
+ */
+export const emCampaignRemove = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<EmCampaignRemoveResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}',
+    ...options,
+  });
+
+/**
+ * Chi tiết campaign + stats
+ */
+export const emCampaignFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmCampaignFindOneResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}',
+    ...options,
+  });
+
+/**
+ * Cập nhật campaign
+ */
+export const emCampaignUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<EmCampaignUpdateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Đặt lịch gửi campaign
+ */
+export const emCampaignSchedule = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignScheduleData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmCampaignScheduleResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}/schedule',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Hủy campaign
+ */
+export const emCampaignCancel = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignCancelData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmCampaignCancelResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}/cancel',
+    ...options,
+  });
+
+/**
+ * Gửi email test
+ */
+export const emCampaignSendTest = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignSendTestData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<EmCampaignSendTestResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}/send-test',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Danh sách email logs của campaign
+ */
+export const emCampaignGetLogs = <ThrowOnError extends boolean = false>(
+  options: Options<EmCampaignGetLogsData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmCampaignGetLogsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/email-marketing/campaigns/{id}/logs',
+    ...options,
+  });
+
+/**
+ * Open pixel tracking (trả về ảnh 1x1 GIF)
+ */
+export const emTrackingTrackOpen = <ThrowOnError extends boolean = false>(
+  options: Options<EmTrackingTrackOpenData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmTrackingTrackOpenResponses, unknown, ThrowOnError>({
+    url: '/api/v1/em-tracking/open/{logId}.gif',
+    ...options,
+  });
+
+/**
+ * Click tracking (redirect 302 tới URL gốc)
+ */
+export const emTrackingTrackClick = <ThrowOnError extends boolean = false>(
+  options: Options<EmTrackingTrackClickData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmTrackingTrackClickResponses, unknown, ThrowOnError>({
+    url: '/api/v1/em-tracking/click/{hash}',
+    ...options,
+  });
+
+/**
+ * Unsubscribe contact
+ */
+export const emTrackingUnsubscribe = <ThrowOnError extends boolean = false>(
+  options: Options<EmTrackingUnsubscribeData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<EmTrackingUnsubscribeResponses, unknown, ThrowOnError>({
+    url: '/api/v1/em-tracking/unsubscribe/{contactId}/{token}',
+    ...options,
   });
 
 /**
@@ -1369,8 +1939,8 @@ export const permissionAllRoles = <ThrowOnError extends boolean = false>(
   options?: Options<PermissionAllRolesData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PermissionAllRolesResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles',
     ...options,
   });
 
@@ -1381,11 +1951,11 @@ export const permissionCreate = <ThrowOnError extends boolean = false>(
   options: Options<PermissionCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PermissionCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1397,8 +1967,8 @@ export const permissionDeleteRole = <ThrowOnError extends boolean = false>(
   options: Options<PermissionDeleteRoleData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PermissionDeleteRoleResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles/{id}',
     ...options,
   });
 
@@ -1409,8 +1979,8 @@ export const permissionRoleDetail = <ThrowOnError extends boolean = false>(
   options: Options<PermissionRoleDetailData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PermissionRoleDetailResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles/{id}',
     ...options,
   });
 
@@ -1421,11 +1991,11 @@ export const permissionUpdateRole = <ThrowOnError extends boolean = false>(
   options: Options<PermissionUpdateRoleData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<PermissionUpdateRoleResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1437,8 +2007,8 @@ export const permissionGetAllPermissions = <ThrowOnError extends boolean = false
   options?: Options<PermissionGetAllPermissionsData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PermissionGetAllPermissionsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permissions',
     ...options,
   });
 
@@ -1449,11 +2019,11 @@ export const permissionCreatePermission = <ThrowOnError extends boolean = false>
   options: Options<PermissionCreatePermissionData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PermissionCreatePermissionResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permissions',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1465,11 +2035,11 @@ export const permissionAssignPermission = <ThrowOnError extends boolean = false>
   options: Options<PermissionAssignPermissionData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PermissionAssignPermissionResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles/{id}/permission",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles/{id}/permission',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1481,8 +2051,8 @@ export const permissionDeletePermission = <ThrowOnError extends boolean = false>
   options: Options<PermissionDeletePermissionData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PermissionDeletePermissionResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permissions/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permissions/{id}',
     ...options,
   });
 
@@ -1493,11 +2063,11 @@ export const permissionUpdatePermission = <ThrowOnError extends boolean = false>
   options: Options<PermissionUpdatePermissionData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<PermissionUpdatePermissionResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permissions/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permissions/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1513,8 +2083,8 @@ export const permissionRemovePermissionFromRole = <ThrowOnError extends boolean 
     unknown,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/roles/{roleId}/permissions/{permissionId}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/roles/{roleId}/permissions/{permissionId}',
     ...options,
   });
 
@@ -1525,8 +2095,8 @@ export const permissionGetUserPermissions = <ThrowOnError extends boolean = fals
   options: Options<PermissionGetUserPermissionsData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PermissionGetUserPermissionsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/users/{userId}/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/users/{userId}/permissions',
     ...options,
   });
 
@@ -1537,8 +2107,8 @@ export const permissionGetGroupedPermissions = <ThrowOnError extends boolean = f
   options?: Options<PermissionGetGroupedPermissionsData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PermissionGetGroupedPermissionsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permissions/grouped",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permissions/grouped',
     ...options,
   });
 
@@ -1550,8 +2120,8 @@ export const permissionGetAllPermissionGroups = <ThrowOnError extends boolean = 
 ) =>
   (options?.client ?? client).get<PermissionGetAllPermissionGroupsResponses, unknown, ThrowOnError>(
     {
-      security: [{ scheme: "bearer", type: "http" }],
-      url: "/api/v1/permission-groups",
+      security: [{ scheme: 'bearer', type: 'http' }],
+      url: '/api/v1/permission-groups',
       ...options,
     },
   );
@@ -1563,11 +2133,11 @@ export const permissionCreatePermissionGroup = <ThrowOnError extends boolean = f
   options: Options<PermissionCreatePermissionGroupData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PermissionCreatePermissionGroupResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permission-groups",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permission-groups',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1583,8 +2153,8 @@ export const permissionDeletePermissionGroup = <ThrowOnError extends boolean = f
     unknown,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permission-groups/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permission-groups/{id}',
     ...options,
   });
 
@@ -1596,11 +2166,11 @@ export const permissionUpdatePermissionGroup = <ThrowOnError extends boolean = f
 ) =>
   (options.client ?? client).patch<PermissionUpdatePermissionGroupResponses, unknown, ThrowOnError>(
     {
-      security: [{ scheme: "bearer", type: "http" }],
-      url: "/api/v1/permission-groups/{id}",
+      security: [{ scheme: 'bearer', type: 'http' }],
+      url: '/api/v1/permission-groups/{id}',
       ...options,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...options.headers,
       },
     },
@@ -1617,11 +2187,11 @@ export const permissionRemovePermissionsFromGroup = <ThrowOnError extends boolea
     unknown,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permission-groups/{id}/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permission-groups/{id}/permissions',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1637,11 +2207,11 @@ export const permissionAssignPermissionsToGroup = <ThrowOnError extends boolean 
     unknown,
     ThrowOnError
   >({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/permission-groups/{id}/permissions",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/permission-groups/{id}/permissions',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1653,8 +2223,8 @@ export const cacheViewerGetKeys = <ThrowOnError extends boolean = false>(
   options?: Options<CacheViewerGetKeysData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<CacheViewerGetKeysResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/cache/keys",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/cache/keys',
     ...options,
   });
 
@@ -1665,8 +2235,8 @@ export const cacheViewerDeleteKey = <ThrowOnError extends boolean = false>(
   options: Options<CacheViewerDeleteKeyData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<CacheViewerDeleteKeyResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/cache/keys/{key}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/cache/keys/{key}',
     ...options,
   });
 
@@ -1677,8 +2247,8 @@ export const cacheViewerGetValue = <ThrowOnError extends boolean = false>(
   options: Options<CacheViewerGetValueData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<CacheViewerGetValueResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/cache/keys/{key}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/cache/keys/{key}',
     ...options,
   });
 
@@ -1689,8 +2259,8 @@ export const cacheViewerClearAll = <ThrowOnError extends boolean = false>(
   options?: Options<CacheViewerClearAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).delete<CacheViewerClearAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/cache/all",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/cache/all',
     ...options,
   });
 
@@ -1701,7 +2271,7 @@ export const faqsFindAllPublic = <ThrowOnError extends boolean = false>(
   options?: Options<FaqsFindAllPublicData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<FaqsFindAllPublicResponses, unknown, ThrowOnError>({
-    url: "/api/v1/faqs",
+    url: '/api/v1/faqs',
     ...options,
   });
 
@@ -1712,11 +2282,11 @@ export const faqsCreate = <ThrowOnError extends boolean = false>(
   options: Options<FaqsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<FaqsCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/faqs",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/faqs',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1728,8 +2298,8 @@ export const faqsFindAllAdmin = <ThrowOnError extends boolean = false>(
   options?: Options<FaqsFindAllAdminData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<FaqsFindAllAdminResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/faqs/admin",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/faqs/admin',
     ...options,
   });
 
@@ -1740,8 +2310,8 @@ export const faqsRemove = <ThrowOnError extends boolean = false>(
   options: Options<FaqsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<FaqsRemoveResponses, FaqsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/faqs/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/faqs/{id}',
     ...options,
   });
 
@@ -1752,7 +2322,7 @@ export const faqsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<FaqsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<FaqsFindOneResponses, FaqsFindOneErrors, ThrowOnError>({
-    url: "/api/v1/faqs/{id}",
+    url: '/api/v1/faqs/{id}',
     ...options,
   });
 
@@ -1763,11 +2333,11 @@ export const faqsUpdate = <ThrowOnError extends boolean = false>(
   options: Options<FaqsUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<FaqsUpdateResponses, FaqsUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/faqs/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/faqs/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1779,7 +2349,7 @@ export const pagesFindBySlug = <ThrowOnError extends boolean = false>(
   options: Options<PagesFindBySlugData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PagesFindBySlugResponses, PagesFindBySlugErrors, ThrowOnError>({
-    url: "/api/v1/pages/slug/{slug}",
+    url: '/api/v1/pages/slug/{slug}',
     ...options,
   });
 
@@ -1790,7 +2360,7 @@ export const pagesFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<PagesFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<PagesFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/pages",
+    url: '/api/v1/pages',
     ...options,
   });
 
@@ -1801,11 +2371,11 @@ export const pagesCreate = <ThrowOnError extends boolean = false>(
   options: Options<PagesCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<PagesCreateResponses, PagesCreateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/pages",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/pages',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1817,8 +2387,8 @@ export const pagesRemove = <ThrowOnError extends boolean = false>(
   options: Options<PagesRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<PagesRemoveResponses, PagesRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/pages/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/pages/{id}',
     ...options,
   });
 
@@ -1829,7 +2399,7 @@ export const pagesFindOne = <ThrowOnError extends boolean = false>(
   options: Options<PagesFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<PagesFindOneResponses, PagesFindOneErrors, ThrowOnError>({
-    url: "/api/v1/pages/{id}",
+    url: '/api/v1/pages/{id}',
     ...options,
   });
 
@@ -1840,11 +2410,11 @@ export const pagesUpdate = <ThrowOnError extends boolean = false>(
   options: Options<PagesUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<PagesUpdateResponses, PagesUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/pages/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/pages/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1856,7 +2426,7 @@ export const settingsGetPublicSettings = <ThrowOnError extends boolean = false>(
   options?: Options<SettingsGetPublicSettingsData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<SettingsGetPublicSettingsResponses, unknown, ThrowOnError>({
-    url: "/api/v1/settings/public",
+    url: '/api/v1/settings/public',
     ...options,
   });
 
@@ -1867,8 +2437,8 @@ export const settingsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<SettingsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<SettingsFindAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/settings",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/settings',
     ...options,
   });
 
@@ -1879,11 +2449,11 @@ export const settingsCreate = <ThrowOnError extends boolean = false>(
   options: Options<SettingsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<SettingsCreateResponses, SettingsCreateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/settings",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/settings',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1895,8 +2465,8 @@ export const settingsRemove = <ThrowOnError extends boolean = false>(
   options: Options<SettingsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<SettingsRemoveResponses, SettingsRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/settings/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/settings/{id}',
     ...options,
   });
 
@@ -1907,8 +2477,8 @@ export const settingsFindOne = <ThrowOnError extends boolean = false>(
   options: Options<SettingsFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<SettingsFindOneResponses, SettingsFindOneErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/settings/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/settings/{id}',
     ...options,
   });
 
@@ -1919,11 +2489,11 @@ export const settingsUpdate = <ThrowOnError extends boolean = false>(
   options: Options<SettingsUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<SettingsUpdateResponses, SettingsUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/settings/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/settings/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1935,7 +2505,7 @@ export const reviewsFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<ReviewsFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<ReviewsFindAllResponses, unknown, ThrowOnError>({
-    url: "/api/v1/reviews",
+    url: '/api/v1/reviews',
     ...options,
   });
 
@@ -1946,11 +2516,11 @@ export const reviewsCreate = <ThrowOnError extends boolean = false>(
   options: Options<ReviewsCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<ReviewsCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/reviews",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/reviews',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -1962,8 +2532,8 @@ export const reviewsRemove = <ThrowOnError extends boolean = false>(
   options: Options<ReviewsRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<ReviewsRemoveResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/reviews/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/reviews/{id}',
     ...options,
   });
 
@@ -1974,8 +2544,8 @@ export const customersFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<CustomersFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<CustomersFindAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/customers",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/customers',
     ...options,
   });
 
@@ -1986,11 +2556,11 @@ export const customersCreate = <ThrowOnError extends boolean = false>(
   options: Options<CustomersCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<CustomersCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/customers",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/customers',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2002,8 +2572,8 @@ export const customersRemove = <ThrowOnError extends boolean = false>(
   options: Options<CustomersRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<CustomersRemoveResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/customers/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/customers/{id}',
     ...options,
   });
 
@@ -2014,8 +2584,8 @@ export const customersFindOne = <ThrowOnError extends boolean = false>(
   options: Options<CustomersFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<CustomersFindOneResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/customers/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/customers/{id}',
     ...options,
   });
 
@@ -2026,11 +2596,11 @@ export const customersUpdate = <ThrowOnError extends boolean = false>(
   options: Options<CustomersUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<CustomersUpdateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/customers/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/customers/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2042,8 +2612,8 @@ export const ordersFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<OrdersFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<OrdersFindAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/orders",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/orders',
     ...options,
   });
 
@@ -2054,10 +2624,10 @@ export const ordersCreate = <ThrowOnError extends boolean = false>(
   options: Options<OrdersCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<OrdersCreateResponses, unknown, ThrowOnError>({
-    url: "/api/v1/orders",
+    url: '/api/v1/orders',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2069,8 +2639,8 @@ export const ordersRemove = <ThrowOnError extends boolean = false>(
   options: Options<OrdersRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<OrdersRemoveResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/orders/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/orders/{id}',
     ...options,
   });
 
@@ -2081,8 +2651,8 @@ export const ordersFindOne = <ThrowOnError extends boolean = false>(
   options: Options<OrdersFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<OrdersFindOneResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/orders/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/orders/{id}',
     ...options,
   });
 
@@ -2093,11 +2663,11 @@ export const ordersUpdate = <ThrowOnError extends boolean = false>(
   options: Options<OrdersUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).put<OrdersUpdateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/orders/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/orders/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2109,7 +2679,7 @@ export const ordersFindByCode = <ThrowOnError extends boolean = false>(
   options: Options<OrdersFindByCodeData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<OrdersFindByCodeResponses, unknown, ThrowOnError>({
-    url: "/api/v1/orders/code/{code}",
+    url: '/api/v1/orders/code/{code}',
     ...options,
   });
 
@@ -2120,8 +2690,8 @@ export const webhooksFindAll = <ThrowOnError extends boolean = false>(
   options?: Options<WebhooksFindAllData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<WebhooksFindAllResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/webhooks",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/webhooks',
     ...options,
   });
 
@@ -2132,11 +2702,11 @@ export const webhooksCreate = <ThrowOnError extends boolean = false>(
   options: Options<WebhooksCreateData, ThrowOnError>,
 ) =>
   (options.client ?? client).post<WebhooksCreateResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/webhooks",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/webhooks',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2148,8 +2718,8 @@ export const webhooksRemove = <ThrowOnError extends boolean = false>(
   options: Options<WebhooksRemoveData, ThrowOnError>,
 ) =>
   (options.client ?? client).delete<WebhooksRemoveResponses, WebhooksRemoveErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/webhooks/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/webhooks/{id}',
     ...options,
   });
 
@@ -2160,8 +2730,8 @@ export const webhooksFindOne = <ThrowOnError extends boolean = false>(
   options: Options<WebhooksFindOneData, ThrowOnError>,
 ) =>
   (options.client ?? client).get<WebhooksFindOneResponses, WebhooksFindOneErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/webhooks/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/webhooks/{id}',
     ...options,
   });
 
@@ -2172,11 +2742,11 @@ export const webhooksUpdate = <ThrowOnError extends boolean = false>(
   options: Options<WebhooksUpdateData, ThrowOnError>,
 ) =>
   (options.client ?? client).patch<WebhooksUpdateResponses, WebhooksUpdateErrors, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/webhooks/{id}",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/webhooks/{id}',
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   });
@@ -2188,7 +2758,7 @@ export const dashboardGetStats = <ThrowOnError extends boolean = false>(
   options?: Options<DashboardGetStatsData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<DashboardGetStatsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
-    url: "/api/v1/dashboard/stats",
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/dashboard/stats',
     ...options,
   });

@@ -17,6 +17,7 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
+      "src/*": ["src/*"],
       "@vibe/shared": ["../../libs/shared/src/index.ts"],
       "@vibe/admin-cms/*": ["../../apps/admin-cms/src/*"],
       "@vibe/tiktok-client/*": ["../../apps/tiktok-client/src/*"]

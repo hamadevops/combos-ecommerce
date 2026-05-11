@@ -40,6 +40,16 @@ import AdminPermissions from "./pages/admin/AdminPermissions";
 import AdminPermissionForm from "./pages/admin/AdminPermissionForm";
 import AdminPermissionGroups from "./pages/admin/AdminPermissionGroups";
 import AdminPermissionGroupForm from "./pages/admin/AdminPermissionGroupForm";
+import EmDashboard from "./pages/email-marketing/EmDashboard";
+import EmCampaigns from "./pages/email-marketing/EmCampaigns";
+import EmCampaignForm from "./pages/email-marketing/EmCampaignForm";
+import EmCampaignDetail from "./pages/email-marketing/EmCampaignDetail";
+import EmContacts from "./pages/email-marketing/EmContacts";
+import EmSegments from "./pages/email-marketing/EmSegments";
+import EmSegmentDetail from "./pages/email-marketing/EmSegmentDetail";
+import EmTemplates from "./pages/email-marketing/EmTemplates";
+import EmTemplateForm from "./pages/email-marketing/EmTemplateForm";
+import EmSettings from "./pages/email-marketing/EmSettings";
 
 const queryClient = new QueryClient();
 
@@ -108,6 +118,20 @@ const App = () => (
                 <Route path="/popups" element={<AdminPopups />} />
                 <Route path="/popups/create" element={<AdminPopupForm />} />
                 <Route path="/popups/edit/:id" element={<AdminPopupForm />} />
+
+                {/* Email Marketing Routes */}
+                <Route path="/email-marketing" element={<EmDashboard />} />
+                <Route path="/email-marketing/settings" element={<EmSettings />} />
+                <Route path="/email-marketing/contacts" element={<EmContacts />} />
+                <Route path="/email-marketing/segments" element={<EmSegments />} />
+                <Route path="/email-marketing/segments/:id" element={<EmSegmentDetail />} />
+                <Route path="/email-marketing/templates" element={<EmTemplates />} />
+                <Route path="/email-marketing/templates/new" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/templates/:id" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/templates/edit/:id" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/campaigns" element={<EmCampaigns />} />
+                <Route path="/email-marketing/campaigns/new" element={<EmCampaignForm />} />
+                <Route path="/email-marketing/campaigns/:id" element={<EmCampaignDetail />} />
               </Route>
 
               {/* Redirect / to /admin or /login if needed, or just 404 for now since user said keep ONLY admin/login */}

@@ -110,4 +110,10 @@ export enum PermissionEnum {
 
   // Dashboard permissions
   DASHBOARD_VIEW = 'dashboard.view',
+
+  // Email Marketing permissions
+  EMAIL_MARKETING_CREATE = 'email-marketing.create',
+  EMAIL_MARKETING_READ = 'email-marketing.read',
+  EMAIL_MARKETING_UPDATE = 'email-marketing.update',
+  EMAIL_MARKETING_DELETE = 'email-marketing.delete',
 }

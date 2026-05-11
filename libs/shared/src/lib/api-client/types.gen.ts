@@ -240,16 +240,16 @@ export type UploadUrlDto = {
 };
 
 export type ProductSortEnum =
-  | "newest"
-  | "best_selling"
-  | "price_asc"
-  | "price_desc"
-  | "name_asc"
-  | "name_desc"
-  | "display_order_asc"
-  | "display_order_desc";
+  | 'newest'
+  | 'best_selling'
+  | 'price_asc'
+  | 'price_desc'
+  | 'name_asc'
+  | 'name_desc'
+  | 'display_order_asc'
+  | 'display_order_desc';
 
-export type ProductQueryTypeEnum = "recommended" | "may_like" | "similar";
+export type ProductQueryTypeEnum = 'recommended' | 'may_like' | 'similar' | 'sitemap';
 
 export type ProductImageResponse = {
   id: number;
@@ -931,12 +931,12 @@ export type UpdateTopicDto = {
 };
 
 export type PostSortByEnum =
-  | "newest"
-  | "oldest"
-  | "most_views"
-  | "title_asc"
-  | "title_desc"
-  | "recently_published";
+  | 'newest'
+  | 'oldest'
+  | 'most_views'
+  | 'title_asc'
+  | 'title_desc'
+  | 'recently_published';
 
 export type AuthorResponse = {
   id: number;
@@ -1150,7 +1150,7 @@ export type PopupResponse = {
   image: string | null;
   link: string;
   isActive: boolean;
-  position: "center" | "bottom-right" | "top-bar";
+  position: 'center' | 'bottom-right' | 'top-bar';
   priority: number;
   startDate: string | null;
   endDate: string | null;
@@ -1210,7 +1210,7 @@ export type CreatePopupDto = {
   /**
    * Position of the popup
    */
-  position: "CENTER" | "FOOTER" | "SIDEBAR";
+  position: 'CENTER' | 'FOOTER' | 'SIDEBAR';
 };
 
 export type UpdatePopupDto = {
@@ -1245,7 +1245,248 @@ export type UpdatePopupDto = {
   /**
    * Position of the popup
    */
-  position?: "CENTER" | "FOOTER" | "SIDEBAR";
+  position?: 'CENTER' | 'FOOTER' | 'SIDEBAR';
+};
+
+export type EmConfigItemDto = {
+  key: string;
+  value: string;
+};
+
+export type UpdateEmConfigDto = {
+  /**
+   * Danh sách config cần cập nhật
+   */
+  items: Array<EmConfigItemDto>;
+};
+
+export type EmMessageResponseDto = {
+  message: string;
+};
+
+export type TestEmConfigDto = {
+  /**
+   * Email nhận thử
+   */
+  testEmail: string;
+};
+
+export type EmContactDto = {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  company?: string;
+  isSubscribed?: boolean;
+  metadata?: {
+    [key: string]: unknown;
+  };
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type EmContactListResponseDto = {
+  data: Array<EmContactDto>;
+  meta: PaginationMetaDto;
+};
+
+export type CreateEmContactDto = {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  company?: string;
+  isSubscribed?: boolean;
+  metadata?: {
+    [key: string]: unknown;
+  };
+};
+
+export type UpdateEmContactDto = {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  company?: string;
+  isSubscribed?: boolean;
+  metadata?: {
+    [key: string]: unknown;
+  };
+};
+
+export type EmImportResponseDto = {
+  imported: number;
+  skipped: number;
+};
+
+export type EmSegmentDto = {
+  name: string;
+  description?: string;
+  id: number;
+  contactCount: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type EmSegmentListResponseDto = {
+  data: Array<EmSegmentDto>;
+  meta: PaginationMetaDto;
+};
+
+export type CreateEmSegmentDto = {
+  name: string;
+  description?: string;
+};
+
+export type UpdateEmSegmentDto = {
+  name?: string;
+  description?: string;
+};
+
+export type AssignContactsDto = {
+  /**
+   * Danh sách contact IDs
+   */
+  contactIds: Array<string>;
+};
+
+export type EmTemplateDto = {
+  name: string;
+  subject: string;
+  htmlContent: string;
+  /**
+   * JSON data từ visual builder (GrapesJS/Unlayer)
+   */
+  designData?: {
+    [key: string]: unknown;
+  };
+  previewText?: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type EmTemplateListResponseDto = {
+  data: Array<EmTemplateDto>;
+  meta: PaginationMetaDto;
+};
+
+export type CreateEmTemplateDto = {
+  name: string;
+  subject: string;
+  htmlContent: string;
+  /**
+   * JSON data từ visual builder (GrapesJS/Unlayer)
+   */
+  designData?: {
+    [key: string]: unknown;
+  };
+  previewText?: string;
+};
+
+export type UpdateEmTemplateDto = {
+  name?: string;
+  subject?: string;
+  htmlContent?: string;
+  designData?: {
+    [key: string]: unknown;
+  };
+  previewText?: string;
+};
+
+export type PreviewEmTemplateDto = {
+  /**
+   * Contact ID dùng để render preview (optional)
+   */
+  contactId?: number;
+  /**
+   * Sample data nếu không có contactId
+   */
+  sampleData?: {
+    [key: string]: unknown;
+  };
+};
+
+export type SendTestEmTemplateDto = {
+  /**
+   * Email nhận thử
+   */
+  testEmail: string;
+};
+
+export type EmCampaignDto = {
+  name: string;
+  /**
+   * Template ID
+   */
+  templateId: number;
+  /**
+   * Segment IDs
+   */
+  segmentIds: Array<string>;
+  fromName?: string;
+  fromEmail?: string;
+  id: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type EmCampaignListResponseDto = {
+  data: Array<EmCampaignDto>;
+  meta: PaginationMetaDto;
+};
+
+export type CreateEmCampaignDto = {
+  name: string;
+  /**
+   * Template ID
+   */
+  templateId: number;
+  /**
+   * Segment IDs
+   */
+  segmentIds: Array<string>;
+  fromName?: string;
+  fromEmail?: string;
+};
+
+export type UpdateEmCampaignDto = {
+  name?: string;
+  templateId?: number;
+  segmentIds?: Array<string>;
+  fromName?: string;
+  fromEmail?: string;
+  status?: 'DRAFT' | 'SCHEDULED' | 'RUNNING' | 'COMPLETED' | 'PAUSED' | 'CANCELLED';
+};
+
+export type ScheduleEmCampaignDto = {
+  /**
+   * Thời gian gửi (ISO 8601)
+   */
+  scheduledAt: string;
+};
+
+export type SendTestEmCampaignDto = {
+  /**
+   * Email nhận thử
+   */
+  testEmail: string;
+};
+
+export type EmCampaignLogDto = {
+  id: number;
+  email: string;
+  status: string;
+  sentAt: string;
+  openedAt: string;
+  clickedAt: string;
+};
+
+export type EmCampaignLogListResponseDto = {
+  data: Array<EmCampaignLogDto>;
+  meta: PaginationMetaDto;
 };
 
 export type RoleCreateDto = {
@@ -1729,7 +1970,7 @@ export type CreateOrderDto = {
   /**
    * Phương thức thanh toán
    */
-  paymentMethod?: "COD" | "BANK_TRANSFER";
+  paymentMethod?: 'COD' | 'BANK_TRANSFER';
   /**
    * Phí vận chuyển
    */
@@ -1776,11 +2017,11 @@ export type UpdateOrderDto = {
   /**
    * Trạng thái đơn hàng
    */
-  status?: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPING" | "COMPLETED" | "CANCELLED";
+  status?: 'PENDING' | 'CONFIRMED' | 'PROCESSING' | 'SHIPPING' | 'COMPLETED' | 'CANCELLED';
   /**
    * Trạng thái thanh toán
    */
-  paymentStatus?: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+  paymentStatus?: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
   /**
    * Tên khách hàng
    */
@@ -1926,7 +2167,7 @@ export type OverviewCardDto = {
   /**
    * Xu hướng tăng/giảm
    */
-  trend: "up" | "down";
+  trend: 'up' | 'down';
 };
 
 export type RevenueByMonthItemDto = {
@@ -1996,7 +2237,7 @@ export type AppGetHelloData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1";
+  url: '/api/v1';
 };
 
 export type AppGetHelloResponses = {
@@ -2007,7 +2248,7 @@ export type UserRegisterData = {
   body: CreateUserDto;
   path?: never;
   query?: never;
-  url: "/api/v1/users/register";
+  url: '/api/v1/users/register';
 };
 
 export type UserRegisterResponses = {
@@ -2020,7 +2261,7 @@ export type UserUpdateProfileData = {
   body: UpdateProfileDto;
   path?: never;
   query?: never;
-  url: "/api/v1/users/profile";
+  url: '/api/v1/users/profile';
 };
 
 export type UserUpdateProfileResponses = {
@@ -2039,7 +2280,7 @@ export type UserUpdateAvatarData = {
   };
   path?: never;
   query?: never;
-  url: "/api/v1/users/profile/avatar";
+  url: '/api/v1/users/profile/avatar';
 };
 
 export type UserUpdateAvatarResponses = {
@@ -2057,7 +2298,7 @@ export type UserUpdateBackgroundData = {
   };
   path?: never;
   query?: never;
-  url: "/api/v1/users/profile/background";
+  url: '/api/v1/users/profile/background';
 };
 
 export type UserUpdateBackgroundResponses = {
@@ -2074,7 +2315,7 @@ export type UserChangePasswordData = {
   body: ChangePasswordDto;
   path?: never;
   query?: never;
-  url: "/api/v1/users/change-password";
+  url: '/api/v1/users/change-password';
 };
 
 export type UserChangePasswordResponses = {
@@ -2108,7 +2349,7 @@ export type UserFindAllData = {
      */
     roleId?: number;
   };
-  url: "/api/v1/users";
+  url: '/api/v1/users';
 };
 
 export type UserFindAllResponses = {
@@ -2124,7 +2365,7 @@ export type UserCreateData = {
   body: AdminCreateUserDto;
   path?: never;
   query?: never;
-  url: "/api/v1/users";
+  url: '/api/v1/users';
 };
 
 export type UserCreateResponses = {
@@ -2145,7 +2386,7 @@ export type UserDeleteData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/users/{id}";
+  url: '/api/v1/users/{id}';
 };
 
 export type UserDeleteResponses = {
@@ -2166,7 +2407,7 @@ export type UserFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/users/{id}";
+  url: '/api/v1/users/{id}';
 };
 
 export type UserFindOneResponses = {
@@ -2187,7 +2428,7 @@ export type UserUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/users/{id}";
+  url: '/api/v1/users/{id}';
 };
 
 export type UserUpdateResponses = {
@@ -2208,7 +2449,7 @@ export type UserUpdateUserRoleData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/users/{id}/role";
+  url: '/api/v1/users/{id}/role';
 };
 
 export type UserUpdateUserRoleResponses = {
@@ -2230,7 +2471,7 @@ export type UserGetUserWithPermissionsData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/users/{id}/permissions";
+  url: '/api/v1/users/{id}/permissions';
 };
 
 export type UserGetUserWithPermissionsResponses = {
@@ -2247,7 +2488,7 @@ export type AuthLoginData = {
   body: LoginDto;
   path?: never;
   query?: never;
-  url: "/api/v1/auth/login";
+  url: '/api/v1/auth/login';
 };
 
 export type AuthLoginResponses = {
@@ -2263,7 +2504,7 @@ export type AuthGetProfileData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/auth/profile";
+  url: '/api/v1/auth/profile';
 };
 
 export type AuthGetProfileResponses = {
@@ -2281,7 +2522,7 @@ export type UploadUploadFileData = {
   };
   path?: never;
   query?: never;
-  url: "/api/v1/upload/file";
+  url: '/api/v1/upload/file';
 };
 
 export type UploadUploadFileResponses = {
@@ -2297,7 +2538,7 @@ export type UploadUploadFromUrlData = {
   body: UploadUrlDto;
   path?: never;
   query?: never;
-  url: "/api/v1/upload/url";
+  url: '/api/v1/upload/url';
 };
 
 export type UploadUploadFromUrlResponses = {
@@ -2361,7 +2602,7 @@ export type ProductsFindAllData = {
     /**
      * Hướng sắp xếp
      */
-    order?: "ASC" | "DESC";
+    order?: 'ASC' | 'DESC';
     /**
      * Loại query đặc biệt
      */
@@ -2399,7 +2640,7 @@ export type ProductsFindAllData = {
      */
     hasVariants?: true | false;
   };
-  url: "/api/v1/products";
+  url: '/api/v1/products';
 };
 
 export type ProductsFindAllResponses = {
@@ -2415,7 +2656,7 @@ export type ProductsCreateData = {
   body: CreateProductDto;
   path?: never;
   query?: never;
-  url: "/api/v1/products";
+  url: '/api/v1/products';
 };
 
 export type ProductsCreateResponses = {
@@ -2433,7 +2674,7 @@ export type ProductsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}";
+  url: '/api/v1/products/{id}';
 };
 
 export type ProductsRemoveErrors = {
@@ -2458,7 +2699,7 @@ export type ProductsFindOneData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}";
+  url: '/api/v1/products/{id}';
 };
 
 export type ProductsFindOneErrors = {
@@ -2483,7 +2724,7 @@ export type ProductsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}";
+  url: '/api/v1/products/{id}';
 };
 
 export type ProductsUpdateErrors = {
@@ -2508,7 +2749,7 @@ export type ProductsFindBySlugData = {
     slug: string;
   };
   query?: never;
-  url: "/api/v1/products/slug/{slug}";
+  url: '/api/v1/products/slug/{slug}';
 };
 
 export type ProductsFindBySlugErrors = {
@@ -2532,7 +2773,7 @@ export type ProductsUpdateDisplayOrderData = {
   body: UpdateProductOrderDto;
   path?: never;
   query?: never;
-  url: "/api/v1/products/display-order";
+  url: '/api/v1/products/display-order';
 };
 
 export type ProductsUpdateDisplayOrderResponses = {
@@ -2553,7 +2794,7 @@ export type ProductsUpdateImagesData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/images";
+  url: '/api/v1/products/{id}/images';
 };
 
 export type ProductsUpdateImagesResponses = {
@@ -2594,7 +2835,7 @@ export type ProductsAddVideoData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/videos";
+  url: '/api/v1/products/{id}/videos';
 };
 
 export type ProductsAddVideoResponses = {
@@ -2614,7 +2855,7 @@ export type ProductsReorderImagesData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/images/order";
+  url: '/api/v1/products/{id}/images/order';
 };
 
 export type ProductsReorderImagesResponses = {
@@ -2634,7 +2875,7 @@ export type ProductsDeleteImageData = {
     imageId: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/images/{imageId}";
+  url: '/api/v1/products/{id}/images/{imageId}';
 };
 
 export type ProductsDeleteImageResponses = {
@@ -2651,7 +2892,7 @@ export type ProductsDeleteVideoData = {
     videoId: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/videos/{videoId}";
+  url: '/api/v1/products/{id}/videos/{videoId}';
 };
 
 export type ProductsDeleteVideoResponses = {
@@ -2671,7 +2912,7 @@ export type ProductsUpdateVideoVisibilityData = {
     videoId: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/videos/{videoId}/visibility";
+  url: '/api/v1/products/{id}/videos/{videoId}/visibility';
 };
 
 export type ProductsUpdateVideoVisibilityResponses = {
@@ -2690,7 +2931,7 @@ export type ProductsUpdateVariantsData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/variants";
+  url: '/api/v1/products/{id}/variants';
 };
 
 export type ProductsUpdateVariantsResponses = {
@@ -2709,7 +2950,7 @@ export type ProductsUpdateSeoData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/products/{id}/seo";
+  url: '/api/v1/products/{id}/seo';
 };
 
 export type ProductsUpdateSeoResponses = {
@@ -2728,7 +2969,7 @@ export type TierVariationsGetTierVariationsData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}/tier-variations";
+  url: '/api/v1/products/{id}/tier-variations';
 };
 
 export type TierVariationsGetTierVariationsErrors = {
@@ -2754,7 +2995,7 @@ export type TierVariationsSetTierVariationsData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}/tier-variations";
+  url: '/api/v1/products/{id}/tier-variations';
 };
 
 export type TierVariationsSetTierVariationsErrors = {
@@ -2780,7 +3021,7 @@ export type TierVariationsGenerateVariantsData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}/generate-variants";
+  url: '/api/v1/products/{id}/generate-variants';
 };
 
 export type TierVariationsGenerateVariantsErrors = {
@@ -2803,7 +3044,7 @@ export type TierVariationsBulkUpdateVariantsData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}/variants/bulk";
+  url: '/api/v1/products/{id}/variants/bulk';
 };
 
 export type TierVariationsBulkUpdateVariantsErrors = {
@@ -2826,7 +3067,7 @@ export type TierVariationsApplyToAllVariantsData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/products/{id}/variants/apply-all";
+  url: '/api/v1/products/{id}/variants/apply-all';
 };
 
 export type TierVariationsApplyToAllVariantsErrors = {
@@ -2876,7 +3117,7 @@ export type CategoriesFindAllData = {
      */
     include_products?: boolean;
   };
-  url: "/api/v1/categories";
+  url: '/api/v1/categories';
 };
 
 export type CategoriesFindAllResponses = {
@@ -2893,7 +3134,7 @@ export type CategoriesCreateData = {
   body: CreateCategoryDto;
   path?: never;
   query?: never;
-  url: "/api/v1/categories";
+  url: '/api/v1/categories';
 };
 
 export type CategoriesCreateResponses = {
@@ -2909,7 +3150,7 @@ export type CategoriesFindTreeData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/categories/tree";
+  url: '/api/v1/categories/tree';
 };
 
 export type CategoriesFindTreeResponses = {
@@ -2928,7 +3169,7 @@ export type CategoriesRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/categories/{id}";
+  url: '/api/v1/categories/{id}';
 };
 
 export type CategoriesRemoveErrors = {
@@ -2953,7 +3194,7 @@ export type CategoriesFindOneData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/categories/{id}";
+  url: '/api/v1/categories/{id}';
 };
 
 export type CategoriesFindOneErrors = {
@@ -2979,7 +3220,7 @@ export type CategoriesUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/categories/{id}";
+  url: '/api/v1/categories/{id}';
 };
 
 export type CategoriesUpdateErrors = {
@@ -3004,7 +3245,7 @@ export type CategoriesRemoveImageData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/categories/{id}/image";
+  url: '/api/v1/categories/{id}/image';
 };
 
 export type CategoriesRemoveImageResponses = {
@@ -3025,7 +3266,7 @@ export type CategoriesUploadImageData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/categories/{id}/image";
+  url: '/api/v1/categories/{id}/image';
 };
 
 export type CategoriesUploadImageResponses = {
@@ -3075,7 +3316,7 @@ export type TopicsFindAllData = {
      */
     include_posts?: boolean;
   };
-  url: "/api/v1/topics";
+  url: '/api/v1/topics';
 };
 
 export type TopicsFindAllResponses = {
@@ -3091,7 +3332,7 @@ export type TopicsCreateData = {
   body: CreateTopicDto;
   path?: never;
   query?: never;
-  url: "/api/v1/topics";
+  url: '/api/v1/topics';
 };
 
 export type TopicsCreateResponses = {
@@ -3107,7 +3348,7 @@ export type TopicsFindTreeData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/topics/tree";
+  url: '/api/v1/topics/tree';
 };
 
 export type TopicsFindTreeResponses = {
@@ -3123,7 +3364,7 @@ export type TopicsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/topics/{id}";
+  url: '/api/v1/topics/{id}';
 };
 
 export type TopicsRemoveErrors = {
@@ -3148,7 +3389,7 @@ export type TopicsFindOneData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/topics/{id}";
+  url: '/api/v1/topics/{id}';
 };
 
 export type TopicsFindOneErrors = {
@@ -3173,7 +3414,7 @@ export type TopicsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/topics/{id}";
+  url: '/api/v1/topics/{id}';
 };
 
 export type TopicsUpdateErrors = {
@@ -3283,9 +3524,9 @@ export type PostsFindAllData = {
     /**
      * Hướng sắp xếp
      */
-    sort_order?: "ASC" | "DESC";
+    sort_order?: 'ASC' | 'DESC';
   };
-  url: "/api/v1/posts";
+  url: '/api/v1/posts';
 };
 
 export type PostsFindAllResponses = {
@@ -3301,7 +3542,7 @@ export type PostsCreateData = {
   body: CreatePostDto;
   path?: never;
   query?: never;
-  url: "/api/v1/posts";
+  url: '/api/v1/posts';
 };
 
 export type PostsCreateResponses = {
@@ -3319,7 +3560,7 @@ export type PostsFindOneData = {
     idOrSlug: string;
   };
   query?: never;
-  url: "/api/v1/posts/{idOrSlug}";
+  url: '/api/v1/posts/{idOrSlug}';
 };
 
 export type PostsFindOneErrors = {
@@ -3344,7 +3585,7 @@ export type PostsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}";
+  url: '/api/v1/posts/{id}';
 };
 
 export type PostsRemoveErrors = {
@@ -3369,7 +3610,7 @@ export type PostsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}";
+  url: '/api/v1/posts/{id}';
 };
 
 export type PostsUpdateErrors = {
@@ -3394,7 +3635,7 @@ export type PostsPublishData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}/publish";
+  url: '/api/v1/posts/{id}/publish';
 };
 
 export type PostsPublishResponses = {
@@ -3412,7 +3653,7 @@ export type PostsScheduleData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}/schedule";
+  url: '/api/v1/posts/{id}/schedule';
 };
 
 export type PostsScheduleResponses = {
@@ -3430,7 +3671,7 @@ export type PostsRemoveThumbnailData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}/thumbnail";
+  url: '/api/v1/posts/{id}/thumbnail';
 };
 
 export type PostsRemoveThumbnailResponses = {
@@ -3451,7 +3692,7 @@ export type PostsUploadThumbnailData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/posts/{id}/thumbnail";
+  url: '/api/v1/posts/{id}/thumbnail';
 };
 
 export type PostsUploadThumbnailResponses = {
@@ -3481,7 +3722,7 @@ export type TagsFindAllData = {
      */
     search?: string;
   };
-  url: "/api/v1/tags";
+  url: '/api/v1/tags';
 };
 
 export type TagsFindAllResponses = {
@@ -3497,7 +3738,7 @@ export type TagsCreateData = {
   body: CreateTagDto;
   path?: never;
   query?: never;
-  url: "/api/v1/tags";
+  url: '/api/v1/tags';
 };
 
 export type TagsCreateResponses = {
@@ -3515,7 +3756,7 @@ export type TagsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/tags/{id}";
+  url: '/api/v1/tags/{id}';
 };
 
 export type TagsRemoveErrors = {
@@ -3540,7 +3781,7 @@ export type TagsFindOneData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/tags/{id}";
+  url: '/api/v1/tags/{id}';
 };
 
 export type TagsFindOneErrors = {
@@ -3565,7 +3806,7 @@ export type TagsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/tags/{id}";
+  url: '/api/v1/tags/{id}';
 };
 
 export type TagsUpdateErrors = {
@@ -3607,9 +3848,9 @@ export type PopupsFindAllData = {
     /**
      * Filter by position
      */
-    position?: "CENTER" | "FOOTER" | "SIDEBAR";
+    position?: 'CENTER' | 'FOOTER' | 'SIDEBAR';
   };
-  url: "/api/v1/popups";
+  url: '/api/v1/popups';
 };
 
 export type PopupsFindAllResponses = {
@@ -3625,7 +3866,7 @@ export type PopupsCreateData = {
   body: CreatePopupDto;
   path?: never;
   query?: never;
-  url: "/api/v1/popups";
+  url: '/api/v1/popups';
 };
 
 export type PopupsCreateResponses = {
@@ -3641,7 +3882,7 @@ export type PopupsFindActiveData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/popups/active";
+  url: '/api/v1/popups/active';
 };
 
 export type PopupsFindActiveResponses = {
@@ -3659,7 +3900,7 @@ export type PopupsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/popups/{id}";
+  url: '/api/v1/popups/{id}';
 };
 
 export type PopupsRemoveErrors = {
@@ -3684,7 +3925,7 @@ export type PopupsFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/popups/{id}";
+  url: '/api/v1/popups/{id}';
 };
 
 export type PopupsFindOneErrors = {
@@ -3709,7 +3950,7 @@ export type PopupsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/popups/{id}";
+  url: '/api/v1/popups/{id}';
 };
 
 export type PopupsUpdateErrors = {
@@ -3728,6 +3969,530 @@ export type PopupsUpdateResponses = {
 
 export type PopupsUpdateResponse = PopupsUpdateResponses[keyof PopupsUpdateResponses];
 
+export type EmConfigFindAllData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/config';
+};
+
+export type EmConfigFindAllResponses = {
+  200: Array<EmConfigItemDto>;
+};
+
+export type EmConfigFindAllResponse = EmConfigFindAllResponses[keyof EmConfigFindAllResponses];
+
+export type EmConfigUpdateBatchData = {
+  body: UpdateEmConfigDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/config';
+};
+
+export type EmConfigUpdateBatchResponses = {
+  200: EmMessageResponseDto;
+};
+
+export type EmConfigUpdateBatchResponse =
+  EmConfigUpdateBatchResponses[keyof EmConfigUpdateBatchResponses];
+
+export type EmConfigSendTestData = {
+  body: TestEmConfigDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/config/test';
+};
+
+export type EmConfigSendTestResponses = {
+  201: EmMessageResponseDto;
+};
+
+export type EmConfigSendTestResponse = EmConfigSendTestResponses[keyof EmConfigSendTestResponses];
+
+export type EmContactFindAllData = {
+  body?: never;
+  path?: never;
+  query: {
+    page: number;
+    limit: number;
+    search: string;
+    segmentId: number;
+  };
+  url: '/api/v1/email-marketing/contacts';
+};
+
+export type EmContactFindAllResponses = {
+  200: EmContactListResponseDto;
+};
+
+export type EmContactFindAllResponse = EmContactFindAllResponses[keyof EmContactFindAllResponses];
+
+export type EmContactCreateData = {
+  body: CreateEmContactDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/contacts';
+};
+
+export type EmContactCreateResponses = {
+  201: EmContactDto;
+};
+
+export type EmContactCreateResponse = EmContactCreateResponses[keyof EmContactCreateResponses];
+
+export type EmContactRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/contacts/{id}';
+};
+
+export type EmContactRemoveResponses = {
+  200: unknown;
+};
+
+export type EmContactFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/contacts/{id}';
+};
+
+export type EmContactFindOneResponses = {
+  200: EmContactDto;
+};
+
+export type EmContactFindOneResponse = EmContactFindOneResponses[keyof EmContactFindOneResponses];
+
+export type EmContactUpdateData = {
+  body: UpdateEmContactDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/contacts/{id}';
+};
+
+export type EmContactUpdateResponses = {
+  200: EmContactDto;
+};
+
+export type EmContactUpdateResponse = EmContactUpdateResponses[keyof EmContactUpdateResponses];
+
+export type EmContactImportCsvData = {
+  body: {
+    file?: Blob | File;
+  };
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/contacts/import';
+};
+
+export type EmContactImportCsvResponses = {
+  200: EmImportResponseDto;
+};
+
+export type EmContactImportCsvResponse =
+  EmContactImportCsvResponses[keyof EmContactImportCsvResponses];
+
+export type EmSegmentFindAllData = {
+  body?: never;
+  path?: never;
+  query?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  };
+  url: '/api/v1/email-marketing/segments';
+};
+
+export type EmSegmentFindAllResponses = {
+  200: EmSegmentListResponseDto;
+};
+
+export type EmSegmentFindAllResponse = EmSegmentFindAllResponses[keyof EmSegmentFindAllResponses];
+
+export type EmSegmentCreateData = {
+  body: CreateEmSegmentDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/segments';
+};
+
+export type EmSegmentCreateResponses = {
+  201: EmSegmentDto;
+};
+
+export type EmSegmentCreateResponse = EmSegmentCreateResponses[keyof EmSegmentCreateResponses];
+
+export type EmSegmentRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/segments/{id}';
+};
+
+export type EmSegmentRemoveResponses = {
+  200: unknown;
+};
+
+export type EmSegmentFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/segments/{id}';
+};
+
+export type EmSegmentFindOneResponses = {
+  200: EmSegmentDto;
+};
+
+export type EmSegmentFindOneResponse = EmSegmentFindOneResponses[keyof EmSegmentFindOneResponses];
+
+export type EmSegmentUpdateData = {
+  body: UpdateEmSegmentDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/segments/{id}';
+};
+
+export type EmSegmentUpdateResponses = {
+  200: EmSegmentDto;
+};
+
+export type EmSegmentUpdateResponse = EmSegmentUpdateResponses[keyof EmSegmentUpdateResponses];
+
+export type EmSegmentRemoveContactsData = {
+  body: AssignContactsDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/segments/{id}/contacts';
+};
+
+export type EmSegmentRemoveContactsResponses = {
+  200: unknown;
+};
+
+export type EmSegmentAssignContactsData = {
+  body: AssignContactsDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/segments/{id}/contacts';
+};
+
+export type EmSegmentAssignContactsResponses = {
+  201: unknown;
+};
+
+export type EmTemplateFindAllData = {
+  body?: never;
+  path?: never;
+  query: {
+    page: number;
+    limit: number;
+    search: string;
+  };
+  url: '/api/v1/email-marketing/templates';
+};
+
+export type EmTemplateFindAllResponses = {
+  200: EmTemplateListResponseDto;
+};
+
+export type EmTemplateFindAllResponse =
+  EmTemplateFindAllResponses[keyof EmTemplateFindAllResponses];
+
+export type EmTemplateCreateData = {
+  body: CreateEmTemplateDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/templates';
+};
+
+export type EmTemplateCreateResponses = {
+  201: EmTemplateDto;
+};
+
+export type EmTemplateCreateResponse = EmTemplateCreateResponses[keyof EmTemplateCreateResponses];
+
+export type EmTemplateRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}';
+};
+
+export type EmTemplateRemoveResponses = {
+  200: unknown;
+};
+
+export type EmTemplateFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}';
+};
+
+export type EmTemplateFindOneResponses = {
+  200: EmTemplateDto;
+};
+
+export type EmTemplateFindOneResponse =
+  EmTemplateFindOneResponses[keyof EmTemplateFindOneResponses];
+
+export type EmTemplateUpdateData = {
+  body: UpdateEmTemplateDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}';
+};
+
+export type EmTemplateUpdateResponses = {
+  200: EmTemplateDto;
+};
+
+export type EmTemplateUpdateResponse = EmTemplateUpdateResponses[keyof EmTemplateUpdateResponses];
+
+export type EmTemplatePreviewData = {
+  body: PreviewEmTemplateDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}/preview';
+};
+
+export type EmTemplatePreviewResponses = {
+  201: unknown;
+};
+
+export type EmTemplateDuplicateData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}/duplicate';
+};
+
+export type EmTemplateDuplicateResponses = {
+  201: EmTemplateDto;
+};
+
+export type EmTemplateDuplicateResponse =
+  EmTemplateDuplicateResponses[keyof EmTemplateDuplicateResponses];
+
+export type EmTemplateSendTestData = {
+  body: SendTestEmTemplateDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/templates/{id}/send-test';
+};
+
+export type EmTemplateSendTestResponses = {
+  201: unknown;
+};
+
+export type EmCampaignFindAllData = {
+  body?: never;
+  path?: never;
+  query: {
+    page: number;
+    limit: number;
+    status: string;
+  };
+  url: '/api/v1/email-marketing/campaigns';
+};
+
+export type EmCampaignFindAllResponses = {
+  200: EmCampaignListResponseDto;
+};
+
+export type EmCampaignFindAllResponse =
+  EmCampaignFindAllResponses[keyof EmCampaignFindAllResponses];
+
+export type EmCampaignCreateData = {
+  body: CreateEmCampaignDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns';
+};
+
+export type EmCampaignCreateResponses = {
+  201: EmCampaignDto;
+};
+
+export type EmCampaignCreateResponse = EmCampaignCreateResponses[keyof EmCampaignCreateResponses];
+
+export type EmCampaignRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}';
+};
+
+export type EmCampaignRemoveResponses = {
+  200: unknown;
+};
+
+export type EmCampaignFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}';
+};
+
+export type EmCampaignFindOneResponses = {
+  200: EmCampaignDto;
+};
+
+export type EmCampaignFindOneResponse =
+  EmCampaignFindOneResponses[keyof EmCampaignFindOneResponses];
+
+export type EmCampaignUpdateData = {
+  body: UpdateEmCampaignDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}';
+};
+
+export type EmCampaignUpdateResponses = {
+  200: EmCampaignDto;
+};
+
+export type EmCampaignUpdateResponse = EmCampaignUpdateResponses[keyof EmCampaignUpdateResponses];
+
+export type EmCampaignScheduleData = {
+  body: ScheduleEmCampaignDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}/schedule';
+};
+
+export type EmCampaignScheduleResponses = {
+  201: unknown;
+};
+
+export type EmCampaignCancelData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}/cancel';
+};
+
+export type EmCampaignCancelResponses = {
+  201: EmMessageResponseDto;
+};
+
+export type EmCampaignCancelResponse = EmCampaignCancelResponses[keyof EmCampaignCancelResponses];
+
+export type EmCampaignSendTestData = {
+  body: SendTestEmCampaignDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/email-marketing/campaigns/{id}/send-test';
+};
+
+export type EmCampaignSendTestResponses = {
+  201: unknown;
+};
+
+export type EmCampaignGetLogsData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query: {
+    page: number;
+    limit: number;
+    status: string;
+  };
+  url: '/api/v1/email-marketing/campaigns/{id}/logs';
+};
+
+export type EmCampaignGetLogsResponses = {
+  200: EmCampaignLogListResponseDto;
+};
+
+export type EmCampaignGetLogsResponse =
+  EmCampaignGetLogsResponses[keyof EmCampaignGetLogsResponses];
+
+export type EmTrackingTrackOpenData = {
+  body?: never;
+  path: {
+    logId: string;
+  };
+  query?: never;
+  url: '/api/v1/em-tracking/open/{logId}.gif';
+};
+
+export type EmTrackingTrackOpenResponses = {
+  200: unknown;
+};
+
+export type EmTrackingTrackClickData = {
+  body?: never;
+  path: {
+    hash: string;
+  };
+  query: {
+    lid: string;
+  };
+  url: '/api/v1/em-tracking/click/{hash}';
+};
+
+export type EmTrackingTrackClickResponses = {
+  200: unknown;
+};
+
+export type EmTrackingUnsubscribeData = {
+  body?: never;
+  path: {
+    contactId: string;
+    token: string;
+  };
+  query?: never;
+  url: '/api/v1/em-tracking/unsubscribe/{contactId}/{token}';
+};
+
+export type EmTrackingUnsubscribeResponses = {
+  200: unknown;
+};
+
 export type PermissionAllRolesData = {
   body?: never;
   path?: never;
@@ -3745,7 +4510,7 @@ export type PermissionAllRolesData = {
      */
     search?: string;
   };
-  url: "/api/v1/roles";
+  url: '/api/v1/roles';
 };
 
 export type PermissionAllRolesResponses = {
@@ -3756,7 +4521,7 @@ export type PermissionCreateData = {
   body: RoleCreateDto;
   path?: never;
   query?: never;
-  url: "/api/v1/roles";
+  url: '/api/v1/roles';
 };
 
 export type PermissionCreateResponses = {
@@ -3777,7 +4542,7 @@ export type PermissionDeleteRoleData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/roles/{id}";
+  url: '/api/v1/roles/{id}';
 };
 
 export type PermissionDeleteRoleResponses = {
@@ -3796,7 +4561,7 @@ export type PermissionRoleDetailData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/roles/{id}";
+  url: '/api/v1/roles/{id}';
 };
 
 export type PermissionRoleDetailResponses = {
@@ -3812,7 +4577,7 @@ export type PermissionUpdateRoleData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/roles/{id}";
+  url: '/api/v1/roles/{id}';
 };
 
 export type PermissionUpdateRoleResponses = {
@@ -3850,7 +4615,7 @@ export type PermissionGetAllPermissionsData = {
      */
     method?: string;
   };
-  url: "/api/v1/permissions";
+  url: '/api/v1/permissions';
 };
 
 export type PermissionGetAllPermissionsResponses = {
@@ -3867,7 +4632,7 @@ export type PermissionCreatePermissionData = {
   body: CreatePermissionDto;
   path?: never;
   query?: never;
-  url: "/api/v1/permissions";
+  url: '/api/v1/permissions';
 };
 
 export type PermissionCreatePermissionResponses = {
@@ -3889,7 +4654,7 @@ export type PermissionAssignPermissionData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/roles/{id}/permission";
+  url: '/api/v1/roles/{id}/permission';
 };
 
 export type PermissionAssignPermissionResponses = {
@@ -3908,7 +4673,7 @@ export type PermissionDeletePermissionData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permissions/{id}";
+  url: '/api/v1/permissions/{id}';
 };
 
 export type PermissionDeletePermissionResponses = {
@@ -3930,7 +4695,7 @@ export type PermissionUpdatePermissionData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permissions/{id}";
+  url: '/api/v1/permissions/{id}';
 };
 
 export type PermissionUpdatePermissionResponses = {
@@ -3956,7 +4721,7 @@ export type PermissionRemovePermissionFromRoleData = {
     permissionId: number;
   };
   query?: never;
-  url: "/api/v1/roles/{roleId}/permissions/{permissionId}";
+  url: '/api/v1/roles/{roleId}/permissions/{permissionId}';
 };
 
 export type PermissionRemovePermissionFromRoleResponses = {
@@ -3978,7 +4743,7 @@ export type PermissionGetUserPermissionsData = {
     userId: number;
   };
   query?: never;
-  url: "/api/v1/users/{userId}/permissions";
+  url: '/api/v1/users/{userId}/permissions';
 };
 
 export type PermissionGetUserPermissionsResponses = {
@@ -3995,7 +4760,7 @@ export type PermissionGetGroupedPermissionsData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/permissions/grouped";
+  url: '/api/v1/permissions/grouped';
 };
 
 export type PermissionGetGroupedPermissionsResponses = {
@@ -4009,7 +4774,7 @@ export type PermissionGetAllPermissionGroupsData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/permission-groups";
+  url: '/api/v1/permission-groups';
 };
 
 export type PermissionGetAllPermissionGroupsResponses = {
@@ -4023,7 +4788,7 @@ export type PermissionCreatePermissionGroupData = {
   body: CreatePermissionGroupDto;
   path?: never;
   query?: never;
-  url: "/api/v1/permission-groups";
+  url: '/api/v1/permission-groups';
 };
 
 export type PermissionCreatePermissionGroupResponses = {
@@ -4042,7 +4807,7 @@ export type PermissionDeletePermissionGroupData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permission-groups/{id}";
+  url: '/api/v1/permission-groups/{id}';
 };
 
 export type PermissionDeletePermissionGroupResponses = {
@@ -4064,7 +4829,7 @@ export type PermissionUpdatePermissionGroupData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permission-groups/{id}";
+  url: '/api/v1/permission-groups/{id}';
 };
 
 export type PermissionUpdatePermissionGroupResponses = {
@@ -4083,7 +4848,7 @@ export type PermissionRemovePermissionsFromGroupData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permission-groups/{id}/permissions";
+  url: '/api/v1/permission-groups/{id}/permissions';
 };
 
 export type PermissionRemovePermissionsFromGroupResponses = {
@@ -4105,7 +4870,7 @@ export type PermissionAssignPermissionsToGroupData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/permission-groups/{id}/permissions";
+  url: '/api/v1/permission-groups/{id}/permissions';
 };
 
 export type PermissionAssignPermissionsToGroupResponses = {
@@ -4124,7 +4889,7 @@ export type CacheViewerGetKeysData = {
      */
     pattern?: string;
   };
-  url: "/api/v1/cache/keys";
+  url: '/api/v1/cache/keys';
 };
 
 export type CacheViewerGetKeysResponses = {
@@ -4143,7 +4908,7 @@ export type CacheViewerDeleteKeyData = {
     key: string;
   };
   query?: never;
-  url: "/api/v1/cache/keys/{key}";
+  url: '/api/v1/cache/keys/{key}';
 };
 
 export type CacheViewerDeleteKeyResponses = {
@@ -4162,7 +4927,7 @@ export type CacheViewerGetValueData = {
     key: string;
   };
   query?: never;
-  url: "/api/v1/cache/keys/{key}";
+  url: '/api/v1/cache/keys/{key}';
 };
 
 export type CacheViewerGetValueResponses = {
@@ -4179,7 +4944,7 @@ export type CacheViewerClearAllData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/cache/all";
+  url: '/api/v1/cache/all';
 };
 
 export type CacheViewerClearAllResponses = {
@@ -4196,7 +4961,7 @@ export type FaqsFindAllPublicData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/faqs";
+  url: '/api/v1/faqs';
 };
 
 export type FaqsFindAllPublicResponses = {
@@ -4213,7 +4978,7 @@ export type FaqsCreateData = {
   body: CreateFaqDto;
   path?: never;
   query?: never;
-  url: "/api/v1/faqs";
+  url: '/api/v1/faqs';
 };
 
 export type FaqsCreateResponses = {
@@ -4229,7 +4994,7 @@ export type FaqsFindAllAdminData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/faqs/admin";
+  url: '/api/v1/faqs/admin';
 };
 
 export type FaqsFindAllAdminResponses = {
@@ -4247,7 +5012,7 @@ export type FaqsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/faqs/{id}";
+  url: '/api/v1/faqs/{id}';
 };
 
 export type FaqsRemoveErrors = {
@@ -4272,7 +5037,7 @@ export type FaqsFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/faqs/{id}";
+  url: '/api/v1/faqs/{id}';
 };
 
 export type FaqsFindOneErrors = {
@@ -4297,7 +5062,7 @@ export type FaqsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/faqs/{id}";
+  url: '/api/v1/faqs/{id}';
 };
 
 export type FaqsUpdateErrors = {
@@ -4322,7 +5087,7 @@ export type PagesFindBySlugData = {
     slug: string;
   };
   query?: never;
-  url: "/api/v1/pages/slug/{slug}";
+  url: '/api/v1/pages/slug/{slug}';
 };
 
 export type PagesFindBySlugErrors = {
@@ -4345,7 +5110,7 @@ export type PagesFindAllData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/pages";
+  url: '/api/v1/pages';
 };
 
 export type PagesFindAllResponses = {
@@ -4361,7 +5126,7 @@ export type PagesCreateData = {
   body: CreatePageDto;
   path?: never;
   query?: never;
-  url: "/api/v1/pages";
+  url: '/api/v1/pages';
 };
 
 export type PagesCreateErrors = {
@@ -4386,7 +5151,7 @@ export type PagesRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/pages/{id}";
+  url: '/api/v1/pages/{id}';
 };
 
 export type PagesRemoveErrors = {
@@ -4411,7 +5176,7 @@ export type PagesFindOneData = {
     id: string;
   };
   query?: never;
-  url: "/api/v1/pages/{id}";
+  url: '/api/v1/pages/{id}';
 };
 
 export type PagesFindOneErrors = {
@@ -4436,7 +5201,7 @@ export type PagesUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/pages/{id}";
+  url: '/api/v1/pages/{id}';
 };
 
 export type PagesUpdateErrors = {
@@ -4463,7 +5228,7 @@ export type SettingsGetPublicSettingsData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/settings/public";
+  url: '/api/v1/settings/public';
 };
 
 export type SettingsGetPublicSettingsResponses = {
@@ -4477,7 +5242,7 @@ export type SettingsFindAllData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/settings";
+  url: '/api/v1/settings';
 };
 
 export type SettingsFindAllResponses = {
@@ -4493,7 +5258,7 @@ export type SettingsCreateData = {
   body: CreateSettingDto;
   path?: never;
   query?: never;
-  url: "/api/v1/settings";
+  url: '/api/v1/settings';
 };
 
 export type SettingsCreateErrors = {
@@ -4518,7 +5283,7 @@ export type SettingsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/settings/{id}";
+  url: '/api/v1/settings/{id}';
 };
 
 export type SettingsRemoveErrors = {
@@ -4543,7 +5308,7 @@ export type SettingsFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/settings/{id}";
+  url: '/api/v1/settings/{id}';
 };
 
 export type SettingsFindOneErrors = {
@@ -4568,7 +5333,7 @@ export type SettingsUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/settings/{id}";
+  url: '/api/v1/settings/{id}';
 };
 
 export type SettingsUpdateErrors = {
@@ -4604,7 +5369,7 @@ export type ReviewsFindAllData = {
      */
     productId?: number;
   };
-  url: "/api/v1/reviews";
+  url: '/api/v1/reviews';
 };
 
 export type ReviewsFindAllResponses = {
@@ -4620,7 +5385,7 @@ export type ReviewsCreateData = {
   body: CreateReviewDto;
   path?: never;
   query?: never;
-  url: "/api/v1/reviews";
+  url: '/api/v1/reviews';
 };
 
 export type ReviewsCreateResponses = {
@@ -4638,7 +5403,7 @@ export type ReviewsRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/reviews/{id}";
+  url: '/api/v1/reviews/{id}';
 };
 
 export type ReviewsRemoveResponses = {
@@ -4671,7 +5436,7 @@ export type CustomersFindAllData = {
      */
     phone?: string;
   };
-  url: "/api/v1/customers";
+  url: '/api/v1/customers';
 };
 
 export type CustomersFindAllResponses = {
@@ -4687,7 +5452,7 @@ export type CustomersCreateData = {
   body: CreateCustomerDto;
   path?: never;
   query?: never;
-  url: "/api/v1/customers";
+  url: '/api/v1/customers';
 };
 
 export type CustomersCreateResponses = {
@@ -4705,7 +5470,7 @@ export type CustomersRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/customers/{id}";
+  url: '/api/v1/customers/{id}';
 };
 
 export type CustomersRemoveResponses = {
@@ -4721,7 +5486,7 @@ export type CustomersFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/customers/{id}";
+  url: '/api/v1/customers/{id}';
 };
 
 export type CustomersFindOneResponses = {
@@ -4739,7 +5504,7 @@ export type CustomersUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/customers/{id}";
+  url: '/api/v1/customers/{id}';
 };
 
 export type CustomersUpdateResponses = {
@@ -4774,15 +5539,15 @@ export type OrdersFindAllData = {
     /**
      * Lọc theo trạng thái đơn hàng
      */
-    status?: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPING" | "COMPLETED" | "CANCELLED";
+    status?: 'PENDING' | 'CONFIRMED' | 'PROCESSING' | 'SHIPPING' | 'COMPLETED' | 'CANCELLED';
     /**
      * Lọc theo trạng thái thanh toán
      */
-    paymentStatus?: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+    paymentStatus?: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
     /**
      * Lọc theo phương thức thanh toán
      */
-    paymentMethod?: "COD" | "BANK_TRANSFER";
+    paymentMethod?: 'COD' | 'BANK_TRANSFER';
     /**
      * Lọc theo customer ID
      */
@@ -4814,13 +5579,13 @@ export type OrdersFindAllData = {
     /**
      * Sắp xếp theo trường
      */
-    sortBy?: "createdAt" | "finalAmount" | "status" | "updatedAt";
+    sortBy?: 'createdAt' | 'finalAmount' | 'status' | 'updatedAt';
     /**
      * Hướng sắp xếp
      */
-    sortOrder?: "ASC" | "DESC";
+    sortOrder?: 'ASC' | 'DESC';
   };
-  url: "/api/v1/orders";
+  url: '/api/v1/orders';
 };
 
 export type OrdersFindAllResponses = {
@@ -4834,7 +5599,7 @@ export type OrdersCreateData = {
   body: CreateOrderDto;
   path?: never;
   query?: never;
-  url: "/api/v1/orders";
+  url: '/api/v1/orders';
 };
 
 export type OrdersCreateResponses = {
@@ -4850,7 +5615,7 @@ export type OrdersRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/orders/{id}";
+  url: '/api/v1/orders/{id}';
 };
 
 export type OrdersRemoveResponses = {
@@ -4866,7 +5631,7 @@ export type OrdersFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/orders/{id}";
+  url: '/api/v1/orders/{id}';
 };
 
 export type OrdersFindOneResponses = {
@@ -4882,7 +5647,7 @@ export type OrdersUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/orders/{id}";
+  url: '/api/v1/orders/{id}';
 };
 
 export type OrdersUpdateResponses = {
@@ -4898,7 +5663,7 @@ export type OrdersFindByCodeData = {
     code: string;
   };
   query?: never;
-  url: "/api/v1/orders/code/{code}";
+  url: '/api/v1/orders/code/{code}';
 };
 
 export type OrdersFindByCodeResponses = {
@@ -4912,7 +5677,7 @@ export type WebhooksFindAllData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/api/v1/webhooks";
+  url: '/api/v1/webhooks';
 };
 
 export type WebhooksFindAllResponses = {
@@ -4928,7 +5693,7 @@ export type WebhooksCreateData = {
   body: CreateWebhookDto;
   path?: never;
   query?: never;
-  url: "/api/v1/webhooks";
+  url: '/api/v1/webhooks';
 };
 
 export type WebhooksCreateResponses = {
@@ -4946,7 +5711,7 @@ export type WebhooksRemoveData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/webhooks/{id}";
+  url: '/api/v1/webhooks/{id}';
 };
 
 export type WebhooksRemoveErrors = {
@@ -4969,7 +5734,7 @@ export type WebhooksFindOneData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/webhooks/{id}";
+  url: '/api/v1/webhooks/{id}';
 };
 
 export type WebhooksFindOneErrors = {
@@ -4994,7 +5759,7 @@ export type WebhooksUpdateData = {
     id: number;
   };
   query?: never;
-  url: "/api/v1/webhooks/{id}";
+  url: '/api/v1/webhooks/{id}';
 };
 
 export type WebhooksUpdateErrors = {
@@ -5026,7 +5791,7 @@ export type DashboardGetStatsData = {
      */
     endDate?: string;
   };
-  url: "/api/v1/dashboard/stats";
+  url: '/api/v1/dashboard/stats';
 };
 
 export type DashboardGetStatsResponses = {

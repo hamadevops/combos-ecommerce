@@ -21,11 +21,12 @@
     "noUnusedParameters": false,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
-
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@vibe/shared": ["../../libs/shared/src/index.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["../../libs/shared/src/lib/api-client/**/*"]
 }

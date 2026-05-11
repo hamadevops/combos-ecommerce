@@ -19,6 +19,7 @@ import {
   Webhook,
   Search,
   MessageSquare,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, getImageUrl } from "@/lib/utils";
@@ -51,7 +52,12 @@ type SidebarItemType = {
 };
 
 const sidebarItems: SidebarItemType[] = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/", permissions: [PermissionEnum.DASHBOARD_VIEW] },
+  {
+    icon: LayoutDashboard,
+    label: "Dashboard",
+    href: "/",
+    permissions: [PermissionEnum.DASHBOARD_VIEW],
+  },
   {
     icon: Package,
     label: "Sản phẩm",
@@ -88,6 +94,18 @@ const sidebarItems: SidebarItemType[] = [
         icon: Users,
         permissions: [PermissionEnum.CUSTOMER_READ],
       },
+    ],
+  },
+  {
+    icon: Mail,
+    label: "Email Marketing",
+    children: [
+      { label: "Tổng quan", href: "/email-marketing", icon: LayoutDashboard },
+      { label: "Chiến dịch", href: "/email-marketing/campaigns", icon: Mail },
+      { label: "Danh sách liên hệ", href: "/email-marketing/contacts", icon: Users },
+      { label: "Phân khúc khách hàng", href: "/email-marketing/segments", icon: FolderTree },
+      { label: "Mẫu email", href: "/email-marketing/templates", icon: FileText },
+      { label: "Cài đặt", href: "/email-marketing/settings", icon: Settings },
     ],
   },
   {
@@ -130,8 +148,18 @@ const sidebarItems: SidebarItemType[] = [
     children: [
       { label: "Thành viên", href: "/users", icon: Users, permissions: [PermissionEnum.USER_READ] },
       { label: "Vai trò", href: "/roles", icon: Lock, permissions: [PermissionEnum.ROLE_READ] },
-      { label: "Quyền hạn", href: "/permissions", icon: Shield, permissions: [PermissionEnum.PERMISSION_READ] },
-      { label: "Nhóm Quyền", href: "/permission-groups", icon: FolderTree, permissions: [PermissionEnum.PERMISSION_READ] },
+      {
+        label: "Quyền hạn",
+        href: "/permissions",
+        icon: Shield,
+        permissions: [PermissionEnum.PERMISSION_READ],
+      },
+      {
+        label: "Nhóm Quyền",
+        href: "/permission-groups",
+        icon: FolderTree,
+        permissions: [PermissionEnum.PERMISSION_READ],
+      },
     ],
   },
   {
@@ -239,7 +267,6 @@ const Sidebar = ({ className }: { className?: string }) => {
 
   // Filter items based on permissions
   const filteredItems = sidebarItems.reduce<SidebarItemType[]>((acc, item) => {
-
     // Check parent permission (if any)
     // For sections like "Sản phẩm", we might want to show it if ANY child is visible,
     // OR if it has explicit permission.
@@ -268,8 +295,13 @@ const Sidebar = ({ className }: { className?: string }) => {
   return (
     <div className={cn("flex h-full flex-col bg-sidebar", className)}>
       {/* Logo */}
-      <Link to="/" className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6 hover:bg-sidebar-accent/50 transition-colors">
-        {shopLogo && <img src={getImageUrl(shopLogo)} alt={shopName} className="h-8 w-auto object-contain" />}
+      <Link
+        to="/"
+        className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6 hover:bg-sidebar-accent/50 transition-colors"
+      >
+        {shopLogo && (
+          <img src={getImageUrl(shopLogo)} alt={shopName} className="h-8 w-auto object-contain" />
+        )}
         <span className="text-xl font-semibold text-sidebar-primary truncate">{shopName}</span>
       </Link>
 

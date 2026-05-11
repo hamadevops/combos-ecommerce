@@ -32,7 +32,9 @@ import { Migration20260401153500UpdatePermissions } from './migrations/Migration
 import { Migration20260401170000CreatePermissionGroups } from './migrations/Migration20260401170000_CreatePermissionGroups';
 import { Migration20260403152600_AddUTMToOrders } from './migrations/Migration20260403152600AddUTMToOrders';
 import { Migration20260414210000AddIsRecommendedToProducts } from './migrations/Migration20260414210000_AddIsRecommendedToProducts';
-
+import { Migration20260418220000_CreateEmailMarketingTables } from './migrations/Migration20260418220000_CreateEmailMarketingTables';
+import { Migration20260419102254_AddClickCountToEmailLogs } from './migrations/Migration20260419102254_AddClickCountToEmailLogs';
+import { Migration20260419113600_AddCascadeDeleteToEmailMarketing } from './migrations/Migration20260419113600_AddCascadeDeleteToEmailMarketing';
 
 export const migrationsList = [
   // ... existing migrations
@@ -171,5 +173,17 @@ export const migrationsList = [
   {
     name: 'Migration20260414210000_AddIsRecommendedToProducts',
     class: Migration20260414210000AddIsRecommendedToProducts,
-  }
+  },
+  {
+    name: 'Migration20260418220000_CreateEmailMarketingTables',
+    class: Migration20260418220000_CreateEmailMarketingTables,
+  },
+  {
+    name: 'Migration20260419102254_AddClickCountToEmailLogs',
+    class: Migration20260419102254_AddClickCountToEmailLogs,
+  },
+  {
+    name: 'Migration20260419113600_AddCascadeDeleteToEmailMarketing',
+    class: Migration20260419113600_AddCascadeDeleteToEmailMarketing,
+  },
 ];

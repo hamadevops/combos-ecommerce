@@ -32,6 +32,14 @@ import { OrderItem } from './database/entities/order-item.entity';
 import { Webhook } from './database/entities/webhook.entity';
 import { migrationsList } from './database/migrations-list';
 import { PageView } from './database/entities/page-view.entity';
+import { EmCampaign } from './database/entities/email-marketing/em-campaign.entity';
+import { EmConfig } from './database/entities/email-marketing/em-config.entity';
+import { EmContact } from './database/entities/email-marketing/em-contact.entity';
+import { EmEmailLog } from './database/entities/email-marketing/em-email-log.entity';
+import { EmLinkClick } from './database/entities/email-marketing/em-link-click.entity';
+import { EmSegment } from './database/entities/email-marketing/em-segment.entity';
+import { EmTemplate } from './database/entities/email-marketing/em-template.entity';
+import { EmTrackedLink } from './database/entities/email-marketing/em-tracked-link.entity';
 
 config();
 
@@ -65,6 +73,14 @@ const MikroOrmConfig: Options<MySqlDriver> = {
     OrderItem,
     Webhook,
     PageView,
+    EmCampaign,
+    EmConfig,
+    EmContact,
+    EmEmailLog,
+    EmLinkClick,
+    EmSegment,
+    EmTemplate,
+    EmTrackedLink,
   ],
   entitiesTs: [
     User,
@@ -95,6 +111,14 @@ const MikroOrmConfig: Options<MySqlDriver> = {
     OrderItem,
     Webhook,
     PageView,
+    EmCampaign,
+    EmConfig,
+    EmContact,
+    EmEmailLog,
+    EmLinkClick,
+    EmSegment,
+    EmTemplate,
+    EmTrackedLink,
   ],
   dbName: process.env.DB_NAME,
   host: process.env.DB_HOST,

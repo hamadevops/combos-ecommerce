@@ -11,7 +11,8 @@
     "migrate": "nx migrate latest",
     "serve:admin": "nx serve @vibe/admin-cms",
     "serve:backend": "nx serve @vibe/backend",
-    "serve:tiktok": "nx serve @vibe/tiktok-client"
+    "serve:tiktok": "nx serve @vibe/tiktok-client",
+    "gen:api": "nx gen-api @vibe/shared"
   },
   "private": true,
   "devDependencies": {
@@ -37,6 +38,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/multer": "^2.0.0",
     "@types/node": "^22.16.5",
+    "@types/nodemailer": "^8.0.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
@@ -170,6 +172,7 @@
     "nest-winston": "^1.10.2",
     "next": "16.1.6",
     "next-themes": "^0.3.0",
+    "nodemailer": "^8.0.7",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "qs": "^6.14.1",

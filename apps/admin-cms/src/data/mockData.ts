@@ -85,7 +85,7 @@ const createMockProduct = (
   ],
   variants: [],
   categories: [{ id: categoryId, name: "Danh mục", slug: "danh-muc" }],
-});
+}) as any;
 
 export const products: Product[] = [
   createMockProduct(

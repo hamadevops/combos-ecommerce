@@ -41,6 +41,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
 import { CustomersModule } from './modules/customers/customers.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { EmailMarketingModule } from './modules/email-marketing/email-marketing.module';
 
 @Module({
   imports: [
@@ -54,18 +55,18 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     ThrottlerModule.forRoot([
       {
         name: 'short',
-        ttl: 1000, 
-        limit: 30,  // Nới từ 3 -> 15 (Next.js thường gọi song song nhiều API khi load trang)
+        ttl: 1000,
+        limit: 30, // Nới từ 3 -> 15 (Next.js thường gọi song song nhiều API khi load trang)
       },
       {
         name: 'medium',
-        ttl: 60000, 
+        ttl: 60000,
         limit: 150, // Tăng lên để user chuyển trang (client-side navigation) mượt mà
       },
       {
         name: 'long',
-        ttl: 900000, 
-        limit: 5000, 
+        ttl: 900000,
+        limit: 5000,
       },
     ]),
     MikroOrmModule.forRoot(MikroOrmConfig),
@@ -89,6 +90,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     CustomersModule,
     OrdersModule,
     DashboardModule,
+    EmailMarketingModule,
   ],
   controllers: [AppController],
   providers: [
@@ -110,9 +112,11 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TraceMiddleware, AppMiddleware, PageViewMiddleware).forRoutes({
-      path: '*path',
-      method: RequestMethod.ALL,
-    });
+    consumer
+      .apply(TraceMiddleware, AppMiddleware, PageViewMiddleware)
+      .forRoutes({
+        path: '*path',
+        method: RequestMethod.ALL,
+      });
   }
 }
