@@ -43,3 +43,7 @@ coverage
 # Temporary files
 tmp
 temp
+
+# Docker volumes data
+apps/backend/data/
+docker/harbor/data/

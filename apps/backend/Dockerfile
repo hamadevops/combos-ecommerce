@@ -10,17 +10,25 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@9.12.2 --activate
 
-# Copy deps & install
-COPY package.json pnpm-lock.yaml ./
+# Copy monorepo configurations & dependency lockfiles
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml nx.json tsconfig.base.json ./
+
+# Copy packages package.json files
+COPY apps/backend/package.json ./apps/backend/
+COPY libs/shared/package.json ./libs/shared/
+
+# Install dependencies
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile --prefer-offline
 
-# Copy source
-COPY tsconfig*.json nest-cli.json webpack.config.js ./
-COPY src ./src
+# Copy source code for libs & backend
+COPY libs/shared ./libs/shared
+COPY apps/backend ./apps/backend
 
 # Build NestJS
-RUN pnpm build
+RUN pnpm nx build @vibe/backend
+
+# Prune non-production dependencies
 RUN pnpm prune --prod
 
 # ================================
@@ -30,14 +38,15 @@ FROM node:${NODE_VERSION}-alpine AS prod
 
 WORKDIR /app
 
-# Copy built files + package.json + node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/node_modules ./node_modules
+# Create appgroup and appuser first
+RUN addgroup -S appgroup && adduser -S -D -G appgroup appuser \
+    && mkdir -p /app/logs && chown -R appuser:appgroup /app/logs
 
-# Tạo logs folder trước khi chuyển user
-RUN mkdir -p /app/logs && addgroup appgroup && adduser -D -G appgroup appuser \
-    && chown -R appuser:appgroup /app/logs /app
+# Copy built files + package.json + node_modules with chown
+COPY --from=builder --chown=appuser:appgroup /app/dist/apps/backend ./dist
+COPY --from=builder --chown=appuser:appgroup /app/apps/backend/package.json ./package.json
+COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
+COPY --from=builder --chown=appuser:appgroup /app/package.json ./package.json
 
 # Chuyển sang non-root user
 USER appuser
@@ -54,3 +63,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
 
 # Start NestJS
 CMD ["node", "dist/main.js"]
+

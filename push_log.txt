@@ -1,0 +1,227 @@
+The push refers to repository [127.0.0.1:8888/library/storefront]
+5f70bf18a086: Preparing
+4dcb613e1fa2: Preparing
+66d6565cb0a3: Preparing
+68db7b49675c: Preparing
+fdd4ca6bee9c: Preparing
+6929f640b903: Preparing
+b4dfc1197e7f: Preparing
+e9a330f29fd4: Preparing
+52caa5bd1d9d: Preparing
+5906df279b58: Preparing
+466f2827c5d1: Preparing
+989e799e6349: Preparing
+b4dfc1197e7f: Waiting
+e9a330f29fd4: Waiting
+52caa5bd1d9d: Waiting
+5906df279b58: Waiting
+466f2827c5d1: Waiting
+6929f640b903: Waiting
+989e799e6349: Waiting
+5f70bf18a086: Layer already exists
+68db7b49675c: Retrying in 5 seconds
+fdd4ca6bee9c: Retrying in 5 seconds
+4dcb613e1fa2: Retrying in 5 seconds
+6929f640b903: Retrying in 5 seconds
+68db7b49675c: Retrying in 4 seconds
+fdd4ca6bee9c: Retrying in 4 seconds
+4dcb613e1fa2: Retrying in 4 seconds
+6929f640b903: Retrying in 4 seconds
+68db7b49675c: Retrying in 3 seconds
+fdd4ca6bee9c: Retrying in 3 seconds
+4dcb613e1fa2: Retrying in 3 seconds
+6929f640b903: Retrying in 3 seconds
+68db7b49675c: Retrying in 2 seconds
+fdd4ca6bee9c: Retrying in 2 seconds
+4dcb613e1fa2: Retrying in 2 seconds
+6929f640b903: Retrying in 2 seconds
+68db7b49675c: Retrying in 1 second
+fdd4ca6bee9c: Retrying in 1 second
+4dcb613e1fa2: Retrying in 1 second
+6929f640b903: Retrying in 1 second
+68db7b49675c: Retrying in 10 seconds
+fdd4ca6bee9c: Retrying in 10 seconds
+4dcb613e1fa2: Retrying in 10 seconds
+6929f640b903: Retrying in 10 seconds
+68db7b49675c: Retrying in 9 seconds
+fdd4ca6bee9c: Retrying in 9 seconds
+4dcb613e1fa2: Retrying in 9 seconds
+6929f640b903: Retrying in 9 seconds
+68db7b49675c: Retrying in 8 seconds
+fdd4ca6bee9c: Retrying in 8 seconds
+4dcb613e1fa2: Retrying in 8 seconds
+6929f640b903: Retrying in 8 seconds
+68db7b49675c: Retrying in 7 seconds
+fdd4ca6bee9c: Retrying in 7 seconds
+4dcb613e1fa2: Retrying in 7 seconds
+6929f640b903: Retrying in 7 seconds
+68db7b49675c: Retrying in 6 seconds
+fdd4ca6bee9c: Retrying in 6 seconds
+4dcb613e1fa2: Retrying in 6 seconds
+6929f640b903: Retrying in 6 seconds
+68db7b49675c: Retrying in 5 seconds
+fdd4ca6bee9c: Retrying in 5 seconds
+4dcb613e1fa2: Retrying in 5 seconds
+6929f640b903: Retrying in 5 seconds
+68db7b49675c: Retrying in 4 seconds
+fdd4ca6bee9c: Retrying in 4 seconds
+4dcb613e1fa2: Retrying in 4 seconds
+6929f640b903: Retrying in 4 seconds
+68db7b49675c: Retrying in 3 seconds
+fdd4ca6bee9c: Retrying in 3 seconds
+4dcb613e1fa2: Retrying in 3 seconds
+6929f640b903: Retrying in 3 seconds
+68db7b49675c: Retrying in 2 seconds
+fdd4ca6bee9c: Retrying in 2 seconds
+4dcb613e1fa2: Retrying in 2 seconds
+6929f640b903: Retrying in 2 seconds
+68db7b49675c: Retrying in 1 second
+fdd4ca6bee9c: Retrying in 1 second
+4dcb613e1fa2: Retrying in 1 second
+6929f640b903: Retrying in 1 second
+68db7b49675c: Retrying in 15 seconds
+fdd4ca6bee9c: Retrying in 15 seconds
+4dcb613e1fa2: Retrying in 15 seconds
+6929f640b903: Retrying in 15 seconds
+68db7b49675c: Retrying in 14 seconds
+fdd4ca6bee9c: Retrying in 14 seconds
+4dcb613e1fa2: Retrying in 14 seconds
+6929f640b903: Retrying in 14 seconds
+68db7b49675c: Retrying in 13 seconds
+fdd4ca6bee9c: Retrying in 13 seconds
+4dcb613e1fa2: Retrying in 13 seconds
+6929f640b903: Retrying in 13 seconds
+68db7b49675c: Retrying in 12 seconds
+fdd4ca6bee9c: Retrying in 12 seconds
+4dcb613e1fa2: Retrying in 12 seconds
+6929f640b903: Retrying in 12 seconds
+68db7b49675c: Retrying in 11 seconds
+fdd4ca6bee9c: Retrying in 11 seconds
+4dcb613e1fa2: Retrying in 11 seconds
+6929f640b903: Retrying in 11 seconds
+68db7b49675c: Retrying in 10 seconds
+fdd4ca6bee9c: Retrying in 10 seconds
+4dcb613e1fa2: Retrying in 10 seconds
+6929f640b903: Retrying in 10 seconds
+68db7b49675c: Retrying in 9 seconds
+fdd4ca6bee9c: Retrying in 9 seconds
+4dcb613e1fa2: Retrying in 9 seconds
+6929f640b903: Retrying in 9 seconds
+68db7b49675c: Retrying in 8 seconds
+fdd4ca6bee9c: Retrying in 8 seconds
+4dcb613e1fa2: Retrying in 8 seconds
+6929f640b903: Retrying in 8 seconds
+68db7b49675c: Retrying in 7 seconds
+fdd4ca6bee9c: Retrying in 7 seconds
+4dcb613e1fa2: Retrying in 7 seconds
+6929f640b903: Retrying in 7 seconds
+68db7b49675c: Retrying in 6 seconds
+fdd4ca6bee9c: Retrying in 6 seconds
+4dcb613e1fa2: Retrying in 6 seconds
+6929f640b903: Retrying in 6 seconds
+68db7b49675c: Retrying in 5 seconds
+fdd4ca6bee9c: Retrying in 5 seconds
+4dcb613e1fa2: Retrying in 5 seconds
+6929f640b903: Retrying in 5 seconds
+68db7b49675c: Retrying in 4 seconds
+fdd4ca6bee9c: Retrying in 4 seconds
+4dcb613e1fa2: Retrying in 4 seconds
+6929f640b903: Retrying in 4 seconds
+68db7b49675c: Retrying in 3 seconds
+fdd4ca6bee9c: Retrying in 3 seconds
+4dcb613e1fa2: Retrying in 3 seconds
+6929f640b903: Retrying in 3 seconds
+68db7b49675c: Retrying in 2 seconds
+fdd4ca6bee9c: Retrying in 2 seconds
+4dcb613e1fa2: Retrying in 2 seconds
+6929f640b903: Retrying in 2 seconds
+68db7b49675c: Retrying in 1 second
+fdd4ca6bee9c: Retrying in 1 second
+4dcb613e1fa2: Retrying in 1 second
+6929f640b903: Retrying in 1 second
+68db7b49675c: Retrying in 20 seconds
+fdd4ca6bee9c: Retrying in 20 seconds
+4dcb613e1fa2: Retrying in 20 seconds
+68db7b49675c: Retrying in 19 seconds
+6929f640b903: Retrying in 20 seconds
+fdd4ca6bee9c: Retrying in 19 seconds
+4dcb613e1fa2: Retrying in 19 seconds
+68db7b49675c: Retrying in 18 seconds
+6929f640b903: Retrying in 19 seconds
+fdd4ca6bee9c: Retrying in 18 seconds
+4dcb613e1fa2: Retrying in 18 seconds
+68db7b49675c: Retrying in 17 seconds
+6929f640b903: Retrying in 18 seconds
+fdd4ca6bee9c: Retrying in 17 seconds
+4dcb613e1fa2: Retrying in 17 seconds
+68db7b49675c: Retrying in 16 seconds
+6929f640b903: Retrying in 17 seconds
+fdd4ca6bee9c: Retrying in 16 seconds
+4dcb613e1fa2: Retrying in 16 seconds
+68db7b49675c: Retrying in 15 seconds
+6929f640b903: Retrying in 16 seconds
+fdd4ca6bee9c: Retrying in 15 seconds
+4dcb613e1fa2: Retrying in 15 seconds
+68db7b49675c: Retrying in 14 seconds
+6929f640b903: Retrying in 15 seconds
+fdd4ca6bee9c: Retrying in 14 seconds
+4dcb613e1fa2: Retrying in 14 seconds
+68db7b49675c: Retrying in 13 seconds
+6929f640b903: Retrying in 14 seconds
+fdd4ca6bee9c: Retrying in 13 seconds
+66d6565cb0a3: Retrying in 5 seconds
+4dcb613e1fa2: Retrying in 13 seconds
+68db7b49675c: Retrying in 12 seconds
+6929f640b903: Retrying in 13 seconds
+fdd4ca6bee9c: Retrying in 12 seconds
+66d6565cb0a3: Retrying in 4 seconds
+4dcb613e1fa2: Retrying in 12 seconds
+68db7b49675c: Retrying in 11 seconds
+6929f640b903: Retrying in 12 seconds
+fdd4ca6bee9c: Retrying in 11 seconds
+66d6565cb0a3: Retrying in 3 seconds
+4dcb613e1fa2: Retrying in 11 seconds
+68db7b49675c: Retrying in 10 seconds
+6929f640b903: Retrying in 11 seconds
+fdd4ca6bee9c: Retrying in 10 seconds
+66d6565cb0a3: Retrying in 2 seconds
+4dcb613e1fa2: Retrying in 10 seconds
+68db7b49675c: Retrying in 9 seconds
+6929f640b903: Retrying in 10 seconds
+fdd4ca6bee9c: Retrying in 9 seconds
+66d6565cb0a3: Retrying in 1 second
+4dcb613e1fa2: Retrying in 9 seconds
+68db7b49675c: Retrying in 8 seconds
+6929f640b903: Retrying in 9 seconds
+fdd4ca6bee9c: Retrying in 8 seconds
+4dcb613e1fa2: Retrying in 8 seconds
+68db7b49675c: Retrying in 7 seconds
+6929f640b903: Retrying in 8 seconds
+fdd4ca6bee9c: Retrying in 7 seconds
+4dcb613e1fa2: Retrying in 7 seconds
+68db7b49675c: Retrying in 6 seconds
+6929f640b903: Retrying in 7 seconds
+fdd4ca6bee9c: Retrying in 6 seconds
+4dcb613e1fa2: Retrying in 6 seconds
+68db7b49675c: Retrying in 5 seconds
+6929f640b903: Retrying in 6 seconds
+fdd4ca6bee9c: Retrying in 5 seconds
+4dcb613e1fa2: Retrying in 5 seconds
+68db7b49675c: Retrying in 4 seconds
+6929f640b903: Retrying in 5 seconds
+fdd4ca6bee9c: Retrying in 4 seconds
+4dcb613e1fa2: Retrying in 4 seconds
+68db7b49675c: Retrying in 3 seconds
+6929f640b903: Retrying in 4 seconds
+fdd4ca6bee9c: Retrying in 3 seconds
+4dcb613e1fa2: Retrying in 3 seconds
+68db7b49675c: Retrying in 2 seconds
+6929f640b903: Retrying in 3 seconds
+fdd4ca6bee9c: Retrying in 2 seconds
+4dcb613e1fa2: Retrying in 2 seconds
+68db7b49675c: Retrying in 1 second
+6929f640b903: Retrying in 2 seconds
+fdd4ca6bee9c: Retrying in 1 second
+4dcb613e1fa2: Retrying in 1 second
+6929f640b903: Retrying in 1 second
+received unexpected HTTP status: 500 Internal Server Error

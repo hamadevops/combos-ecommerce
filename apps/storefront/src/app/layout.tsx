@@ -7,6 +7,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
 };
+export const dynamic = "force-dynamic";
 import "./globals.css";
 import { Providers } from "./providers";
 import { getQueryClient } from "@/lib/get-query-client";

@@ -1,0 +1,16 @@
+node_modules
+dist
+.nx
+.git
+.agent
+.vscode
+tmp
+out.txt
+err.txt
+tsc_output.txt
+
+# Ignore database data folders
+apps/backend/data
+apps/backend/data/*
+docker/harbor/data
+docker/harbor/data/*

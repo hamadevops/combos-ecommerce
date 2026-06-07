@@ -36,7 +36,7 @@ import { Migration20260418220000_CreateEmailMarketingTables } from './migrations
 import { Migration20260419102254_AddClickCountToEmailLogs } from './migrations/Migration20260419102254_AddClickCountToEmailLogs';
 import { Migration20260419113600_AddCascadeDeleteToEmailMarketing } from './migrations/Migration20260419113600_AddCascadeDeleteToEmailMarketing';
 import { Migration20260606181231_CreateContactsTable } from './migrations/Migration20260606181231_CreateContactsTable';
-import { Migration20260606141453 } from './migrations/Migration20260606141453undefined';
+import { Migration20260606141453_SchemaSyncAndAppFeedbacks } from './migrations/Migration20260606141453_SchemaSyncAndAppFeedbacks';
 import { Migration20260606155218_AddProductCascadeDelete } from './migrations/Migration20260606155218_AddProductCascadeDelete';
 import { Migration20260606155622_AddProductSoftDelete } from './migrations/Migration20260606155622_AddProductSoftDelete';
 import { Migration20260606230000_RedesignProductVariants } from './migrations/Migration20260606230000_RedesignProductVariants';
@@ -197,7 +197,7 @@ export const migrationsList = [
   },
   {
     name: 'Migration20260606141453',
-    class: Migration20260606141453,
+    class: Migration20260606141453_SchemaSyncAndAppFeedbacks,
   },
   {
     name: 'Migration20260606155218_AddProductCascadeDelete',
