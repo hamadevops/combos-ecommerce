@@ -26,7 +26,7 @@ const nextConfig = {
         })),
     ],
   },
-  // Path aliases (e.g. /danh-muc → /categories) are handled in middleware (src/middleware.ts)
+  // Path aliases (e.g. /danh-muc → /categories) are handled in middleware (src/proxy.ts)
   // because middleware runs before next.config.mjs rewrites and prepends the theme prefix.
   transpilePackages: ["@vibe/shared"],
 };
