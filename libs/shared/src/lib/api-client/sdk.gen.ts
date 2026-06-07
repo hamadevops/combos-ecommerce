@@ -8,6 +8,21 @@ import {
 } from './client';
 import { client } from './client.gen';
 import type {
+  AppFeedbacksCreateData,
+  AppFeedbacksCreateResponses,
+  AppFeedbacksFindAllAdminData,
+  AppFeedbacksFindAllAdminResponses,
+  AppFeedbacksFindAllPublicData,
+  AppFeedbacksFindAllPublicResponses,
+  AppFeedbacksFindOneData,
+  AppFeedbacksFindOneErrors,
+  AppFeedbacksFindOneResponses,
+  AppFeedbacksRemoveData,
+  AppFeedbacksRemoveErrors,
+  AppFeedbacksRemoveResponses,
+  AppFeedbacksUpdateData,
+  AppFeedbacksUpdateErrors,
+  AppFeedbacksUpdateResponses,
   AppGetHelloData,
   AppGetHelloResponses,
   AuthGetProfileData,
@@ -41,6 +56,24 @@ import type {
   CategoriesUpdateResponses,
   CategoriesUploadImageData,
   CategoriesUploadImageResponses,
+  ContactsCreateData,
+  ContactsCreateResponses,
+  ContactsExportCsvData,
+  ContactsExportCsvResponses,
+  ContactsFindAllData,
+  ContactsFindAllResponses,
+  ContactsFindOneData,
+  ContactsFindOneResponses,
+  ContactsRemoveData,
+  ContactsRemoveResponses,
+  ContactsSubmitContactFormData,
+  ContactsSubmitContactFormResponses,
+  ContactsSubmitNewsletterData,
+  ContactsSubmitNewsletterResponses,
+  ContactsUpdateData,
+  ContactsUpdateResponses,
+  ContactsUpdateStatusData,
+  ContactsUpdateStatusResponses,
   CustomersCreateData,
   CustomersCreateResponses,
   CustomersFindAllData,
@@ -2761,4 +2794,217 @@ export const dashboardGetStats = <ThrowOnError extends boolean = false>(
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/api/v1/dashboard/stats',
     ...options,
+  });
+
+/**
+ * Submit Newsletter Subscription
+ */
+export const contactsSubmitNewsletter = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsSubmitNewsletterData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<ContactsSubmitNewsletterResponses, unknown, ThrowOnError>({
+    url: '/api/v1/contacts/newsletter',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Submit Contact Form
+ */
+export const contactsSubmitContactForm = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsSubmitContactFormData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<ContactsSubmitContactFormResponses, unknown, ThrowOnError>({
+    url: '/api/v1/contacts/submit',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * List Contacts
+ */
+export const contactsFindAll = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsFindAllData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<ContactsFindAllResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts',
+    ...options,
+  });
+
+/**
+ * Create Contact Manually
+ */
+export const contactsCreate = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<ContactsCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Export Contacts to CSV
+ */
+export const contactsExportCsv = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsExportCsvData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<ContactsExportCsvResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts/export',
+    ...options,
+  });
+
+/**
+ * Delete Contact
+ */
+export const contactsRemove = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<ContactsRemoveResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts/{id}',
+    ...options,
+  });
+
+/**
+ * Get Contact Details
+ */
+export const contactsFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<ContactsFindOneResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts/{id}',
+    ...options,
+  });
+
+/**
+ * Update Contact
+ */
+export const contactsUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).patch<ContactsUpdateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Update Contact Status
+ */
+export const contactsUpdateStatus = <ThrowOnError extends boolean = false>(
+  options: Options<ContactsUpdateStatusData, ThrowOnError>,
+) =>
+  (options.client ?? client).patch<ContactsUpdateStatusResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/contacts/{id}/status',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Get all active app feedbacks (Public)
+ */
+export const appFeedbacksFindAllPublic = <ThrowOnError extends boolean = false>(
+  options?: Options<AppFeedbacksFindAllPublicData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<AppFeedbacksFindAllPublicResponses, unknown, ThrowOnError>({
+    url: '/api/v1/app-feedbacks',
+    ...options,
+  });
+
+/**
+ * Create a new app feedback
+ */
+export const appFeedbacksCreate = <ThrowOnError extends boolean = false>(
+  options: Options<AppFeedbacksCreateData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<AppFeedbacksCreateResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/app-feedbacks',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+
+/**
+ * Get all app feedbacks (Admin)
+ */
+export const appFeedbacksFindAllAdmin = <ThrowOnError extends boolean = false>(
+  options?: Options<AppFeedbacksFindAllAdminData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<AppFeedbacksFindAllAdminResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/app-feedbacks/admin',
+    ...options,
+  });
+
+/**
+ * Delete an app feedback
+ */
+export const appFeedbacksRemove = <ThrowOnError extends boolean = false>(
+  options: Options<AppFeedbacksRemoveData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<
+    AppFeedbacksRemoveResponses,
+    AppFeedbacksRemoveErrors,
+    ThrowOnError
+  >({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/app-feedbacks/{id}',
+    ...options,
+  });
+
+/**
+ * Get app feedback by ID
+ */
+export const appFeedbacksFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<AppFeedbacksFindOneData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<
+    AppFeedbacksFindOneResponses,
+    AppFeedbacksFindOneErrors,
+    ThrowOnError
+  >({ url: '/api/v1/app-feedbacks/{id}', ...options });
+
+/**
+ * Update an app feedback
+ */
+export const appFeedbacksUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<AppFeedbacksUpdateData, ThrowOnError>,
+) =>
+  (options.client ?? client).patch<
+    AppFeedbacksUpdateResponses,
+    AppFeedbacksUpdateErrors,
+    ThrowOnError
+  >({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/v1/app-feedbacks/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
   });

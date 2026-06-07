@@ -163,6 +163,20 @@ export class SettingSeeder extends Seeder {
         group: 'footer',
         label: 'Bản quyền Footer',
       },
+      {
+        key: 'main_menu',
+        value: JSON.stringify([
+          { title: 'Trang chủ', url: '/' },
+          { title: 'Giới thiệu', url: '/pages/about-us' },
+          { title: 'Danh mục sản phẩm', url: '/danh-muc', isCategoryList: true },
+          { title: 'Tin tức công nghệ', url: '/tin-tuc' },
+          { title: 'Liên hệ', url: '/lien-he' }
+        ]),
+        type: 'json',
+        isPublic: true,
+        group: 'menu',
+        label: 'Menu chính',
+      },
     ];
 
     for (const data of settings) {

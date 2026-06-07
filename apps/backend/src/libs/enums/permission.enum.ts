@@ -116,4 +116,16 @@ export enum PermissionEnum {
   EMAIL_MARKETING_READ = 'email-marketing.read',
   EMAIL_MARKETING_UPDATE = 'email-marketing.update',
   EMAIL_MARKETING_DELETE = 'email-marketing.delete',
+
+  // Contact permissions
+  CONTACT_CREATE = 'contact.create',
+  CONTACT_READ = 'contact.read',
+  CONTACT_UPDATE = 'contact.update',
+  CONTACT_DELETE = 'contact.delete',
+
+  // App Feedback permissions
+  APP_FEEDBACK_CREATE = 'app-feedback.create',
+  APP_FEEDBACK_READ = 'app-feedback.read',
+  APP_FEEDBACK_UPDATE = 'app-feedback.update',
+  APP_FEEDBACK_DELETE = 'app-feedback.delete',
 }

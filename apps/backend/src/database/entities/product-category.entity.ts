@@ -5,10 +5,10 @@ import { Category } from './category.entity';
 
 @Entity({ tableName: 'product_categories' })
 export class ProductCategory {
-  @ManyToOne(() => Product, { primary: true })
+  @ManyToOne(() => Product, { primary: true, deleteRule: 'cascade' })
   product!: Product;
 
-  @ManyToOne(() => Category, { primary: true })
+  @ManyToOne(() => Category, { primary: true, deleteRule: 'cascade' })
   category!: Category;
 
   @Property({ onCreate: () => new Date() })

@@ -17,7 +17,7 @@ export class ProductVariant {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { deleteRule: 'cascade' })
   product!: Product;
 
   @Property({ unique: true, nullable: true })
@@ -44,6 +44,15 @@ export class ProductVariant {
 
   @Property({ default: 1 })
   isActive: number;
+
+  @Property({ type: 'json', nullable: true })
+  optionIds?: number[];
+
+  @Property({ type: 'json', nullable: true })
+  optionValues?: string[];
+
+  @Property({ nullable: true })
+  deletedAt?: Date;
 
 
 

@@ -24,6 +24,9 @@ export class PermissionGroupSeeder extends Seeder {
       { key: 'cache', name: 'Quản lý Cache', display_order: 17 },
       { key: 'webhook', name: 'Quản lý Webhook', display_order: 18 },
       { key: 'dashboard', name: 'Tổng quan (Dashboard)', display_order: 19 },
+      { key: 'email-marketing', name: 'Email Marketing', display_order: 20 },
+      { key: 'contact', name: 'Quản lý Liên hệ', display_order: 21 },
+      { key: 'app-feedback', name: 'Đánh giá ứng dụng', display_order: 22 },
     ];
 
     for (const groupData of groups) {

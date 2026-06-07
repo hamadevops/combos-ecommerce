@@ -42,6 +42,8 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { EmailMarketingModule } from './modules/email-marketing/email-marketing.module';
+import { ContactsModule } from './modules/contacts/contacts.module';
+import { AppFeedbacksModule } from './modules/app-feedbacks/app-feedbacks.module';
 
 @Module({
   imports: [
@@ -91,6 +93,8 @@ import { EmailMarketingModule } from './modules/email-marketing/email-marketing.
     OrdersModule,
     DashboardModule,
     EmailMarketingModule,
+    ContactsModule,
+    AppFeedbacksModule,
   ],
   controllers: [AppController],
   providers: [

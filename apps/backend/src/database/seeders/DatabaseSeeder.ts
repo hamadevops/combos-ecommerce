@@ -17,7 +17,7 @@ import { PopupSeeder } from './PopupSeeder';
 import { FaqSeeder } from './FaqSeeder';
 import { PageSeeder } from './PageSeeder';
 import { SettingSeeder } from './SettingSeeder';
-
+import { AppFeedbackSeeder } from './AppFeedbackSeeder';
 
 config();
 
@@ -64,6 +64,9 @@ export class DatabaseSeeder extends Seeder {
       console.log('Admin user already exists, skipping...');
     }
 
+    // Always seed settings
+    await this.call(em, [SettingSeeder]);
+
     // Optionally Seed mock data
     if (process.env.SEED_MOCK_DATA === 'true') {
       console.log('Seeding mock data (SEED_MOCK_DATA is true)...');
@@ -85,11 +88,9 @@ export class DatabaseSeeder extends Seeder {
       // Seed new modules
       await this.call(em, [FaqSeeder]);
       await this.call(em, [PageSeeder]);
-      await this.call(em, [SettingSeeder]);
+      await this.call(em, [AppFeedbackSeeder]);
     } else {
       console.log('Skipping mock data (Categories, Products, Posts, etc.). Set SEED_MOCK_DATA=true in .env to seed them.');
     }
-
-    // Settings are usually essential
   }
 }

@@ -12,7 +12,7 @@ export class Review {
   @Property({ type: 'text' })
   comment!: string;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { deleteRule: 'cascade' })
   product!: Product;
 
   @Property()

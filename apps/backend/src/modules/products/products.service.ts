@@ -35,7 +35,7 @@ export class ProductsService {
     const isSitemap = type === ProductQueryTypeEnum.SITEMAP;
 
     // ── Build WHERE conditions ──────────────────────────────────────
-    const where: FilterQuery<Product> = {};
+    const where: FilterQuery<Product> = { deletedAt: null };
 
     if (search) {
       where.name = { $like: `%${search}%` };
@@ -240,6 +240,7 @@ export class ProductsService {
       { id: { $in: productIds } },
       {
         populate: ['variants', 'images', 'categories', 'tierVariations.options'],
+        populateWhere: { variants: { deletedAt: null } } as any,
         orderBy,
         exclude: ['description'],
       },
@@ -259,29 +260,33 @@ export class ProductsService {
   async findOne(idOrSlug: number | string) {
     let product;
     if (typeof idOrSlug === 'number' || /^\d+$/.test(String(idOrSlug))) {
-      product = await this.productRepository.findOne(Number(idOrSlug), {
+      product = await this.productRepository.findOne({ id: Number(idOrSlug), deletedAt: null }, {
         populate: [
-
           'variants.tierIndexes.tierOption',
           'images',
           'categories',
           'tierVariations.options',
           'videos',
         ],
-        populateWhere: { videos: { isVisible: 1 } } as any,
+        populateWhere: {
+          variants: { deletedAt: null },
+          videos: { isVisible: 1 },
+        } as any,
         orderBy: { images: { position: 'ASC' } } as any,
       });
     } else {
-      product = await this.productRepository.findOne({ slug: String(idOrSlug) } as any, {
+      product = await this.productRepository.findOne({ slug: String(idOrSlug), deletedAt: null } as any, {
         populate: [
-
           'variants.tierIndexes.tierOption',
           'images',
           'categories',
           'tierVariations.options',
           'videos',
         ],
-        populateWhere: { videos: { isVisible: 1 } } as any,
+        populateWhere: {
+          variants: { deletedAt: null },
+          videos: { isVisible: 1 },
+        } as any,
         orderBy: { images: { position: 'ASC' } } as any,
       });
     }
@@ -294,7 +299,7 @@ export class ProductsService {
   }
 
   async findBySlug(slug: string) {
-    const product = await this.productRepository.findOne({ slug } as any, {
+    const product = await this.productRepository.findOne({ slug, deletedAt: null } as any, {
       populate: [
         'variants.tierIndexes.tierOption',
         'images',
@@ -302,7 +307,10 @@ export class ProductsService {
         'tierVariations.options',
         'videos',
       ],
-      populateWhere: { videos: { isVisible: 1 } } as any,
+      populateWhere: {
+        variants: { deletedAt: null },
+        videos: { isVisible: 1 },
+      } as any,
       orderBy: { images: { position: 'ASC' } } as any,
     });
 
@@ -662,30 +670,72 @@ export class ProductsService {
 
   async updateVariants(id: number, variantsDto: CreateProductVariantDto[]) {
     return await this.em.transactional(async (em) => {
-      const product = await em.findOne(Product, id, { populate: ['variants'] });
+      const product = await em.findOne(Product, id, { populate: ['variants.tierIndexes.tierOption'] });
       if (!product) {
         throw new NotFoundException(`Product with ID ${id} not found`);
       }
 
-      // Strategy: Replace All Variants (typical for "Save Variants Tab") because tracking diffs is hard without IDs
-      product.variants.removeAll();
+      const existingVariants = product.variants.getItems();
 
       if (variantsDto && variantsDto.length > 0) {
         for (const variantDto of variantsDto) {
-          const variant = em.create(ProductVariant, {
-            product,
-            sku: variantDto.sku ?? null,
-            price: variantDto.price,
-            salePrice: variantDto.sale_price,
-            costPrice: variantDto.cost_price,
-            stock: variantDto.stock ?? 0,
-            isActive: 1,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+          // Find if there's an existing variant matching id, name, or optionValues
+          let variant = existingVariants.find((v) => {
+            if (variantDto.id && v.id === variantDto.id) return true;
+            if (variantDto.name && v.name === variantDto.name) return true;
+            if (variantDto.optionValues && v.optionValues) {
+              const opts = variantDto.optionValues;
+              if (v.optionValues.length === opts.length && 
+                  v.optionValues.every((val, i) => val === opts[i])) {
+                return true;
+              }
+            }
+            return false;
           });
 
+          if (variant) {
+            // Update fields in place
+            variant.sku = variantDto.sku ?? variant.sku;
+            variant.price = variantDto.price;
+            variant.salePrice = variantDto.sale_price ?? undefined;
+            variant.costPrice = variantDto.cost_price ?? undefined;
+            variant.stock = variantDto.stock ?? 0;
+            if (variantDto.isActive !== undefined) {
+              variant.isActive = variantDto.isActive;
+            }
+            variant.deletedAt = undefined; // restore if was soft-deleted
+            variant.updatedAt = new Date();
+          } else {
+            // Create a new variant
+            const newVar = em.create(ProductVariant, {
+              product,
+              sku: variantDto.sku ?? null,
+              price: variantDto.price,
+              salePrice: variantDto.sale_price ?? undefined,
+              costPrice: variantDto.cost_price ?? undefined,
+              stock: variantDto.stock ?? 0,
+              isActive: 1,
+              name: variantDto.name,
+              optionValues: variantDto.optionValues,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            });
+            em.persist(newVar);
+            product.variants.add(newVar);
+          }
+        }
+      }
 
-          em.persist(variant);
+      // Hard delete variants that are missing from DTO
+      const incomingIds = variantsDto.map(d => d.id).filter(Boolean);
+      const incomingNames = variantsDto.map(d => d.name).filter(Boolean);
+
+      for (const variant of existingVariants) {
+        const isMatched = incomingIds.includes(variant.id) || 
+                          (variant.name && incomingNames.includes(variant.name));
+        if (!isMatched) {
+          product.variants.remove(variant);
+          em.remove(variant);
         }
       }
 
@@ -740,30 +790,18 @@ export class ProductsService {
   }
 
   async remove(id: number) {
-    const product = await this.productRepository.findOne(id, {
-      populate: ['images', 'videos'],
+    const product = await this.productRepository.findOne({ id, deletedAt: null }, {
+      populate: ['images', 'videos', 'tierVariations.options'],
     });
 
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
 
-    // Delete all associated files from MinIO
-    for (const image of product.images) {
-      await this.uploadService.deleteFile(image.url);
-    }
-    
-    // Delete all associated videos from MinIO
-    if (product.videos) {
-      for (const video of product.videos) {
-        if (video.videoUrl) await this.uploadService.deleteFile(video.videoUrl);
-        if (video.thumbnailUrl && video.thumbnailUrl.startsWith('/')) {
-          await this.uploadService.deleteFile(video.thumbnailUrl);
-        }
-      }
-    }
-
-    await this.em.removeAndFlush(product);
+    // Since this is a soft delete, we do NOT physically remove files from MinIO
+    // to preserve historical order logs and prevent broken image/video links.
+    product.deletedAt = new Date();
+    await this.em.flush();
     return { success: true };
   }
 

@@ -35,6 +35,11 @@ import { Migration20260414210000AddIsRecommendedToProducts } from './migrations/
 import { Migration20260418220000_CreateEmailMarketingTables } from './migrations/Migration20260418220000_CreateEmailMarketingTables';
 import { Migration20260419102254_AddClickCountToEmailLogs } from './migrations/Migration20260419102254_AddClickCountToEmailLogs';
 import { Migration20260419113600_AddCascadeDeleteToEmailMarketing } from './migrations/Migration20260419113600_AddCascadeDeleteToEmailMarketing';
+import { Migration20260606181231_CreateContactsTable } from './migrations/Migration20260606181231_CreateContactsTable';
+import { Migration20260606141453 } from './migrations/Migration20260606141453undefined';
+import { Migration20260606155218_AddProductCascadeDelete } from './migrations/Migration20260606155218_AddProductCascadeDelete';
+import { Migration20260606155622_AddProductSoftDelete } from './migrations/Migration20260606155622_AddProductSoftDelete';
+import { Migration20260606230000_RedesignProductVariants } from './migrations/Migration20260606230000_RedesignProductVariants';
 
 export const migrationsList = [
   // ... existing migrations
@@ -185,5 +190,25 @@ export const migrationsList = [
   {
     name: 'Migration20260419113600_AddCascadeDeleteToEmailMarketing',
     class: Migration20260419113600_AddCascadeDeleteToEmailMarketing,
+  },
+  {
+    name: 'Migration20260606181231_CreateContactsTable',
+    class: Migration20260606181231_CreateContactsTable,
+  },
+  {
+    name: 'Migration20260606141453',
+    class: Migration20260606141453,
+  },
+  {
+    name: 'Migration20260606155218_AddProductCascadeDelete',
+    class: Migration20260606155218_AddProductCascadeDelete,
+  },
+  {
+    name: 'Migration20260606155622_AddProductSoftDelete',
+    class: Migration20260606155622_AddProductSoftDelete,
+  },
+  {
+    name: 'Migration20260606230000_RedesignProductVariants',
+    class: Migration20260606230000_RedesignProductVariants,
   },
 ];

@@ -44,5 +44,8 @@
       "node20-linux-x64"
     ]
   },
-  "bin": "dist/main.js"
+  "bin": "dist/main.js",
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.6.14"
+  }
 }

@@ -20,6 +20,7 @@ import AdminBlogForm from "./pages/admin/AdminBlogForm";
 import BlogPreview from "./pages/admin/BlogPreview";
 import AdminTopics from "./pages/admin/Topics";
 import AdminCustomers from "./pages/admin/Customers";
+import AdminContacts from "./pages/admin/Contacts";
 import AdminOrders from "./pages/admin/Orders";
 import OrderDetail from "./pages/admin/OrderDetail";
 import AdminSettings from "./pages/admin/Settings";
@@ -27,6 +28,8 @@ import AdminPages from "./pages/admin/Pages";
 import AdminPageForm from "./pages/admin/AdminPageForm";
 import AdminFaqs from "./pages/admin/Faqs";
 import AdminFaqForm from "./pages/admin/AdminFaqForm";
+import AdminAppFeedbacks from "./pages/admin/AppFeedbacks";
+import AdminAppFeedbackForm from "./pages/admin/AdminAppFeedbackForm";
 import AdminRoles from "./pages/admin/Roles";
 import AdminRoleForm from "./pages/admin/AdminRoleForm";
 import AdminUsers from "./pages/admin/Users";
@@ -101,6 +104,10 @@ const App = () => (
                 <Route path="/faqs" element={<AdminFaqs />} />
                 <Route path="/faqs/create" element={<AdminFaqForm />} />
                 <Route path="/faqs/edit/:id" element={<AdminFaqForm />} />
+                <Route path="/app-feedbacks" element={<AdminAppFeedbacks />} />
+                <Route path="/app-feedbacks/create" element={<AdminAppFeedbackForm />} />
+                <Route path="/app-feedbacks/edit/:id" element={<AdminAppFeedbackForm />} />
+
                 <Route path="/users" element={<AdminUsers />} />
                 <Route path="/users/create" element={<AdminUserForm />} />
                 <Route path="/users/edit/:id" element={<AdminUserForm />} />
@@ -115,6 +122,7 @@ const App = () => (
                 <Route path="/permission-groups/edit/:id" element={<AdminPermissionGroupForm />} />
                 <Route path="/webhooks" element={<Webhooks />} />
                 <Route path="/seo" element={<SeoManagement />} />
+                <Route path="/contacts" element={<AdminContacts />} />
                 <Route path="/popups" element={<AdminPopups />} />
                 <Route path="/popups/create" element={<AdminPopupForm />} />
                 <Route path="/popups/edit/:id" element={<AdminPopupForm />} />

@@ -17,10 +17,10 @@ export class OrderItem {
   @ManyToOne(() => Order, { deleteRule: 'cascade' })
   order!: Order;
 
-  @ManyToOne(() => Product, { nullable: true })
+  @ManyToOne(() => Product, { nullable: true, deleteRule: 'set null' })
   product?: Product;
 
-  @ManyToOne(() => ProductVariant, { nullable: true })
+  @ManyToOne(() => ProductVariant, { nullable: true, deleteRule: 'set null' })
   productVariant?: ProductVariant;
 
   // Snapshot fields

@@ -94,6 +94,12 @@ const sidebarItems: SidebarItemType[] = [
         icon: Users,
         permissions: [PermissionEnum.CUSTOMER_READ],
       },
+      {
+        label: "Liên hệ",
+        href: "/contacts",
+        icon: MessageSquare,
+        permissions: [PermissionEnum.CONTACT_READ],
+      },
     ],
   },
   {
@@ -120,6 +126,12 @@ const sidebarItems: SidebarItemType[] = [
         href: "/popups",
         icon: MessageSquare,
         permissions: [PermissionEnum.POPUP_READ],
+      },
+      {
+        label: "Đánh giá khách hàng",
+        href: "/app-feedbacks",
+        icon: MessageSquare,
+        permissions: [PermissionEnum.APP_FEEDBACK_READ],
       },
     ],
   },

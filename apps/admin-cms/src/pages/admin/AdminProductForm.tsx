@@ -75,9 +75,28 @@ const schema = yup.object().shape({
         stock: yup.number().optional().nullable(),
         isActive: yup.boolean().optional(),
         attributes: yup.array().optional().nullable(),
+        optionValues: yup.array().of(yup.string()).optional(),
       }),
     )
     .default([]),
+  tierVariations: yup
+    .array()
+    .of(
+      yup.object().shape({
+        id: yup.number().optional().nullable(),
+        name: yup.string().required(),
+        options: yup
+          .array()
+          .of(
+            yup.object().shape({
+              id: yup.number().optional().nullable(),
+              value: yup.string().required(),
+            }),
+          )
+          .required(),
+      }),
+    )
+    .optional(),
   // Specifications (key-value pairs with order)
   specifications: yup
     .array()
@@ -123,7 +142,8 @@ const AdminProductForm = () => {
   // Store mapping of URL to Image ID to track deletions
   const imageIdMap = useRef<Map<string, number>>(new Map());
 
-  const existingProduct = productResponse;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const existingProduct = productResponse as any;
   const categories = Array.isArray(categoriesResponse)
     ? categoriesResponse
     : categoriesResponse?.items || [];
@@ -137,6 +157,7 @@ const AdminProductForm = () => {
     getValues,
     formState: { isSubmitting, errors },
   } = useForm<ProductFormData>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: yupResolver(schema) as any,
     defaultValues: {
       name: "",
@@ -160,6 +181,7 @@ const AdminProductForm = () => {
       canonicalUrl: "",
       ogImage: "",
       variants: [],
+      tierVariations: [],
       specifications: [],
       displayOrder: 0,
     },
@@ -200,7 +222,7 @@ const AdminProductForm = () => {
           })) || [],
         isNew: false,
         isFeatured: Boolean(existingProduct.isFeatured),
-        isRecommended: Boolean((existingProduct as any).isRecommended),
+        isRecommended: Boolean(existingProduct.isRecommended),
         isActive: Boolean(existingProduct.isActive),
         seoTitle: existingProduct.seoTitle || "",
         seoDescription: existingProduct.seoDescription || "",
@@ -218,7 +240,8 @@ const AdminProductForm = () => {
             return [];
           }
         })(),
-        displayOrder: (existingProduct as any).displayOrder ?? 0,
+        displayOrder: existingProduct.displayOrder ?? 0,
+        tierVariations: existingProduct.tierVariations || [],
       });
     }
   }, [isEditing, existingProduct, reset]);
@@ -301,10 +324,10 @@ const AdminProductForm = () => {
       if (updatedProduct) {
         const allOriginalIds = Array.from(imageIdMap.current.values());
         const newImages = updatedProduct.images.filter(
-          (img: any) => !allOriginalIds.includes(img.id),
+          (img) => !allOriginalIds.includes(img.id),
         );
-        newImages.sort((a: any, b: any) => a.id - b.id);
-        newImageIds = newImages.map((img: any) => img.id);
+        newImages.sort((a, b) => a.id - b.id);
+        newImageIds = newImages.map((img) => img.id);
       }
 
       const finalOrderIds: number[] = [];
@@ -353,21 +376,33 @@ const AdminProductForm = () => {
     }
   };
 
-  const handleVariantsSubmit = () => {
+  const handleVariantsSubmit = async () => {
     const variants = getValues("variants");
-    // Transform attributes to expected DTO format
+    const tierVariations = getValues("tierVariations");
 
+    // 1. Save tier variations names & options (without auto-generating variants)
+    if (tierVariations && tierVariations.length > 0) {
+      try {
+        await productApi.setTierVariations(productId, {
+          tierVariations,
+          autoGenerateVariants: false,
+        });
+      } catch (error) {
+        console.error("Failed to save tier variations", error);
+      }
+    }
+
+    // 2. Save variant details in place
     const variantsPayload =
       variants?.map((v) => ({
-        ...v,
+        id: v.id,
+        sku: v.sku ?? null,
         price: Number(v.price),
         sale_price: v.salePrice ? Number(v.salePrice) : undefined,
         cost_price: v.costPrice ? Number(v.costPrice) : undefined,
         stock: Number(v.stock),
-        attributes:
-          v.attributes?.map((a: any) => ({
-            attribute_value_id: Number(a.id), // Ensure we use the proper ID
-          })) || [],
+        isActive: v.isActive ? 1 : 0,
+        optionValues: v.optionValues || [],
       })) || [];
 
     updateVariantsMutation.mutate(variantsPayload);
@@ -549,6 +584,7 @@ const AdminProductForm = () => {
                   register={register}
                   setValue={setValue}
                   getValues={getValues}
+                  existingProduct={existingProduct}
                 />
               </TabsContent>
 

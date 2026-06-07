@@ -12,7 +12,7 @@ import { BulkUpdateVariantsDto } from './dto/bulk-update-variants.dto';
  * TierVariationsService - Quản lý hệ thống biến thể sản phẩm theo tier
  * 
  * Hỗ trợ:
- * - Tạo/cập nhật tier variations cho sản phẩm
+ * - Tạo/cập nhật tier variations cho sản phẩm (Đồng bộ hóa vi sai - Diff-based)
  * - Auto-generate variant matrix từ các tier options
  * - Bulk update giá/tồn kho cho variants
  * - Tìm sản phẩm theo ID hoặc slug
@@ -32,12 +32,10 @@ export class TierVariationsService {
   ): Promise<Product> {
     let product: Product | null;
 
-    // Nếu là số hoặc string chỉ chứa số => tìm theo ID
     if (typeof idOrSlug === 'number' || /^\d+$/.test(String(idOrSlug))) {
       const id = typeof idOrSlug === 'number' ? idOrSlug : parseInt(String(idOrSlug), 10);
       product = await this.em.findOne(Product, id, { populate: populate as any });
     } else {
-      // Tìm theo slug
       product = await this.em.findOne(Product, { slug: String(idOrSlug) } as any, { populate: populate as any });
     }
 
@@ -63,7 +61,7 @@ export class TierVariationsService {
         name: tier.name,
         tierIndex: tier.tierIndex,
         position: tier.position,
-        options: tier.options.getItems().map((opt) => ({
+        options: tier.options.getItems().filter(o => o.isActive).map((opt) => ({
           id: opt.id,
           value: opt.value,
           imageUrl: opt.imageUrl,
@@ -75,43 +73,39 @@ export class TierVariationsService {
   }
 
   /**
-   * Thiết lập tier variations cho sản phẩm
-   * Sẽ xóa toàn bộ tiers/options/variants cũ và tạo mới
+   * Thiết lập tier variations cho sản phẩm (Diff-based)
+   * Đồng bộ hóa thông tin và giữ nguyên ID của các biến thể/options còn sử dụng
    * @param idOrSlug - Product ID or slug
    */
   async setTierVariations(idOrSlug: number | string, dto: SetTierVariationsDto) {
-    // Resolve product first to get the ID
     const resolvedProduct = await this.resolveProduct(idOrSlug, []);
     const productId = resolvedProduct.id;
 
     return await this.em.transactional(async (em) => {
       const product = await em.findOne(Product, productId, {
-        populate: ['tierVariations.options', 'variants.tierIndexes'],
+        populate: ['tierVariations.options', 'variants.tierIndexes.tierOption'],
       });
 
       if (!product) {
         throw new NotFoundException(`Sản phẩm với ID ${productId} không tồn tại`);
       }
 
-      // Validate: Tối đa 2 tiers
       if (dto.tierVariations && dto.tierVariations.length > 2) {
         throw new BadRequestException('Sản phẩm chỉ được phép có tối đa 2 phân loại hàng');
       }
 
-      // Xóa toàn bộ tier variations cũ (cascade sẽ xóa options)
-      for (const tier of product.tierVariations.getItems()) {
-        em.remove(tier);
-      }
-      product.tierVariations.removeAll();
-
-      // Xóa toàn bộ variants cũ
-      for (const variant of product.variants.getItems()) {
-        em.remove(variant);
-      }
-      product.variants.removeAll();
-
-      // Nếu không có tier nào (simple product), return
+      // Nếu không có tier nào (simple product), xóa hoàn toàn tất cả variants
       if (!dto.tierVariations || dto.tierVariations.length === 0) {
+        for (const tier of product.tierVariations.getItems()) {
+          em.remove(tier);
+        }
+        product.tierVariations.removeAll();
+
+        for (const variant of product.variants.getItems()) {
+          product.variants.remove(variant);
+          em.remove(variant);
+        }
+
         await em.flush();
         return {
           productId: product.id,
@@ -121,52 +115,94 @@ export class TierVariationsService {
         };
       }
 
-      // Tạo tier variations mới
+      const existingTiers = product.tierVariations.getItems();
+      const activeTierOptions: TierOption[][] = [];
+
+      // Đồng bộ Tiers và Options
       for (let tierIndex = 0; tierIndex < dto.tierVariations.length; tierIndex++) {
         const tierDto = dto.tierVariations[tierIndex];
-        
-        const tierVariation = em.create(ProductTierVariation, {
-          product,
-          name: tierDto.name,
-          tierIndex,
-          position: tierIndex,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
-        
-        em.persist(tierVariation);
+        let tierVariation = existingTiers.find((t) => t.tierIndex === tierIndex);
 
-        // Tạo options cho tier này
-        if (tierDto.options && tierDto.options.length > 0) {
-          for (let optIndex = 0; optIndex < tierDto.options.length; optIndex++) {
-            const optDto = tierDto.options[optIndex];
-            
-            const option = em.create(TierOption, {
+        if (!tierVariation) {
+          tierVariation = em.create(ProductTierVariation, {
+            product,
+            name: tierDto.name,
+            tierIndex,
+            position: tierIndex,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+          em.persist(tierVariation);
+          product.tierVariations.add(tierVariation);
+        } else {
+          tierVariation.name = tierDto.name;
+          tierVariation.updatedAt = new Date();
+        }
+
+        const existingOptions = tierVariation.options.getItems();
+        const currentTierOptions: TierOption[] = [];
+
+        for (let optIndex = 0; optIndex < tierDto.options.length; optIndex++) {
+          const optDto = tierDto.options[optIndex];
+          let option = existingOptions.find((o) => o.value === optDto.value);
+
+          if (!option) {
+            option = em.create(TierOption, {
               tierVariation,
               value: optDto.value,
-              imageUrl: tierIndex === 0 ? optDto.imageUrl : undefined, // Chỉ tier1 có ảnh
+              imageUrl: tierIndex === 0 ? optDto.imageUrl : undefined,
               position: optIndex,
               isActive: 1,
               createdAt: new Date(),
               updatedAt: new Date(),
             });
-            
             em.persist(option);
+            tierVariation.options.add(option);
+          } else {
+            if (tierIndex === 0 && optDto.imageUrl !== undefined) {
+              option.imageUrl = optDto.imageUrl;
+            }
+            option.position = optIndex;
+            option.isActive = 1;
+            option.updatedAt = new Date();
           }
+          currentTierOptions.push(option);
+        }
+
+        // Xóa hoàn toàn các option cũ không còn được gửi lên
+        const incomingValues = tierDto.options.map((o) => o.value);
+        for (const oldOpt of existingOptions) {
+          if (!incomingValues.includes(oldOpt.value)) {
+            tierVariation.options.remove(oldOpt);
+            em.remove(oldOpt);
+          }
+        }
+
+        activeTierOptions.push(currentTierOptions);
+      }
+
+      // Xóa các tier thừa nếu có
+      for (const oldTier of existingTiers) {
+        if (oldTier.tierIndex >= dto.tierVariations.length) {
+          em.remove(oldTier);
         }
       }
 
       await em.flush();
 
-      // Auto-generate variants nếu được yêu cầu
+      // Đồng bộ ma trận variants
       if (dto.autoGenerateVariants !== false) {
-        await this.generateVariantMatrix(productId, dto.defaultPrice, dto.defaultStock);
+        await this.syncVariantMatrix(product, activeTierOptions, em, dto.defaultPrice, dto.defaultStock);
       }
 
-      // Fetch lại để return
+      await em.flush();
+
+      // Load lại để trả về
       const updatedProduct = await em.findOne(Product, productId, {
         populate: ['tierVariations.options', 'variants.tierIndexes.tierOption'],
       });
+
+      const activeVariants = updatedProduct!.variants.getItems().filter((v) => !v.deletedAt);
 
       return {
         productId: updatedProduct!.id,
@@ -174,39 +210,104 @@ export class TierVariationsService {
           id: tier.id,
           name: tier.name,
           tierIndex: tier.tierIndex,
-          options: tier.options.getItems().map((opt) => ({
+          options: tier.options.getItems().filter(o => o.isActive).map((opt) => ({
             id: opt.id,
             value: opt.value,
             imageUrl: opt.imageUrl,
           })),
         })),
-        variantsCount: updatedProduct!.variants.length,
-        message: `Đã tạo ${updatedProduct!.tierVariations.length} phân loại và ${updatedProduct!.variants.length} biến thể`,
+        variantsCount: activeVariants.length,
+        message: `Đã đồng bộ ${updatedProduct!.tierVariations.length} phân loại và ${activeVariants.length} biến thể hoạt động`,
       };
     });
   }
 
   /**
+   * Đồng bộ ma trận các biến thể (diff-based)
+   */
+  private async syncVariantMatrix(
+    product: Product,
+    activeTierOptions: TierOption[][],
+    em: EntityManager,
+    defaultPrice?: number,
+    defaultStock?: number,
+  ) {
+    const basePrice = defaultPrice ?? product.price ?? 0;
+    const baseStock = defaultStock ?? 0;
+
+    const existingVariants = product.variants.getItems();
+    const combinations: TierOption[][] = [];
+    const tier1Options = activeTierOptions[0] || [];
+    const tier2Options = activeTierOptions[1] || [];
+
+    if (tier2Options.length > 0) {
+      for (const opt1 of tier1Options) {
+        for (const opt2 of tier2Options) {
+          combinations.push([opt1, opt2]);
+        }
+      }
+    } else {
+      for (const opt1 of tier1Options) {
+        combinations.push([opt1]);
+      }
+    }
+
+    const activeVariantIds = new Set<number>();
+
+    for (const combo of combinations) {
+      // Tìm xem có biến thể cũ nào khớp chính xác với combo này không
+      const matchedVariant = existingVariants.find((v) => {
+        if (v.deletedAt) return false;
+        const vtiItems = v.tierIndexes.getItems();
+        if (vtiItems.length !== combo.length) return false;
+
+        return combo.every((opt) => vtiItems.some((vti) => vti.tierOption.id === opt.id));
+      });
+
+      if (matchedVariant) {
+        matchedVariant.deletedAt = undefined;
+        matchedVariant.isActive = 1;
+        matchedVariant.optionIds = combo.map((o) => o.id);
+        matchedVariant.optionValues = combo.map((o) => o.value);
+        matchedVariant.name = combo.map((o) => o.value).join(' - ');
+        activeVariantIds.add(matchedVariant.id);
+      } else {
+        const newVariant = this.createVariantWithTiers(
+          em,
+          product,
+          combo,
+          basePrice,
+          baseStock,
+        );
+        newVariant.optionIds = combo.map((o) => o.id);
+        newVariant.optionValues = combo.map((o) => o.value);
+        product.variants.add(newVariant);
+      }
+    }
+
+    // Xóa hoàn toàn các variant cũ không còn dùng
+    for (const oldVariant of existingVariants) {
+      if (!activeVariantIds.has(oldVariant.id)) {
+        product.variants.remove(oldVariant);
+        em.remove(oldVariant);
+      }
+    }
+  }
+
+  /**
    * Tự động tạo variant matrix từ các tier options
-   * 
-   * Ví dụ:
-   * - Tier 1: Màu sắc [Đỏ, Xanh]
-   * - Tier 2: Size [S, M, L]
-   * => Tạo 6 variants: Đỏ-S, Đỏ-M, Đỏ-L, Xanh-S, Xanh-M, Xanh-L
-   * @param idOrSlug - Product ID or slug
    */
   async generateVariantMatrix(
     idOrSlug: number | string,
     defaultPrice?: number,
     defaultStock?: number,
   ) {
-    // Resolve product first to get the ID
     const resolvedProduct = await this.resolveProduct(idOrSlug, []);
     const productId = resolvedProduct.id;
 
     return await this.em.transactional(async (em) => {
       const product = await em.findOne(Product, productId, {
-        populate: ['tierVariations.options', 'variants'],
+        populate: ['tierVariations.options', 'variants.tierIndexes.tierOption'],
       });
 
       if (!product) {
@@ -219,55 +320,25 @@ export class TierVariationsService {
         throw new BadRequestException('Sản phẩm không có phân loại hàng để tạo biến thể');
       }
 
-      // Xóa variants cũ
-      for (const variant of product.variants.getItems()) {
-        em.remove(variant);
-      }
-      product.variants.removeAll();
-
-      const basePrice = defaultPrice ?? product.price ?? 0;
-      const baseStock = defaultStock ?? 0;
-
-      // Lấy options từ các tier
+      const activeTierOptions: TierOption[][] = [];
       const tier1Options = tiers[0]?.options.getItems().filter(o => o.isActive) || [];
       const tier2Options = tiers[1]?.options.getItems().filter(o => o.isActive) || [];
 
-      const variantsCreated: ProductVariant[] = [];
-
-      if (tier2Options.length > 0) {
-        // 2 tiers: Cartesian product
-        for (const opt1 of tier1Options) {
-          for (const opt2 of tier2Options) {
-            const variant = this.createVariantWithTiers(
-              em,
-              product,
-              [opt1, opt2],
-              basePrice,
-              baseStock,
-            );
-            variantsCreated.push(variant);
-          }
-        }
-      } else {
-        // 1 tier only
-        for (const opt1 of tier1Options) {
-          const variant = this.createVariantWithTiers(
-            em,
-            product,
-            [opt1],
-            basePrice,
-            baseStock,
-          );
-          variantsCreated.push(variant);
-        }
+      activeTierOptions.push(tier1Options);
+      if (tiers[1]) {
+        activeTierOptions.push(tier2Options);
       }
+
+      await this.syncVariantMatrix(product, activeTierOptions, em, defaultPrice, defaultStock);
 
       await em.flush();
 
+      const activeVariants = product.variants.getItems().filter((v) => !v.deletedAt);
+
       return {
         productId: product.id,
-        variantsCreated: variantsCreated.length,
-        variants: variantsCreated.map((v) => ({
+        variantsCreated: activeVariants.length,
+        variants: activeVariants.map((v) => ({
           id: v.id,
           name: v.name,
           sku: v.sku,
@@ -280,10 +351,8 @@ export class TierVariationsService {
 
   /**
    * Bulk update giá/tồn kho cho nhiều variants
-   * @param idOrSlug - Product ID or slug
    */
   async bulkUpdateVariants(idOrSlug: number | string, dto: BulkUpdateVariantsDto) {
-    // Resolve product first to get the product with variants
     const product = await this.resolveProduct(idOrSlug, ['variants']);
 
     const updates: { id: number; updated: boolean }[] = [];
@@ -291,7 +360,7 @@ export class TierVariationsService {
     for (const variantUpdate of dto.variants) {
       const variant = product.variants.getItems().find((v) => v.id === variantUpdate.id);
       
-      if (variant) {
+      if (variant && !variant.deletedAt) {
         if (variantUpdate.price !== undefined) variant.price = variantUpdate.price;
         if (variantUpdate.salePrice !== undefined) variant.salePrice = variantUpdate.salePrice;
         if (variantUpdate.costPrice !== undefined) variant.costPrice = variantUpdate.costPrice;
@@ -306,10 +375,9 @@ export class TierVariationsService {
       }
     }
 
-    // Cập nhật giá/tồn kho ở product level (lấy min price, tổng stock)
     const variants = product.variants.getItems();
     if (variants.length > 0) {
-      const activeVariants = variants.filter((v) => v.isActive);
+      const activeVariants = variants.filter((v) => v.isActive && !v.deletedAt);
       if (activeVariants.length > 0) {
         product.price = Math.min(...activeVariants.map((v) => v.price));
         
@@ -338,27 +406,25 @@ export class TierVariationsService {
 
   /**
    * Apply giá/tồn kho đồng nhất cho tất cả variants
-   * @param idOrSlug - Product ID or slug
    */
   async applyToAllVariants(
     idOrSlug: number | string,
     data: { price?: number; salePrice?: number; stock?: number },
   ) {
-    // Resolve product first
     const product = await this.resolveProduct(idOrSlug, ['variants']);
+    const activeVariants = product.variants.getItems().filter((v) => !v.deletedAt);
 
-    for (const variant of product.variants.getItems()) {
+    for (const variant of activeVariants) {
       if (data.price !== undefined) variant.price = data.price;
       if (data.salePrice !== undefined) variant.salePrice = data.salePrice;
       if (data.stock !== undefined) variant.stock = data.stock;
       variant.updatedAt = new Date();
     }
 
-    // Update product-level values
     if (data.price !== undefined) product.price = data.price;
     if (data.salePrice !== undefined) product.salePrice = data.salePrice;
     if (data.stock !== undefined) {
-      product.stock = data.stock * product.variants.length;
+      product.stock = data.stock * activeVariants.length;
     }
 
     product.updatedAt = new Date();
@@ -366,7 +432,7 @@ export class TierVariationsService {
 
     return {
       productId: product.id,
-      variantsUpdated: product.variants.length,
+      variantsUpdated: activeVariants.length,
       appliedValues: data,
     };
   }
@@ -382,37 +448,15 @@ export class TierVariationsService {
     price: number,
     stock: number,
   ): ProductVariant {
-    // Generate variant name from options
     const name = options.map((o) => o.value).join(' - ');
     
-    // Generate SKU
-    // Logic: Lấy chữ cái đầu của mỗi từ trong value, uppercase, remove special chars
-    // Ví dụ: "Titan Đen" -> "TD", "Titan Xanh" -> "TX", "Size XL" -> "SXL"
-    const skuParts = options.map((o) => {
-      const acronym = o.value
-        .split(/\s+/)
-        .map(word => word.charAt(0))
-        .join('')
-        .toUpperCase();
-      
-      // Nếu acronym quá ngắn (<2 chars) hoặc trùng lặp nhiều, có thể append thêm chars
-      // Nhưng tạm thời simple acronym là đủ cho case này
-      // Fallback: nếu acronym rỗng (e.g. toàn special chars), dùng value gốc
-      return acronym.length > 0 ? acronym : o.value.substring(0, 3).toUpperCase();
-    });
-
-    // Thêm random suffix để đảm bảo unique tuyệt đối nếu options giống nhau về acronym
-    // Thực tế options trong cùng 1 tier phải khác nhau value, nên acronym có thể trùng 
-    // (VD: "Xanh Lơ" vs "Xanh Lam" => XL, XL).
-    // Giải pháp tốt hơn: Dùng slugify hoặc giữ nguyên value nhưng remove space
-    // Tạm dùng logic: value không dấu, remove space
     const skuPartsEnhanced = options.map((o) => 
       o.value
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '') // Remove accents
         .replace(/[^a-zA-Z0-9]/g, '')    // Remove non-alphanumeric
         .toUpperCase()
-        .substring(0, 12)                 // Limit length
+        .substring(0, 12)
     );
 
     const sku = `${product.sku || 'PRD'}-${skuPartsEnhanced.join('-')}`;
@@ -424,13 +468,14 @@ export class TierVariationsService {
       price,
       stock,
       isActive: 1,
+      optionIds: options.map((o) => o.id),
+      optionValues: options.map((o) => o.value),
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
     em.persist(variant);
 
-    // Tạo tier indexes để liên kết variant với options
     for (let i = 0; i < options.length; i++) {
       const tierIndex = em.create(VariantTierIndex, {
         variant,

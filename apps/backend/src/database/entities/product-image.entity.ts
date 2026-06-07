@@ -7,7 +7,7 @@ export class ProductImage {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { deleteRule: 'cascade' })
   product!: Product;
 
   @Property()

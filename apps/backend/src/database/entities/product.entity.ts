@@ -91,6 +91,9 @@ export class Product {
   @Property({ onUpdate: () => new Date() })
   updatedAt!: Date;
 
+  @Property({ nullable: true })
+  deletedAt?: Date;
+
   @OneToMany(() => ProductImage, (image) => image.product, {
     orphanRemoval: true,
     orderBy: { position: 'ASC' },

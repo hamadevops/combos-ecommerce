@@ -384,6 +384,69 @@ export class PermissionSeeder extends Seeder {
         key: PermissionEnum.WEBHOOK_DELETE,
         method: 'DELETE',
       },
+      // Email Marketing permissions
+      {
+        name: 'Create Email Marketing',
+        key: PermissionEnum.EMAIL_MARKETING_CREATE,
+        method: 'POST',
+      },
+      {
+        name: 'Read Email Marketing',
+        key: PermissionEnum.EMAIL_MARKETING_READ,
+        method: 'GET',
+      },
+      {
+        name: 'Update Email Marketing',
+        key: PermissionEnum.EMAIL_MARKETING_UPDATE,
+        method: 'PATCH',
+      },
+      {
+        name: 'Delete Email Marketing',
+        key: PermissionEnum.EMAIL_MARKETING_DELETE,
+        method: 'DELETE',
+      },
+      // Contact permissions
+      {
+        name: 'Create Contact',
+        key: PermissionEnum.CONTACT_CREATE,
+        method: 'POST',
+      },
+      {
+        name: 'Read Contact',
+        key: PermissionEnum.CONTACT_READ,
+        method: 'GET',
+      },
+      {
+        name: 'Update Contact',
+        key: PermissionEnum.CONTACT_UPDATE,
+        method: 'PATCH',
+      },
+      {
+        name: 'Delete Contact',
+        key: PermissionEnum.CONTACT_DELETE,
+        method: 'DELETE',
+      },
+      // App Feedback permissions
+      {
+        name: 'Create App Feedback',
+        key: PermissionEnum.APP_FEEDBACK_CREATE,
+        method: 'POST',
+      },
+      {
+        name: 'Read App Feedback',
+        key: PermissionEnum.APP_FEEDBACK_READ,
+        method: 'GET',
+      },
+      {
+        name: 'Update App Feedback',
+        key: PermissionEnum.APP_FEEDBACK_UPDATE,
+        method: 'PATCH',
+      },
+      {
+        name: 'Delete App Feedback',
+        key: PermissionEnum.APP_FEEDBACK_DELETE,
+        method: 'DELETE',
+      },
     ];
 
     for (const permData of permissions) {

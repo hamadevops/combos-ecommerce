@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -8,15 +9,14 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RichTextEditor from "@/components/ui/rich-text-editor";
-import { mockPages } from "@/data/mockPages";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Globe } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ImageUpload } from "@/components/common/ImageUpload";
 import { generateSlug } from "@/lib/utils";
+import { usePage, useCreatePage, useUpdatePage } from "@/hooks/usePages";
 
 // Define validation schema
 const schema = yup.object().shape({
@@ -27,10 +27,9 @@ const schema = yup.object().shape({
     .matches(/^[a-z0-9-]+$/, "Slug chỉ chứa chữ thường, số và gạch ngang"),
   content: yup.string().optional(),
   status: yup.string().oneOf(["published", "draft"]).default("published"),
-  metaTitle: yup.string().optional(),
-  metaDescription: yup.string().optional(),
-  metaKeywords: yup.string().optional(),
-  metaImage: yup.mixed<string | File>().optional(),
+  metaTitle: yup.string().optional().nullable(),
+  metaDescription: yup.string().optional().nullable(),
+  metaKeywords: yup.string().optional().nullable(),
 });
 
 type PageFormData = yup.InferType<typeof schema>;
@@ -39,6 +38,12 @@ const AdminPageForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Queries & Mutations
+  const { data: pageData, isLoading: isLoadingPage } = usePage(id ? Number(id) : "");
+  const createPage = useCreatePage();
+  const updatePage = useUpdatePage();
 
   const {
     control,
@@ -57,7 +62,6 @@ const AdminPageForm = () => {
       metaTitle: "",
       metaDescription: "",
       metaKeywords: "",
-      metaImage: "",
     },
   });
 
@@ -66,13 +70,13 @@ const AdminPageForm = () => {
   const title = watch("title");
 
   // Auto-generate slug from title if in create mode and slug is untouched
-  // Logic: Simple effect for now.
   useEffect(() => {
     if (!isEditing && title && !slug) {
       const generatedSlug = title
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "") // Remove accents
+        .replace(/đ/g, "d")
         .replace(/[^a-z0-9\s-]/g, "") // Remove special chars
         .trim()
         .replace(/\s+/g, "-"); // Replace spaces with hyphens
@@ -80,32 +84,60 @@ const AdminPageForm = () => {
     }
   }, [title, isEditing, slug, setValue]);
 
+  // Load existing data when editing
   useEffect(() => {
-    if (isEditing) {
-      const page = mockPages.find((p) => p.id === id);
-      if (page) {
-        reset({
-          title: page.title,
-          slug: page.slug,
-          content: page.content,
-          status: page.status as "published" | "draft", // Type assertion for mock data
-          metaTitle: page.metaTitle,
-          metaDescription: page.metaDescription,
-          metaKeywords: page.metaKeywords,
-          metaImage: page.metaImage,
-        });
-      } else {
-        toast.error("Không tìm thấy trang");
-        navigate("/pages");
-      }
+    if (isEditing && pageData) {
+      const data = (pageData as any).data || pageData;
+      reset({
+        title: data.title || "",
+        slug: data.slug || "",
+        content: data.content || "",
+        status: data.isActive ? "published" : "draft",
+        metaTitle: data.metaTitle || "",
+        metaDescription: data.metaDescription || "",
+        metaKeywords: data.metaKeywords || "",
+      });
     }
-  }, [id, isEditing, navigate, reset]);
+  }, [pageData, isEditing, reset]);
 
-  const onSubmit = (data: PageFormData) => {
-    console.log("Saving page:", data);
-    toast.success(isEditing ? "Đã cập nhật trang" : "Đã tạo trang mới");
-    navigate("/pages");
+  const onSubmit = async (data: PageFormData) => {
+    setIsSubmitting(true);
+    const payload = {
+      title: data.title,
+      slug: data.slug,
+      content: data.content || "",
+      isActive: data.status === "published",
+      metaTitle: data.metaTitle || undefined,
+      metaDescription: data.metaDescription || undefined,
+      metaKeywords: data.metaKeywords || undefined,
+    };
+
+    try {
+      if (isEditing) {
+        await updatePage.mutateAsync({ id: Number(id), data: payload });
+        toast.success("Cập nhật trang thành công");
+      } else {
+        await createPage.mutateAsync(payload);
+        toast.success("Tạo trang mới thành công");
+      }
+      navigate("/pages");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || "Lỗi khi lưu dữ liệu");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (isEditing && isLoadingPage) {
+    return (
+      <AdminLayout title="Chỉnh sửa trang">
+        <div className="flex items-center justify-center h-48 text-muted-foreground">
+          Đang tải thông tin trang...
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout title={isEditing ? "Chỉnh sửa trang" : "Thêm trang mới"}>
@@ -122,13 +154,13 @@ const AdminPageForm = () => {
               <Button
                 variant="outline"
                 type="button"
-                onClick={() => window.open(`/${slug}`, "_blank")}
+                onClick={() => window.open(`/pages/${slug}`, "_blank")}
               >
                 <Globe className="mr-2 h-4 w-4" /> Xem trang
               </Button>
             )}
-            <Button type="submit">
-              <Save className="mr-2 h-4 w-4" /> {isEditing ? "Cập nhật" : "Tạo trang"}
+            <Button type="submit" disabled={isSubmitting}>
+              <Save className="mr-2 h-4 w-4" /> {isSubmitting ? "Đang lưu..." : isEditing ? "Cập nhật" : "Tạo trang"}
             </Button>
           </div>
         </div>
@@ -230,21 +262,6 @@ const AdminPageForm = () => {
                         )}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="metaImage">Meta Image (OG Image)</Label>
-                      <Controller
-                        name="metaImage"
-                        control={control}
-                        render={({ field }) => (
-                          <ImageUpload
-                            value={field.value}
-                            onChange={field.onChange}
-                            multiple={false}
-                            maxFiles={1}
-                          />
-                        )}
-                      />
-                    </div>
                   </TabsContent>
                 </CardContent>
               </Tabs>
@@ -279,9 +296,9 @@ const AdminPageForm = () => {
                           size="icon"
                           title="Tạo slug từ tên"
                           onClick={() => {
-                            const title = watch("title");
-                            if (title) {
-                              setValue("slug", generateSlug(title));
+                            const titleValue = watch("title");
+                            if (titleValue) {
+                              setValue("slug", generateSlug(titleValue));
                             }
                           }}
                         >
@@ -307,7 +324,7 @@ const AdminPageForm = () => {
                     )}
                   />
                   {errors.slug && <p className="text-xs text-red-500">{errors.slug.message}</p>}
-                  <p className="text-xs text-muted-foreground">example.com/{slug}</p>
+                  <p className="text-xs text-muted-foreground">example.com/pages/{slug}</p>
                 </div>
 
                 <div className="flex items-center justify-between border-t pt-4">

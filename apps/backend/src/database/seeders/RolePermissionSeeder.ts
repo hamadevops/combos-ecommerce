@@ -113,11 +113,21 @@ export class RolePermissionSeeder extends Seeder {
         PermissionEnum.REVIEW_DELETE,
         PermissionEnum.UPLOAD_FILE,
         PermissionEnum.SETTING_CREATE,
-        PermissionEnum.SETTING_READ,
-        PermissionEnum.SETTING_UPDATE,
         PermissionEnum.SETTING_DELETE,
         PermissionEnum.ORDER_READ,
         PermissionEnum.USER_READ_PROFILE,
+        PermissionEnum.CONTACT_CREATE,
+        PermissionEnum.CONTACT_READ,
+        PermissionEnum.CONTACT_UPDATE,
+        PermissionEnum.CONTACT_DELETE,
+        PermissionEnum.EMAIL_MARKETING_CREATE,
+        PermissionEnum.EMAIL_MARKETING_READ,
+        PermissionEnum.EMAIL_MARKETING_UPDATE,
+        PermissionEnum.EMAIL_MARKETING_DELETE,
+        PermissionEnum.APP_FEEDBACK_CREATE,
+        PermissionEnum.APP_FEEDBACK_READ,
+        PermissionEnum.APP_FEEDBACK_UPDATE,
+        PermissionEnum.APP_FEEDBACK_DELETE,
       ];
 
       for (const key of marketingPermissionKeys) {

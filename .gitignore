@@ -13,6 +13,8 @@ out
 # Logs
 logs
 *.log
+dev.log
+dev-all.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

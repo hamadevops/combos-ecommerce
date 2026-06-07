@@ -40,6 +40,8 @@ import { EmLinkClick } from './database/entities/email-marketing/em-link-click.e
 import { EmSegment } from './database/entities/email-marketing/em-segment.entity';
 import { EmTemplate } from './database/entities/email-marketing/em-template.entity';
 import { EmTrackedLink } from './database/entities/email-marketing/em-tracked-link.entity';
+import { Contact } from './database/entities/contact.entity';
+import { AppFeedback } from './database/entities/app-feedback.entity';
 
 config();
 
@@ -81,6 +83,8 @@ const MikroOrmConfig: Options<MySqlDriver> = {
     EmSegment,
     EmTemplate,
     EmTrackedLink,
+    Contact,
+    AppFeedback,
   ],
   entitiesTs: [
     User,
@@ -119,6 +123,8 @@ const MikroOrmConfig: Options<MySqlDriver> = {
     EmSegment,
     EmTemplate,
     EmTrackedLink,
+    Contact,
+    AppFeedback,
   ],
   dbName: process.env.DB_NAME,
   host: process.env.DB_HOST,

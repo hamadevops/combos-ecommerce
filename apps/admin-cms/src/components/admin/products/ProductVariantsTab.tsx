@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -17,6 +19,7 @@ import { useSetTierVariations } from "@/hooks/useProducts";
 import { TierVariation } from "@/types/product";
 import { Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface ProductVariantsTabProps {
   productId: number;
@@ -24,6 +27,7 @@ interface ProductVariantsTabProps {
   register: UseFormRegister<any>;
   setValue: UseFormSetValue<any>;
   getValues: any;
+  existingProduct?: any;
 }
 
 export function ProductVariantsTab({
@@ -32,9 +36,30 @@ export function ProductVariantsTab({
   register,
   setValue,
   getValues,
+  existingProduct,
 }: ProductVariantsTabProps) {
   // Tier Builder State
   const [tiers, setTiers] = useState<TierVariation[]>([]);
+
+  // Populate Tiers from existing product's tier variations
+  useEffect(() => {
+    if (existingProduct?.tierVariations && existingProduct.tierVariations.length > 0 && tiers.length === 0) {
+      const formattedTiers = existingProduct.tierVariations.map((tv: any) => ({
+        id: tv.id,
+        name: tv.name,
+        options: tv.options
+          ?.filter((o: any) => o.isActive !== 0 && o.is_active !== 0)
+          ?.map((o: any) => ({ id: o.id, value: o.value })) || [],
+      }));
+      setTiers(formattedTiers);
+    }
+  }, [existingProduct]);
+
+  // Sync tiers state with react-hook-form
+  useEffect(() => {
+    setValue("tierVariations", tiers);
+  }, [tiers, setValue]);
+
   const [tempOptionInput, setTempOptionInput] = useState<{ [key: number]: string }>({});
 
   // API Hook
@@ -191,7 +216,7 @@ export function ProductVariantsTab({
     if (tiers.length === 0) return;
     const invalidTier = tiers.find((t) => !t.name || t.options.length === 0);
     if (invalidTier) {
-      alert("Vui lòng nhập tên nhóm phân loại và ít nhất 1 tùy chọn.");
+      toast.error("Vui lòng nhập tên nhóm phân loại và ít nhất 1 tùy chọn.");
       return;
     }
 

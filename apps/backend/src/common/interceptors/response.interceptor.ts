@@ -14,6 +14,14 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
   constructor(private readonly reflector: Reflector) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const http = context.switchToHttp();
+    const response = http.getResponse();
+    const contentType = response?.getHeader?.('content-type') || response?.getHeader?.('Content-Type');
+
+    if (contentType && (contentType.includes('text/csv') || contentType.includes('application/octet-stream'))) {
+      return next.handle();
+    }
+
     const message =
       this.reflector.get<string>(CUSTOM_MESSAGE, context.getHandler()) ||
       'Success';

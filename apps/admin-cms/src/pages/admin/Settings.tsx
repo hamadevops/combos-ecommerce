@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Save, Globe, Mail, Share2, ShoppingBag, Undo, Loader2 } from "lucide-react";
+import { Save, Globe, Mail, Share2, ShoppingBag, Undo, Loader2, Menu } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SliderSettingsInput } from "@/components/admin/SliderSettingsInput";
+import { MenuSettingsInput } from "@/components/admin/MenuSettingsInput";
 import { settingsService } from "@/services/settings.service";
 import { uploadService } from "@/services/upload.service";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -81,9 +82,14 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
     defaultValues,
   });
 
+  const queryClient = useQueryClient();
+
   const updateSettingMutation = useMutation({
     mutationFn: async ({ id, value }: { id: number; value: any }) => {
       return settingsService.update(id, { value });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["settings"] });
     },
     onError: (error: any) => {
       console.error("Failed to update setting", error);
@@ -112,10 +118,10 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
             }
           }
 
-          // Handle JSON Fields (e.g. Slider)
+           // Handle JSON Fields (e.g. Slider, Menu)
           if (setting.type === "json") {
-            // Check if it's the slider array
-            if (Array.isArray(newValue)) {
+            // Check if it's the slider array which contains files
+            if (setting.key === "home_slider" && Array.isArray(newValue)) {
               const updatedValue = await Promise.all(
                 newValue.map(async (item: any) => {
                   // Helper to upload image in slider item if changed
@@ -199,6 +205,14 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
                   );
                 }
 
+                if (setting.key === "main_menu") {
+                  return (
+                    <div className="max-w-full">
+                      <MenuSettingsInput value={field.value} onChange={field.onChange} />
+                    </div>
+                  );
+                }
+
                 if (
                   setting.key === "site_description" ||
                   setting.key === "store_description" ||
@@ -240,7 +254,10 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit, (e) => console.error("Form errors:", e))}
+      onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.error("Form errors:", errors);
+        toast.error("Vui lòng kiểm tra lại các trường thông tin lỗi ở các tab!");
+      })}
       className="space-y-6"
     >
       <div className="flex justify-between items-center">
@@ -271,12 +288,15 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
+        <TabsList className="grid w-full grid-cols-5 lg:w-[750px]">
           <TabsTrigger value="general" className="gap-2">
             <Globe className="h-4 w-4" /> Cửa hàng
           </TabsTrigger>
           <TabsTrigger value="appearance" className="gap-2">
             <ShoppingBag className="h-4 w-4" /> Giao diện
+          </TabsTrigger>
+          <TabsTrigger value="menu" className="gap-2">
+            <Menu className="h-4 w-4" /> Menu
           </TabsTrigger>
           <TabsTrigger value="contact" className="gap-2">
             <Mail className="h-4 w-4" /> Liên hệ
@@ -304,6 +324,16 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
                 <CardDescription>Tùy chỉnh banner, slider và hình ảnh.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">{renderInputs("appearance")}</CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="menu">
+            <Card>
+              <CardHeader>
+                <CardTitle>Cấu hình Menu chính</CardTitle>
+                <CardDescription>Thiết lập và phân cấp menu chính hiển thị trên trang chủ.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">{renderInputs("menu")}</CardContent>
             </Card>
           </TabsContent>
 

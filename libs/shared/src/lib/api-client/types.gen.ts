@@ -2233,6 +2233,111 @@ export type DashboardStatsResponseDto = {
   topSellingProducts: Array<TopSellingProductItemDto>;
 };
 
+export type SubmitNewsletterDto = {
+  email: string;
+  metadata?: {
+    [key: string]: unknown;
+  };
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+};
+
+export type SubmitContactFormDto = {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  /**
+   * Additional flexible metadata associated with the submission
+   */
+  metadata?: {
+    [key: string]: unknown;
+  };
+  /**
+   * UTM Source (e.g. google, facebook)
+   */
+  utmSource?: string;
+  /**
+   * UTM Medium (e.g. cpc, banner, email)
+   */
+  utmMedium?: string;
+  /**
+   * UTM Campaign Name
+   */
+  utmCampaign?: string;
+  /**
+   * UTM Term (usually search keywords)
+   */
+  utmTerm?: string;
+  /**
+   * UTM Content (used to differentiate similar content or links)
+   */
+  utmContent?: string;
+};
+
+export type CreateContactDto = {
+  name?: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  type: 'NEWSLETTER' | 'CONTACT_FORM';
+  status: 'UNREAD' | 'READ' | 'REPLIED';
+  metadata?: {
+    [key: string]: unknown;
+  };
+};
+
+export type UpdateContactStatusDto = {
+  status: 'UNREAD' | 'READ' | 'REPLIED';
+};
+
+export type UpdateContactDto = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+  type?: 'NEWSLETTER' | 'CONTACT_FORM';
+  status?: 'UNREAD' | 'READ' | 'REPLIED';
+  metadata?: {
+    [key: string]: unknown;
+  };
+};
+
+export type AppFeedbackResponseDto = {
+  id: number;
+  customerName?: string;
+  customerAvatar?: string;
+  content?: string;
+  rating: number;
+  image?: string;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+};
+
+export type CreateAppFeedbackDto = {
+  customerName?: string;
+  customerAvatar?: string;
+  content?: string;
+  rating?: number;
+  image?: string;
+  isActive?: boolean;
+  sortOrder?: number;
+};
+
+export type UpdateAppFeedbackDto = {
+  customerName?: string;
+  customerAvatar?: string;
+  content?: string;
+  rating?: number;
+  image?: string;
+  isActive?: boolean;
+  sortOrder?: number;
+};
+
 export type AppGetHelloData = {
   body?: never;
   path?: never;
@@ -5803,3 +5908,277 @@ export type DashboardGetStatsResponses = {
 
 export type DashboardGetStatsResponse =
   DashboardGetStatsResponses[keyof DashboardGetStatsResponses];
+
+export type ContactsSubmitNewsletterData = {
+  body: SubmitNewsletterDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/contacts/newsletter';
+};
+
+export type ContactsSubmitNewsletterResponses = {
+  /**
+   * Subscribed successfully
+   */
+  201: unknown;
+};
+
+export type ContactsSubmitContactFormData = {
+  body: SubmitContactFormDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/contacts/submit';
+};
+
+export type ContactsSubmitContactFormResponses = {
+  /**
+   * Contact submitted successfully
+   */
+  201: unknown;
+};
+
+export type ContactsFindAllData = {
+  body?: never;
+  path?: never;
+  query: {
+    page: number;
+    limit: number;
+    search: string;
+  };
+  url: '/api/v1/contacts';
+};
+
+export type ContactsFindAllResponses = {
+  200: unknown;
+};
+
+export type ContactsCreateData = {
+  body: CreateContactDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/contacts';
+};
+
+export type ContactsCreateResponses = {
+  201: unknown;
+};
+
+export type ContactsExportCsvData = {
+  body?: never;
+  path?: never;
+  query: {
+    search: string;
+  };
+  url: '/api/v1/contacts/export';
+};
+
+export type ContactsExportCsvResponses = {
+  200: unknown;
+};
+
+export type ContactsRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/contacts/{id}';
+};
+
+export type ContactsRemoveResponses = {
+  200: unknown;
+};
+
+export type ContactsFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/contacts/{id}';
+};
+
+export type ContactsFindOneResponses = {
+  200: unknown;
+};
+
+export type ContactsUpdateData = {
+  body: UpdateContactDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/contacts/{id}';
+};
+
+export type ContactsUpdateResponses = {
+  200: unknown;
+};
+
+export type ContactsUpdateStatusData = {
+  body: UpdateContactStatusDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/contacts/{id}/status';
+};
+
+export type ContactsUpdateStatusResponses = {
+  200: unknown;
+};
+
+export type AppFeedbacksFindAllPublicData = {
+  body?: never;
+  path?: never;
+  query?: {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Filter by active status
+     */
+    isActive?: boolean;
+  };
+  url: '/api/v1/app-feedbacks';
+};
+
+export type AppFeedbacksFindAllPublicResponses = {
+  /**
+   * List of active app feedbacks
+   */
+  200: Array<AppFeedbackResponseDto>;
+};
+
+export type AppFeedbacksFindAllPublicResponse =
+  AppFeedbacksFindAllPublicResponses[keyof AppFeedbacksFindAllPublicResponses];
+
+export type AppFeedbacksCreateData = {
+  body: CreateAppFeedbackDto;
+  path?: never;
+  query?: never;
+  url: '/api/v1/app-feedbacks';
+};
+
+export type AppFeedbacksCreateResponses = {
+  /**
+   * App feedback created successfully.
+   */
+  201: AppFeedbackResponseDto;
+};
+
+export type AppFeedbacksCreateResponse =
+  AppFeedbacksCreateResponses[keyof AppFeedbacksCreateResponses];
+
+export type AppFeedbacksFindAllAdminData = {
+  body?: never;
+  path?: never;
+  query?: {
+    /**
+     * Page number
+     */
+    page?: number;
+    /**
+     * Items per page
+     */
+    limit?: number;
+    /**
+     * Filter by active status
+     */
+    isActive?: boolean;
+  };
+  url: '/api/v1/app-feedbacks/admin';
+};
+
+export type AppFeedbacksFindAllAdminResponses = {
+  /**
+   * List of all app feedbacks
+   */
+  200: Array<AppFeedbackResponseDto>;
+};
+
+export type AppFeedbacksFindAllAdminResponse =
+  AppFeedbacksFindAllAdminResponses[keyof AppFeedbacksFindAllAdminResponses];
+
+export type AppFeedbacksRemoveData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/app-feedbacks/{id}';
+};
+
+export type AppFeedbacksRemoveErrors = {
+  /**
+   * App feedback not found
+   */
+  404: unknown;
+};
+
+export type AppFeedbacksRemoveResponses = {
+  /**
+   * App feedback deleted successfully.
+   */
+  200: SuccessResponseDto;
+};
+
+export type AppFeedbacksRemoveResponse =
+  AppFeedbacksRemoveResponses[keyof AppFeedbacksRemoveResponses];
+
+export type AppFeedbacksFindOneData = {
+  body?: never;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/app-feedbacks/{id}';
+};
+
+export type AppFeedbacksFindOneErrors = {
+  /**
+   * App feedback not found
+   */
+  404: unknown;
+};
+
+export type AppFeedbacksFindOneResponses = {
+  /**
+   * App feedback details
+   */
+  200: AppFeedbackResponseDto;
+};
+
+export type AppFeedbacksFindOneResponse =
+  AppFeedbacksFindOneResponses[keyof AppFeedbacksFindOneResponses];
+
+export type AppFeedbacksUpdateData = {
+  body: UpdateAppFeedbackDto;
+  path: {
+    id: number;
+  };
+  query?: never;
+  url: '/api/v1/app-feedbacks/{id}';
+};
+
+export type AppFeedbacksUpdateErrors = {
+  /**
+   * App feedback not found
+   */
+  404: unknown;
+};
+
+export type AppFeedbacksUpdateResponses = {
+  /**
+   * App feedback updated successfully.
+   */
+  200: AppFeedbackResponseDto;
+};
+
+export type AppFeedbacksUpdateResponse =
+  AppFeedbacksUpdateResponses[keyof AppFeedbacksUpdateResponses];
