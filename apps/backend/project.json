@@ -17,6 +17,12 @@
         "cwd": "apps/backend"
       }
     },
+    "start": {
+      "command": "pnpm run start:prod",
+      "options": {
+        "cwd": "apps/backend"
+      }
+    },
     "test": {
       "command": "jest",
       "options": {

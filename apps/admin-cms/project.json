@@ -17,6 +17,12 @@
         "cwd": "apps/admin-cms"
       }
     },
+    "start": {
+      "command": "pnpm run preview",
+      "options": {
+        "cwd": "apps/admin-cms"
+      }
+    },
     "test": {
       "command": "vitest run",
       "options": {
