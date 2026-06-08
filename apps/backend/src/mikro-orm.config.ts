@@ -1,4 +1,5 @@
 import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
+import { SeedManager } from '@mikro-orm/seeder';
 import { Options } from '@mikro-orm/core';
 import { MySqlDriver } from '@mikro-orm/mysql';
 import { config } from 'dotenv';
@@ -149,9 +150,11 @@ const MikroOrmConfig: Options<MySqlDriver> = {
       `Migration${timestamp}${name}`,
   },
   seeder: {
-    path: 'src/database/seeders',
+    path: join(__dirname, 'database', 'seeders'),
+    pathTs: join(__dirname, 'database', 'seeders'),
+    defaultSeeder: 'DatabaseSeeder',
   },
-  extensions: [Migrator],
+  extensions: [Migrator, SeedManager],
 };
 
 export default MikroOrmConfig;

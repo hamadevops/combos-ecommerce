@@ -25,14 +25,31 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 COPY libs/shared ./libs/shared
 COPY apps/backend ./apps/backend
 
-# Build NestJS
-RUN pnpm nx build @vibe/backend
-
-# Prune non-production dependencies
-RUN pnpm prune --prod
+# Build NestJS in production mode (compiles, bundles, and obfuscates)
+RUN pnpm --filter=@vibe/backend build:prod
 
 # ================================
-# Stage 2: Production image
+# Stage 2: Production dependencies installer
+# ================================
+FROM node:${NODE_VERSION}-alpine AS installer
+
+WORKDIR /app
+
+# Enable pnpm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@9.12.2 --activate
+
+# Copy package.json and remove workspace reference, touch pnpm-workspace.yaml to isolate
+COPY apps/backend/package.json ./package.json
+RUN sed -i '/"@vibe\/shared"/d' ./package.json && touch pnpm-workspace.yaml
+
+# Install only production dependencies
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --prod --no-frozen-lockfile
+
+# ================================
+# Stage 3: Production image
 # ================================
 FROM node:${NODE_VERSION}-alpine AS prod
 
@@ -44,9 +61,8 @@ RUN addgroup -S appgroup && adduser -S -D -G appgroup appuser \
 
 # Copy built files + package.json + node_modules with chown
 COPY --from=builder --chown=appuser:appgroup /app/dist/apps/backend ./dist
-COPY --from=builder --chown=appuser:appgroup /app/apps/backend/package.json ./package.json
-COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
-COPY --from=builder --chown=appuser:appgroup /app/package.json ./package.json
+COPY --from=installer --chown=appuser:appgroup /app/node_modules ./node_modules
+COPY --from=installer --chown=appuser:appgroup /app/package.json ./package.json
 
 # Chuyển sang non-root user
 USER appuser
@@ -59,7 +75,7 @@ EXPOSE 3333
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD wget -qO- http://localhost:3333/api/v1 || exit 1
+    CMD wget -qO- http://127.0.0.1:3333/api/v1 || exit 1
 
 # Start NestJS
 CMD ["node", "dist/main.js"]

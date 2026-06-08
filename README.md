@@ -10,7 +10,7 @@ Hệ thống bao gồm các thành phần chính sau:
 | :---------------------- | :----------------------------- | :----------------------------------------------------------- |
 | **@vibe/admin-cms**     | React, Vite, Shadcn UI         | Trang quản trị (Dashboard) để quản lý toàn bộ hệ thống.      |
 | **@vibe/tiktok-client** | Next.js (App Router), Tailwind | Giao diện người dùng cuối, tối ưu cho trải nghiệm mua sắm.   |
-| **@vibe/backend**       | NestJS, PostgreSQL             | Hệ thống API tập trung, xử lý logic nghiệp vụ và dữ liệu.    |
+| **@vibe/backend**       | NestJS, MySQL                  | Hệ thống API tập trung, xử lý logic nghiệp vụ và dữ liệu.    |
 | **@vibe/shared**        | TypeScript                     | Thư viện dùng chung (API Client, Types, Utils) giữa các app. |
 
 ---
@@ -21,7 +21,7 @@ Hệ thống bao gồm các thành phần chính sau:
 
 - **Node.js**: Phiên bản 20.x trở lên.
 - **pnpm**: Phiên bản 9.x trở lên.
-- **Database**: PostgreSQL (đã được cấu hình trong backend).
+- **Database**: MySQL (đã được cấu hình trong backend).
 
 ### 2. Cài đặt Dependencies
 
@@ -76,6 +76,7 @@ Hoặc chạy riêng lẻ từng ứng dụng:
 
 ## 📄 Tài liệu chi tiết
 
+- [Hướng dẫn khởi chạy hệ thống (Dev & Docker/Harbor)](./docs/RUNNING.md)
 - [Mô tả tính năng hệ thống](./docs/FEATURES.md)
 - [Hướng dẫn API (Shared SDK)](./libs/shared/README.md)
 

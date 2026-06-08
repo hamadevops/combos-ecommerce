@@ -1,7 +1,7 @@
 const JavaScriptObfuscator = require('javascript-obfuscator');
 const fs = require('fs');
 
-const path = 'dist/main.js';
+const path = '../../dist/apps/backend/main.js';
 
 fs.readFile(path, 'utf8', (err, data) => {
     if (err) {

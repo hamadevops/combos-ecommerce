@@ -10,6 +10,7 @@ import helmet from 'helmet';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { winstonConfig } from './config/logger.config';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { DatabaseSeeder } from './database/seeders/DatabaseSeeder';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -61,6 +62,11 @@ async function bootstrap() {
       await migrator.up();
       console.log('Migrations completed!');
     }
+
+    console.log('Running database seeders...');
+    const seeder = orm.getSeeder();
+    await seeder.seed(DatabaseSeeder);
+    console.log('Database seeding completed!');
   }
 
   await app.listen(process.env.PORT ?? 3333);
