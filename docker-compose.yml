@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
     backend:
         image: 127.0.0.1:8888/library/backend:latest
@@ -52,5 +50,5 @@ services:
 
 networks:
     app-network:
-        name: vibe-app-network
+        name: ecommerce-app-network
         external: true

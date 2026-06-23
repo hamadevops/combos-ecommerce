@@ -1,0 +1,26 @@
+<clickhouse>
+    <!-- Listen on all IPv4 and IPv6 interfaces inside the container; ports are mapped via Docker -->
+    <listen_host>::</listen_host>
+    <listen_host>0.0.0.0</listen_host>
+
+    <!-- Logging configuration -->
+    <logger>
+        <level>information</level>
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <size>100M</size>
+        <count>10</count>
+    </logger>
+
+    <!-- Configure query log, slow query log and error log tables for system auditing -->
+    <query_log>
+        <database>system</database>
+        <table>query_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </query_log>
+
+    <!-- Prevent server crashes on expensive queries by defining a max memory usage.
+         If host memory is low, ClickHouse will gracefully reject the offending query. -->
+    <max_server_memory_usage_to_keep_allocation>1073741824</max_server_memory_usage_to_keep_allocation>
+</clickhouse>

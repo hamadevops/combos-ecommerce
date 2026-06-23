@@ -1,0 +1,33 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-24.8-alpine}
+    container_name: clickhouse-server
+    restart: unless-stopped
+    ports:
+      - "${CLICKHOUSE_HTTP_PORT:-8125}:8123"
+      - "${CLICKHOUSE_TCP_PORT:-9005}:9000"
+    environment:
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-clickhouse_admin}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhouse_pass}
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB:-analytics_db}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      # Persistent directories on the host
+      - ${CLICKHOUSE_DATA_PATH:-./data}:/var/lib/clickhouse
+      - ${CLICKHOUSE_LOG_PATH:-./logs}:/var/log/clickhouse-server
+      # Custom production configurations overrides
+      - ./config/custom-config.xml:/etc/clickhouse-server/config.d/custom-config.xml:ro
+      - ./config/custom-users.xml:/etc/clickhouse-server/users.d/custom-users.xml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: ecommerce-app-network
+    external: true

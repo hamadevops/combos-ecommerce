@@ -1,0 +1,16 @@
+services:
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:${CLOUDBEAVER_VERSION:-latest}
+    container_name: cloudbeaver-gui
+    restart: unless-stopped
+    ports:
+      - "${CLOUDBEAVER_PORT:-8978}:8978"
+    volumes:
+      - ${CLOUDBEAVER_DATA_PATH:-./data}:/opt/cloudbeaver/workspace
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: ecommerce-app-network
+    external: true

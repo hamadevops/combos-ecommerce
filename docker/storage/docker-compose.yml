@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   minio:
     image: tahuuhao/minio:${MINIO_VERSION:-latest}
@@ -40,5 +38,5 @@ services:
 
 networks:
   app-network:
-    name: vibe-app-network
+    name: ecommerce-app-network
     driver: bridge

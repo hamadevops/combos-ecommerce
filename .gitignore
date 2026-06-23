@@ -52,3 +52,6 @@ docker/database/mariadb/logs/
 docker/database/redis/data/
 docker/database/redis/logs/
 docker/storage/data/
+docker/clickhouse/data/
+docker/clickhouse/logs/
+docker/db-manager/data/
