@@ -27,6 +27,30 @@ run_with_sudo() {
     fi
 }
 
+# 0. Pre-create directories and fix permissions to prevent container permission-denied errors
+echo -e "\n${YELLOW}[0/5] Pre-creating volume directories and fixing permissions...${NC}"
+mkdir -p \
+  database/mariadb/data \
+  database/mariadb/logs \
+  database/redis/data \
+  database/redis/logs \
+  storage/data \
+  clickhouse/data \
+  clickhouse/logs \
+  db-manager/data \
+  harbor/data
+
+run_with_sudo chmod -R 777 \
+  database/mariadb/data \
+  database/mariadb/logs \
+  database/redis/data \
+  database/redis/logs \
+  storage/data \
+  clickhouse/data \
+  clickhouse/logs \
+  db-manager/data \
+  harbor/data
+
 # 1. Start Database Stack
 echo -e "\n${YELLOW}[1/5] Starting Database Stack (MariaDB, Redis)...${NC}"
 cd database
