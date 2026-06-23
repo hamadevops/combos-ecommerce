@@ -19,7 +19,7 @@ services:
       - ./config/custom-config.xml:/etc/clickhouse-server/config.d/custom-config.xml:ro
       - ./config/custom-users.xml:/etc/clickhouse-server/users.d/custom-users.xml:ro
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8123/ping"]
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8123/ping"]
       interval: 10s
       timeout: 5s
       retries: 3
