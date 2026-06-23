@@ -32,11 +32,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
-      
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    name: ecommerce-app-network
-    driver: bridge

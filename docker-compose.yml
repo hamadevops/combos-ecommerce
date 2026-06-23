@@ -51,4 +51,3 @@ services:
 networks:
     app-network:
         name: ecommerce-app-network
-        external: true
