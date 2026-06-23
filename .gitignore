@@ -55,3 +55,7 @@ docker/storage/data/
 docker/clickhouse/data/
 docker/clickhouse/logs/
 docker/db-manager/data/
+
+# Harbor generated configs
+docker/harbor/docker-compose.yml
+docker/harbor/common/config/
