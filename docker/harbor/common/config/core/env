@@ -22,8 +22,8 @@ PORTAL_URL=http://portal:8080
 TOKEN_SERVICE_URL=http://core:8080/service/token
 HARBOR_ADMIN_PASSWORD=Harbor12345
 MAX_JOB_WORKERS=10
-CORE_SECRET=sY2Qom0jqyjfMUbs
-JOBSERVICE_SECRET=WR6qnhMYOk3dK8B1
+CORE_SECRET=RPjGISuz2EG8mS1A
+JOBSERVICE_SECRET=YSOqwzmAusl99Mcw
 WITH_TRIVY=False
 CORE_URL=http://core:8080
 CORE_LOCAL_URL=http://127.0.0.1:8080
@@ -34,14 +34,14 @@ READ_ONLY=false
 RELOAD_KEY=
 REGISTRY_CONTROLLER_URL=http://registryctl:8080
 REGISTRY_CREDENTIAL_USERNAME=harbor_registry_user
-REGISTRY_CREDENTIAL_PASSWORD=ZFJO5UxKaKH0VwMXIXKUUrd5ac2EKvue
-CSRF_KEY=7htxR1WzTujcAnecb4zqytX7XbFYGw6a
-ROBOT_SCANNER_NAME_PREFIX=tREpEzp6
+REGISTRY_CREDENTIAL_PASSWORD=OzshB77BJGFIaID3Q8ccMd9eMNIr3yuM
+CSRF_KEY=zneTiUyJZCco3YNbxWz4Q2VvSbJWnvNB
+ROBOT_SCANNER_NAME_PREFIX=WcehG5GC
 PERMITTED_REGISTRY_TYPES_FOR_PROXY_CACHE=docker-hub,harbor,azure-acr,aws-ecr,google-gcr,quay,docker-registry,github-ghcr,jfrog-artifactory
 
 HTTP_PROXY=
 HTTPS_PROXY=
-NO_PROXY=jobservice,.internal,registryctl,.local,127.0.0.1,nginx,registry,db,trivy-adapter,postgresql,exporter,log,core,redis,portal,localhost
+NO_PROXY=trivy-adapter,.local,core,jobservice,registry,db,redis,postgresql,.internal,exporter,portal,registryctl,nginx,localhost,127.0.0.1,log
 
 PORT=8080
 
