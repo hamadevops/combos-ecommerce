@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  minio:
+    image: tahuuhao/minio:${MINIO_VERSION:-latest}
+    container_name: minio
+    restart: unless-stopped
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_WEB_PORT:-9001}:9001"
+    environment:
+      # Credentials
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      
+      # Production URLs (Ensures correct redirection through proxy/domain)
+      MINIO_SERVER_URL: ${MINIO_SERVER_URL:-http://localhost:9000}
+      MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL:-http://localhost:9001}
+      
+      # Storage Optimization: Compression
+      # Enables gzip/deflate compression for text-based resources on the fly to save disk space
+      MINIO_COMPRESSION_ENABLE: "on"
+      MINIO_COMPRESSION_EXTENSIONS: ".txt,.log,.json,.csv,.xml,.yaml,.yml,.sql,.html,.css,.js"
+      MINIO_COMPRESSION_MIME_TYPES: "text/*,application/json,application/xml,application/javascript,application/x-yaml,application/x-sql"
+    
+    volumes:
+      - ${MINIO_DATA_PATH:-./data}:/data
+    command: server --console-address ":9001" /data
+    
+    # Production Health Check
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/minio/health/live || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+      
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: vibe-app-network
+    driver: bridge

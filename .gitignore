@@ -47,3 +47,8 @@ temp
 # Docker volumes data
 apps/backend/data/
 docker/harbor/data/
+docker/database/mariadb/data/
+docker/database/mariadb/logs/
+docker/database/redis/data/
+docker/database/redis/logs/
+docker/storage/data/

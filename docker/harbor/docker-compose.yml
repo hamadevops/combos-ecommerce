@@ -12,7 +12,7 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/logs/:/var/log/docker/:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/logs/:/var/log/docker/:z
       - type: bind
         source: ./common/config/log/logrotate.conf
         target: /etc/logrotate.d/logrotate.conf
@@ -34,10 +34,10 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/registry:/storage:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/registry:/storage:z
       - ./common/config/registry/:/etc/registry/:z
       - type: bind
-        source: /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/secret/registry/root.crt
+        source: /home/hamadevops/works/combos-ecommerce/docker/harbor/data/secret/registry/root.crt
         target: /etc/registry/root.crt
       - type: bind
         source: ./common/config/shared/trust-certificates
@@ -64,7 +64,7 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/registry:/storage:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/registry:/storage:z
       - ./common/config/registry/:/etc/registry/:z
       - type: bind
         source: ./common/config/registryctl/config.yml
@@ -93,7 +93,7 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/database:/var/lib/postgresql/data:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/database:/var/lib/postgresql/data:z
     networks:
       harbor:
     env_file:
@@ -118,17 +118,17 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/ca_download/:/etc/core/ca/:z
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/:/data/:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/ca_download/:/etc/core/ca/:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/:/data/:z
       - ./common/config/core/certificates/:/etc/core/certificates/:z
       - type: bind
         source: ./common/config/core/app.conf
         target: /etc/core/app.conf
       - type: bind
-        source: /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/secret/core/private_key.pem
+        source: /home/hamadevops/works/combos-ecommerce/docker/harbor/data/secret/core/private_key.pem
         target: /etc/core/private_key.pem
       - type: bind
-        source: /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/secret/keys/secretkey
+        source: /home/hamadevops/works/combos-ecommerce/docker/harbor/data/secret/keys/secretkey
         target: /etc/core/key
       - type: bind
         source: ./common/config/shared/trust-certificates
@@ -183,7 +183,7 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/job_logs:/var/log/jobs:z
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/job_logs:/var/log/jobs:z
       - type: bind
         source: ./common/config/jobservice/config.yml
         target: /etc/jobservice/config.yml
@@ -210,7 +210,7 @@ services:
       - SETGID
       - SETUID
     volumes:
-      - /home/hao/work/vibe-cms/vibe-monorepo/docker/harbor/data/redis:/var/lib/redis
+      - /home/hamadevops/works/combos-ecommerce/docker/harbor/data/redis:/var/lib/redis
     networks:
       harbor:
     depends_on:

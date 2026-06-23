@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.11}
+    container_name: mariadb-container
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    command: [
+      "mysqld",
+      "--port=${DB_PORT:-3306}"
+    ]
+    volumes:
+      # Mount production configuration
+      - ${DB_CONF_PATH:-./mariadb/conf}/my.cnf:/etc/mysql/my.cnf:ro
+      # Mount data persistent volume
+      - ${DB_DATA_PATH:-./mariadb/data}:/var/lib/mysql
+      # Mount external logs directory
+      - ${DB_LOG_PATH:-./mariadb/logs}:/var/log/mysql
+
+  redis:
+    image: redis:${REDIS_VERSION:-7.2}
+    container_name: redis-container
+    restart: unless-stopped
+    network_mode: host
+    command: [
+      "redis-server",
+      "/usr/local/etc/redis/redis.conf",
+      "--port", "${REDIS_PORT:-6379}",
+      "--requirepass", "${REDIS_PASSWORD}",
+      "--dir", "/data"
+    ]
+    volumes:
+      # Mount production configuration
+      - ${REDIS_CONF_PATH:-./redis/conf}/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      # Mount data persistent volume
+      - ${REDIS_DATA_PATH:-./redis/data}:/data
+      # Mount external logs directory
+      - ${REDIS_LOG_PATH:-./redis/logs}:/var/log/redis
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:${PHPMYADMIN_VERSION:-latest}
+    container_name: phpmyadmin-container
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      # In host networking mode, containers communicate via loopback interface
+      PMA_HOST: 127.0.0.1
+      PMA_PORT: ${DB_PORT:-3306}
+      # Set custom Apache listening port on host to prevent port 80 conflicts
+      APACHE_PORT: ${PMA_PORT:-8082}
+      UPLOAD_LIMIT: 2G
+    depends_on:
+      - mariadb
