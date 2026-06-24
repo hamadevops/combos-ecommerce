@@ -124,6 +124,11 @@ cd ..
 echo -e "\n${YELLOW}[5/5] Starting Harbor Registry Stack (Log-driver safe sequence)...${NC}"
 cd harbor
 
+# Stop any running harbor containers to prevent DB locks/corruption during clean runs
+echo -e "${YELLOW}Stopping any existing Harbor containers...${NC}"
+docker stop harbor-jobservice nginx harbor-core registryctl redis harbor-db registry harbor-portal harbor-log 2>/dev/null || true
+docker rm harbor-jobservice nginx harbor-core registryctl redis harbor-db registry harbor-portal harbor-log 2>/dev/null || true
+
 # Clean up old configuration to prevent stale permission locks
 if [ -d "common/config" ]; then
     echo -e "${YELLOW}Cleaning old Harbor configurations...${NC}"
