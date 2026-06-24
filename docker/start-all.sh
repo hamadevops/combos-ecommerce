@@ -27,8 +27,53 @@ run_with_sudo() {
     fi
 }
 
+# Helper function to generate a random alphanumeric password of length 16
+generate_random_password() {
+    openssl rand -base64 16 | tr -dc 'A-Za-z0-9' | head -c 16
+}
+
+# Helper function to auto-create .env from .env.example if missing and generate secure credentials
+init_env_file() {
+    local file=$1
+    if [ ! -f "$file" ]; then
+        if [ -f "${file}.example" ]; then
+            echo -e "${GREEN}Creating $file from template and generating secure credentials...${NC}"
+            cp "${file}.example" "$file"
+            
+            # Generate random passwords
+            local rand_pass1=$(generate_random_password)
+            local rand_pass2=$(generate_random_password)
+            local rand_pass3=$(generate_random_password)
+            local rand_pass4=$(generate_random_password)
+            
+            # Replace placeholder passwords in the generated .env file
+            sed -i "s/change_this_to_a_very_strong_root_password_123456/$rand_pass1/g" "$file"
+            sed -i "s/change_this_to_a_very_strong_user_password_123456/$rand_pass2/g" "$file"
+            sed -i "s/change_this_to_a_very_strong_redis_password_123456/$rand_pass3/g" "$file"
+            sed -i "s/change_this_to_admin_user/minioadmin/g" "$file"
+            sed -i "s/change_this_to_a_very_strong_password_123456/$rand_pass4/g" "$file"
+        fi
+    fi
+}
+
+# Helper function to extract config values for printing
+get_env_val() {
+    local file=$1
+    local var=$2
+    if [ -f "$file" ]; then
+        grep "^${var}=" "$file" | cut -d'=' -f2-
+    else
+        echo "N/A"
+    fi
+}
+
 # 0. Pre-create directories and fix permissions to prevent container permission-denied errors
-echo -e "\n${YELLOW}[0/5] Pre-creating volume directories and fixing permissions...${NC}"
+echo -e "\n${YELLOW}[0/5] Pre-creating volume directories, environment files, and fixing permissions...${NC}"
+init_env_file "database/.env"
+init_env_file "storage/.env"
+init_env_file "clickhouse/.env"
+init_env_file "db-manager/.env"
+
 mkdir -p \
   database/mariadb/data \
   database/mariadb/logs \
@@ -112,3 +157,22 @@ echo -e "\n${GREEN}=============================================================
 echo -e "${GREEN}        All Services Started successfully! Current status:         ${NC}"
 echo -e "${GREEN}===================================================================${NC}"
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+# Print the generated credentials dashboard
+echo -e "\n${BLUE}===================================================================${NC}"
+echo -e "${BLUE}               Auto-Generated Local Credentials Summary            ${NC}"
+echo -e "${BLUE}===================================================================${NC}"
+echo -e "${YELLOW}MariaDB Database:${NC}"
+echo -e "  Host User:     ${GREEN}$(get_env_val "database/.env" "DB_USER")${NC}"
+echo -e "  User Password: ${GREEN}$(get_env_val "database/.env" "DB_PASSWORD")${NC}"
+echo -e "  Root Password: ${GREEN}$(get_env_val "database/.env" "DB_ROOT_PASSWORD")${NC}"
+echo -e "  DB Name:       ${GREEN}$(get_env_val "database/.env" "DB_NAME")${NC}"
+echo -e "${YELLOW}Redis Cache:${NC}"
+echo -e "  Password:      ${GREEN}$(get_env_val "database/.env" "REDIS_PASSWORD")${NC}"
+echo -e "${YELLOW}MinIO Object Storage:${NC}"
+echo -e "  Root User:     ${GREEN}$(get_env_val "storage/.env" "MINIO_ROOT_USER")${NC}"
+echo -e "  Root Password: ${GREEN}$(get_env_val "storage/.env" "MINIO_ROOT_PASSWORD")${NC}"
+echo -e "${YELLOW}ClickHouse Analytics:${NC}"
+echo -e "  Admin User:    ${GREEN}$(get_env_val "clickhouse/.env" "CLICKHOUSE_USER")${NC}"
+echo -e "  Admin Password:${GREEN}$(get_env_val "clickhouse/.env" "CLICKHOUSE_PASSWORD")${NC}"
+echo -e "${BLUE}===================================================================${NC}"
