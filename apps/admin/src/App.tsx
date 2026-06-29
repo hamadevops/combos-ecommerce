@@ -1,122 +1,158 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "./components/providers/theme-provider";
+import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./components/providers/AuthProvider";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { GuestRoute } from "./components/auth/GuestRoute";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminCategories from "./pages/admin/Categories";
+import AdminProducts from "./pages/admin/Products";
+import AdminProductForm from "./pages/admin/AdminProductForm";
+import AdminTags from "./pages/admin/Tags";
+import AdminBlog from "./pages/admin/Blog";
+import AdminBlogForm from "./pages/admin/AdminBlogForm";
+import BlogPreview from "./pages/admin/BlogPreview";
+import AdminTopics from "./pages/admin/Topics";
+import AdminCustomers from "./pages/admin/Customers";
+import AdminContacts from "./pages/admin/Contacts";
+import AdminOrders from "./pages/admin/Orders";
+import OrderDetail from "./pages/admin/OrderDetail";
+import AdminSettings from "./pages/admin/Settings";
+import AdminPages from "./pages/admin/Pages";
+import AdminPageForm from "./pages/admin/AdminPageForm";
+import AdminFaqs from "./pages/admin/Faqs";
+import AdminFaqForm from "./pages/admin/AdminFaqForm";
+import AdminAppFeedbacks from "./pages/admin/AppFeedbacks";
+import AdminAppFeedbackForm from "./pages/admin/AdminAppFeedbackForm";
+import AdminRoles from "./pages/admin/Roles";
+import AdminRoleForm from "./pages/admin/AdminRoleForm";
+import AdminUsers from "./pages/admin/Users";
+import AdminUserForm from "./pages/admin/AdminUserForm";
+import AdminProfile from "./pages/admin/Profile";
+import Webhooks from "./pages/admin/Webhooks";
+import SeoManagement from "./pages/admin/SeoManagement";
+import AdminPopups from "./pages/admin/Popups";
+import AdminPopupForm from "./pages/admin/AdminPopupForm";
+import AdminPermissions from "./pages/admin/AdminPermissions";
+import AdminPermissionForm from "./pages/admin/AdminPermissionForm";
+import AdminPermissionGroups from "./pages/admin/AdminPermissionGroups";
+import AdminPermissionGroupForm from "./pages/admin/AdminPermissionGroupForm";
+import EmDashboard from "./pages/email-marketing/EmDashboard";
+import EmCampaigns from "./pages/email-marketing/EmCampaigns";
+import EmCampaignForm from "./pages/email-marketing/EmCampaignForm";
+import EmCampaignDetail from "./pages/email-marketing/EmCampaignDetail";
+import EmContacts from "./pages/email-marketing/EmContacts";
+import EmSegments from "./pages/email-marketing/EmSegments";
+import EmSegmentDetail from "./pages/email-marketing/EmSegmentDetail";
+import EmTemplates from "./pages/email-marketing/EmTemplates";
+import EmTemplateForm from "./pages/email-marketing/EmTemplateForm";
+import EmSettings from "./pages/email-marketing/EmSettings";
 
-function App() {
-  const [count, setCount] = useState(0)
+const queryClient = new QueryClient();
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+import { GlobalPopup } from "./components/common/GlobalPopup";
+
+const App = () => (
+  <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" attribute="class">
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner position="top-center" />
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
         >
-          Count is {count}
-        </button>
-      </section>
+          <AuthProvider>
+            <GlobalPopup />
+            <Routes>
+              {/* Public Auth Routes - Wrapped in GuestRoute */}
+              <Route element={<GuestRoute />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Route>
 
-      <div className="ticks"></div>
+              {/* Protected Admin Routes */}
+              <Route element={<ProtectedRoute excludedRoles={["user"]} />}>
+                <Route path="/" element={<AdminDashboard />} />
+                <Route path="/profile" element={<AdminProfile />} />
+                <Route path="/categories" element={<AdminCategories />} />
+                <Route path="/products" element={<AdminProducts />} />
+                <Route path="/products/new" element={<AdminProductForm />} />
+                <Route path="/products/edit/:id" element={<AdminProductForm />} />
+                <Route path="/blog" element={<AdminBlog />} />
+                <Route path="/blog/preview" element={<BlogPreview />} />
+                <Route path="/blog/preview/:id" element={<BlogPreview />} />
+                <Route path="/blog/new" element={<AdminBlogForm />} />
+                <Route path="/blog/edit/:id" element={<AdminBlogForm />} />
+                <Route path="/topics" element={<AdminTopics />} />
+                <Route path="/tags" element={<AdminTags />} />
+                <Route path="/customers" element={<AdminCustomers />} />
+                <Route path="/orders" element={<AdminOrders />} />
+                <Route path="/orders/:id" element={<OrderDetail />} />
+                <Route path="/settings" element={<AdminSettings />} />
+                <Route path="/pages" element={<AdminPages />} />
+                <Route path="/pages/create" element={<AdminPageForm />} />
+                <Route path="/pages/edit/:id" element={<AdminPageForm />} />
+                <Route path="/faqs" element={<AdminFaqs />} />
+                <Route path="/faqs/create" element={<AdminFaqForm />} />
+                <Route path="/faqs/edit/:id" element={<AdminFaqForm />} />
+                <Route path="/app-feedbacks" element={<AdminAppFeedbacks />} />
+                <Route path="/app-feedbacks/create" element={<AdminAppFeedbackForm />} />
+                <Route path="/app-feedbacks/edit/:id" element={<AdminAppFeedbackForm />} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank" rel="noopener noreferrer">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank" rel="noopener noreferrer">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank" rel="noopener noreferrer">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank" rel="noopener noreferrer">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank" rel="noopener noreferrer">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+                <Route path="/users" element={<AdminUsers />} />
+                <Route path="/users/create" element={<AdminUserForm />} />
+                <Route path="/users/edit/:id" element={<AdminUserForm />} />
+                <Route path="/roles" element={<AdminRoles />} />
+                <Route path="/roles/create" element={<AdminRoleForm />} />
+                <Route path="/roles/edit/:id" element={<AdminRoleForm />} />
+                <Route path="/permissions" element={<AdminPermissions />} />
+                <Route path="/permissions/create" element={<AdminPermissionForm />} />
+                <Route path="/permissions/edit/:id" element={<AdminPermissionForm />} />
+                <Route path="/permission-groups" element={<AdminPermissionGroups />} />
+                <Route path="/permission-groups/create" element={<AdminPermissionGroupForm />} />
+                <Route path="/permission-groups/edit/:id" element={<AdminPermissionGroupForm />} />
+                <Route path="/webhooks" element={<Webhooks />} />
+                <Route path="/seo" element={<SeoManagement />} />
+                <Route path="/contacts" element={<AdminContacts />} />
+                <Route path="/popups" element={<AdminPopups />} />
+                <Route path="/popups/create" element={<AdminPopupForm />} />
+                <Route path="/popups/edit/:id" element={<AdminPopupForm />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+                {/* Email Marketing Routes */}
+                <Route path="/email-marketing" element={<EmDashboard />} />
+                <Route path="/email-marketing/settings" element={<EmSettings />} />
+                <Route path="/email-marketing/contacts" element={<EmContacts />} />
+                <Route path="/email-marketing/segments" element={<EmSegments />} />
+                <Route path="/email-marketing/segments/:id" element={<EmSegmentDetail />} />
+                <Route path="/email-marketing/templates" element={<EmTemplates />} />
+                <Route path="/email-marketing/templates/new" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/templates/:id" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/templates/edit/:id" element={<EmTemplateForm />} />
+                <Route path="/email-marketing/campaigns" element={<EmCampaigns />} />
+                <Route path="/email-marketing/campaigns/new" element={<EmCampaignForm />} />
+                <Route path="/email-marketing/campaigns/:id" element={<EmCampaignDetail />} />
+              </Route>
 
-export default App
+              {/* Redirect / to /admin or /login if needed, or just 404 for now since user said keep ONLY admin/login */}
+              {/* But usually root should redirect somewhere. For now sticking to instructions: DELETE client routes. */}
+
+              {/* CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
+);
+
+export default App;

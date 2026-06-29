@@ -1,0 +1,39 @@
+{
+  "name": "admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/admin/src",
+  "targets": {
+    "build": {
+      "command": "pnpm run build",
+      "options": {
+        "cwd": "apps/admin"
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/admin"]
+    },
+    "serve": {
+      "command": "pnpm run dev",
+      "options": {
+        "cwd": "apps/admin"
+      }
+    },
+    "start": {
+      "command": "pnpm run preview",
+      "options": {
+        "cwd": "apps/admin"
+      }
+    },
+    "test": {
+      "command": "vitest run",
+      "options": {
+        "cwd": "apps/admin"
+      }
+    },
+    "lint": {
+      "command": "eslint .",
+      "options": {
+        "cwd": "apps/admin"
+      }
+    }
+  }
+}

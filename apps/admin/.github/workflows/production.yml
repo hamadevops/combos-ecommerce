@@ -1,0 +1,37 @@
+name: CI/CD FRONTEND MOBILE TIKTOK APPLICATION
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-runner:
+    runs-on: self-hosted
+    steps:
+      ######################
+      # Stage 1: Pull Code
+      ######################
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      ######################
+      # Stage 2: Deploy
+      ######################
+      - name: Build & Deploy
+        run: |
+          DEPLOY_DIR=/home/vibecode/tiktok-shop-mobile
+
+          # 1. Build first to ensure success
+          pnpm install --frozen-lockfile
+          pnpm run build
+
+          # 2. Deploy only after successful build
+          echo "Build successful. Deploying to $DEPLOY_DIR..."
+          mkdir -p $DEPLOY_DIR
+
+          # Short downtime window starts here
+          rm -rf $DEPLOY_DIR/*
+          cp -r dist/* $DEPLOY_DIR/
+
+          echo "Deploy completed!"
