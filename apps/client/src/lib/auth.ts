@@ -16,17 +16,31 @@ export const auth = {
   },
 
   removeToken: () => {
-    Cookies.remove(TOKEN_KEY, {
-      path: "/",
-      ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
-    });
+    Cookies.remove(TOKEN_KEY, { path: "/" });
+    if (COOKIE_DOMAIN) {
+      Cookies.remove(TOKEN_KEY, { path: "/", domain: COOKIE_DOMAIN });
+      Cookies.remove(TOKEN_KEY, { path: "/", domain: "." + COOKIE_DOMAIN });
+    }
+    // Fallback direct cookie clearing
+    document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    if (COOKIE_DOMAIN) {
+      document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${COOKIE_DOMAIN};`;
+      document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${COOKIE_DOMAIN};`;
+    }
   },
 
   clear: () => {
-    Cookies.remove(TOKEN_KEY, {
-      path: "/",
-      ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
-    });
+    Cookies.remove(TOKEN_KEY, { path: "/" });
+    if (COOKIE_DOMAIN) {
+      Cookies.remove(TOKEN_KEY, { path: "/", domain: COOKIE_DOMAIN });
+      Cookies.remove(TOKEN_KEY, { path: "/", domain: "." + COOKIE_DOMAIN });
+    }
+    // Fallback direct cookie clearing
+    document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    if (COOKIE_DOMAIN) {
+      document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${COOKIE_DOMAIN};`;
+      document.cookie = `${TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${COOKIE_DOMAIN};`;
+    }
   },
 
   isAuthenticated: () => {

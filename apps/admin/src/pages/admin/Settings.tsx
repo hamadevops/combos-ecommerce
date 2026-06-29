@@ -197,6 +197,69 @@ const SettingsForm = ({ settingsData }: { settingsData: any[] }) => {
                   );
                 }
 
+                if (setting.key === "client_theme") {
+                  return (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mt-1">
+                      <div
+                        onClick={() => field.onChange("tiktok")}
+                        className={`relative cursor-pointer rounded-xl border-2 p-4 flex flex-col justify-between transition-all hover:shadow-md ${
+                          field.value === "tiktok"
+                            ? "border-primary bg-primary/5"
+                            : "border-muted bg-card hover:border-muted-foreground"
+                        }`}
+                      >
+                        {field.value === "tiktok" && (
+                          <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                            <span className="text-[10px] text-primary-foreground font-bold">✓</span>
+                          </div>
+                        )}
+                        <div className="space-y-1">
+                          <h4 className="font-semibold text-sm">Giao diện TikTok</h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            Phong cách video ngắn, hiện đại, thích hợp cho các sản phẩm xu hướng và trải nghiệm mua sắm nhanh gọn.
+                          </p>
+                        </div>
+                        <div className="mt-3 aspect-[16/10] w-full rounded-lg bg-zinc-950 flex flex-col items-center justify-center text-[10px] text-zinc-400 border border-zinc-800 p-2 space-y-1">
+                          <div className="w-full h-1 bg-zinc-800 rounded"></div>
+                          <div className="flex w-full gap-1 flex-1">
+                            <div className="flex-1 bg-zinc-900 rounded border border-zinc-800 flex items-center justify-center">Video</div>
+                            <div className="w-1/3 bg-zinc-900 rounded border border-zinc-800 flex items-center justify-center">Cart</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        onClick={() => field.onChange("muabantaikhoan")}
+                        className={`relative cursor-pointer rounded-xl border-2 p-4 flex flex-col justify-between transition-all hover:shadow-md ${
+                          field.value === "muabantaikhoan"
+                            ? "border-primary bg-primary/5"
+                            : "border-muted bg-card hover:border-muted-foreground"
+                        }`}
+                      >
+                        {field.value === "muabantaikhoan" && (
+                          <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                            <span className="text-[10px] text-primary-foreground font-bold">✓</span>
+                          </div>
+                        )}
+                        <div className="space-y-1">
+                          <h4 className="font-semibold text-sm">Giao diện Mua Bán Tài Khoản</h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            Thiết kế dạng lưới (Grid), tối ưu cho các sản phẩm số, tài khoản dịch vụ, danh sách lọc thông minh.
+                          </p>
+                        </div>
+                        <div className="mt-3 aspect-[16/10] w-full rounded-lg bg-zinc-950 flex flex-col items-center justify-center text-[10px] text-zinc-400 border border-zinc-800 p-2 space-y-1">
+                          <div className="w-full h-1 bg-zinc-800 rounded"></div>
+                          <div className="grid grid-cols-3 gap-1 w-full flex-1">
+                            <div className="bg-zinc-900 rounded border border-zinc-800 flex items-center justify-center">Acc</div>
+                            <div className="bg-zinc-900 rounded border border-zinc-800 flex items-center justify-center">Acc</div>
+                            <div className="bg-zinc-900 rounded border border-zinc-800 flex items-center justify-center">Acc</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
                 if (setting.key === "home_slider") {
                   return (
                     <div className="max-w-full">

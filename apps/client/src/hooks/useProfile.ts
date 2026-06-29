@@ -25,6 +25,7 @@ export const useProfile = () => {
 
   useEffect(() => {
     if (query.isError && auth.isAuthenticated() && !logout.isPending) {
+      auth.clear(); // Clear token synchronously to make auth.isAuthenticated() false immediately
       logout.mutate();
     }
   }, [query.isError, logout]);

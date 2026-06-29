@@ -63,6 +63,15 @@ export const mockSettings: Setting[] = [
     type: "json",
     label: "Slider trang chủ",
   },
+  {
+    id: 15,
+    group: "appearance",
+    key: "client_theme",
+    value: "tiktok",
+    type: "string",
+    label: "Giao diện client",
+    description: "Chọn giao diện hiển thị cho website (tiktok hoặc muabantaikhoan)",
+  },
 
   // Contact
   {

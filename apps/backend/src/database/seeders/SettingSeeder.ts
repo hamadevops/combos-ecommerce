@@ -66,6 +66,15 @@ export class SettingSeeder extends Seeder {
         label: 'Hình nền (Background)',
       },
       {
+        key: 'client_theme',
+        value: 'tiktok',
+        type: 'string',
+        isPublic: true,
+        group: 'appearance',
+        label: 'Giao diện client',
+        description: 'Chọn giao diện hiển thị cho website (tiktok hoặc muabantaikhoan)',
+      },
+      {
         key: 'home_slider',
         value: JSON.stringify([
           { image: 'https://placehold.co/800x400/111/FFF?text=Slider1', link: '/products' },
@@ -202,6 +211,7 @@ export class SettingSeeder extends Seeder {
         setting.label = data.label;
         setting.group = data.group;
         setting.type = data.type;
+        setting.description = data.description;
         // setting.value = data.value; // Uncomment to force reset value
       }
       em.persist(setting);

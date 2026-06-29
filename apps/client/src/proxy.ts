@@ -1,7 +1,48 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
+let cachedTheme: string | null = null;
+let cacheExpiry = 0;
+
+async function getTheme(): Promise<string> {
+  const now = Date.now();
+  if (cachedTheme && now < cacheExpiry) {
+    return cachedTheme;
+  }
+
+  try {
+    const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3333/api/v1";
+    
+    // Create an AbortController to set a quick timeout for fetching
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
+
+    const res = await fetch(`${envUrl}/settings/public`, {
+      signal: controller.signal,
+      next: { revalidate: process.env.NODE_ENV === "development" ? 1 : 10 },
+    });
+
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const data = await res.json();
+      const theme = data.client_theme || process.env.NEXT_PUBLIC_THEME || "tiktok";
+      cachedTheme = theme;
+      
+      // 1 second cache in development, 10 seconds in production
+      const cacheTTL = process.env.NODE_ENV === "development" ? 1000 : 10000;
+      cacheExpiry = now + cacheTTL;
+      
+      return theme;
+    }
+  } catch (err) {
+    console.error("Failed to fetch client theme from API, using default/env", err);
+  }
+
+  return process.env.NEXT_PUBLIC_THEME || "tiktok";
+}
+
+export async function proxy(request: NextRequest) {
   const { searchParams } = request.nextUrl;
 
   const utmSource = searchParams.get("utm_source");
@@ -51,7 +92,7 @@ export function proxy(request: NextRequest) {
     pathname = "/products";
   }
 
-  const theme = process.env.NEXT_PUBLIC_THEME || "tiktok";
+  const theme = await getTheme();
   const rewriteUrl = new URL(`/themes/${theme}${pathname}${request.nextUrl.search}`, request.url);
   const response = NextResponse.rewrite(rewriteUrl);
 
