@@ -73,6 +73,13 @@ export class Product {
   @Property({ default: 0 })
   isRecommended: number = 0;
 
+  // Affiliate
+  @Property({ default: 'purchase' })
+  productType?: string = 'purchase';
+
+  @Property({ nullable: true })
+  affiliateLink?: string;
+
   @Property({ nullable: true })
   publishedAt?: Date;
 

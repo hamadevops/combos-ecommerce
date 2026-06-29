@@ -343,6 +343,8 @@ export class ProductsService {
         soldCount: 0,
         isFeatured: (dto.isFeatured ?? dto.is_featured) ? 1 : 0,
         isRecommended: (dto.isRecommended ?? dto.is_recommended) ? 1 : 0,
+        productType: dto.product_type ?? 'purchase',
+        affiliateLink: dto.affiliate_link,
         isActive: ActiveProductEnum.Inactive,
         displayOrder: 0,
         shortDescription: dto.short_description,
@@ -412,6 +414,12 @@ export class ProductsService {
       if (dto.specifications !== undefined) product.specifications = dto.specifications;
 
       if (dto.display_order !== undefined) product.displayOrder = dto.display_order;
+
+      const productType = dto.product_type;
+      if (productType !== undefined) product.productType = productType;
+
+      const affiliateLink = dto.affiliate_link;
+      if (affiliateLink !== undefined) product.affiliateLink = affiliateLink;
 
       // Handle categories update
       if (dto.category_ids !== undefined) {

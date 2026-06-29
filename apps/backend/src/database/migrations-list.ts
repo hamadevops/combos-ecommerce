@@ -40,6 +40,7 @@ import { Migration20260606141453_SchemaSyncAndAppFeedbacks } from './migrations/
 import { Migration20260606155218_AddProductCascadeDelete } from './migrations/Migration20260606155218_AddProductCascadeDelete';
 import { Migration20260606155622_AddProductSoftDelete } from './migrations/Migration20260606155622_AddProductSoftDelete';
 import { Migration20260606230000_RedesignProductVariants } from './migrations/Migration20260606230000_RedesignProductVariants';
+import { Migration20260629043000AddProductTypeAndAffiliateLinkToProducts } from './migrations/Migration20260629043000_AddProductTypeAndAffiliateLinkToProducts';
 
 export const migrationsList = [
   // ... existing migrations
@@ -210,5 +211,9 @@ export const migrationsList = [
   {
     name: 'Migration20260606230000_RedesignProductVariants',
     class: Migration20260606230000_RedesignProductVariants,
+  },
+  {
+    name: 'Migration20260629043000_AddProductTypeAndAffiliateLinkToProducts',
+    class: Migration20260629043000AddProductTypeAndAffiliateLinkToProducts,
   },
 ];

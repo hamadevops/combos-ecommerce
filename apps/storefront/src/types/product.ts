@@ -33,6 +33,10 @@ export type Product = Omit<ProductResponse, "variants"> & {
   reviewCount?: number;
   specifications?: ProductSpecification[];
   tierVariations?: any[];
+  product_type?: string;
+  productType?: string;
+  affiliate_link?: string | null;
+  affiliateLink?: string | null;
 };
 
 // Product specification with order for maintaining sequence

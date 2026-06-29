@@ -41,6 +41,7 @@ const ProductDetailContent = () => {
   // Fetch Product Data
   const { data: productDetail, isLoading, isError } = useProduct(slug || "");
   const product = useMemo(() => productDetail, [productDetail]);
+  const isAffiliate = product?.product_type === "affiliate" || product?.productType === "affiliate";
   // Fetch Related Products
   const { data: relatedData } = useProducts({
     type: "similar",
@@ -95,6 +96,14 @@ const ProductDetailContent = () => {
 
   const handleBuyNow = (variant: ProductVariant | null = selectedVariant) => {
     if (product) {
+      if (product.product_type === "affiliate" || product.productType === "affiliate") {
+        if (product.affiliate_link) {
+          window.open(product.affiliate_link, "_blank");
+        } else {
+          toast.error("Sản phẩm chưa có liên kết mua hàng");
+        }
+        return;
+      }
       if (product.variants && product.variants.length > 0 && !variant) {
         toast.error("Vui lòng chọn phân loại hàng");
         return;
@@ -112,6 +121,10 @@ const ProductDetailContent = () => {
 
   const handleAddToCart = (variant: ProductVariant | null = selectedVariant) => {
     if (product) {
+      if (product.product_type === "affiliate" || product.productType === "affiliate") {
+        toast.info("Sản phẩm liên kết, vui lòng nhấn Mua Ngay để mua hàng");
+        return;
+      }
       if (product.variants && product.variants.length > 0 && !variant) {
         toast.error("Vui lòng chọn phân loại hàng");
         return;
@@ -305,6 +318,7 @@ const ProductDetailContent = () => {
         price={selectedVariant ? (selectedVariant.salePrice || selectedVariant.price) : (product.salePrice || product.price)}
         onAddToCart={handleAddToCart}
         onBuyNow={handleBuyNow}
+        isAffiliate={isAffiliate}
       />
 
       <CheckoutForm

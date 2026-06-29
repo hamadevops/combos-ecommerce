@@ -220,5 +220,21 @@ export class CreateProductDto {
   @IsNumber()
   @Min(0)
   display_order?: number;
+
+  // AFFILIATE FIELDS
+  @ApiPropertyOptional({
+    description: 'Loại sản phẩm: purchase hoặc affiliate',
+    default: 'purchase',
+  })
+  @IsOptional()
+  @IsString()
+  product_type?: string;
+
+  @ApiPropertyOptional({
+    description: 'Đường dẫn affiliate',
+  })
+  @IsOptional()
+  @IsString()
+  affiliate_link?: string;
 }
 

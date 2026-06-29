@@ -31,6 +31,8 @@ export type Product = Omit<ProductResponse, "variants"> & {
   rating?: number;
   reviewCount?: number;
   specifications?: ProductSpecification[];
+  product_type?: string;
+  affiliate_link?: string | null;
 };
 
 // Product specification with order for maintaining sequence
@@ -43,9 +45,13 @@ export interface ProductSpecification {
 // Request DTOs - extended with specifications
 export type CreateProductDto = GenCreateProductDto & {
   specifications?: ProductSpecification[];
+  product_type?: string;
+  affiliate_link?: string | null;
 };
 export type UpdateProductDto = GenUpdateProductDto & {
   specifications?: ProductSpecification[];
+  product_type?: string;
+  affiliate_link?: string | null;
 };
 export type SetTierVariationsDto = GenSetTierVariationsDto;
 export type TierVariation = TierVariationDto;

@@ -24,6 +24,7 @@ export default function MuabanProductDetail({
 }: MuabanProductDetailProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
+  const isAffiliate = product?.product_type === "affiliate" || product?.productType === "affiliate";
 
   // Fallback data if product is incomplete
   const name = product?.name || "Tên sản phẩm";
@@ -177,44 +178,48 @@ export default function MuabanProductDetail({
               )}
 
               {/* Quantity */}
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-sm font-medium text-gray-700">Số lượng:</span>
-                <div className="flex items-center border border-gray-300 rounded-md">
-                  <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 transition-colors"
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="text" 
-                    value={quantity}
-                    readOnly
-                    className="w-12 text-center text-sm font-medium border-x border-gray-300 py-1.5 focus:outline-none"
-                  />
-                  <button 
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 transition-colors"
-                  >
-                    +
-                  </button>
+              {!isAffiliate && (
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-sm font-medium text-gray-700">Số lượng:</span>
+                  <div className="flex items-center border border-gray-300 rounded-md">
+                    <button 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 transition-colors"
+                    >
+                      -
+                    </button>
+                    <input 
+                      type="text" 
+                      value={quantity}
+                      readOnly
+                      className="w-12 text-center text-sm font-medium border-x border-gray-300 py-1.5 focus:outline-none"
+                    />
+                    <button 
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-4 mt-auto">
-                <button 
-                  onClick={() => onAddToCart(selectedVariant)}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  Thêm vào giỏ
-                </button>
+                {!isAffiliate && (
+                  <button 
+                    onClick={() => onAddToCart(selectedVariant)}
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Thêm vào giỏ
+                  </button>
+                )}
                 <button 
                   onClick={() => onBuyNow(selectedVariant)}
                   className="flex-1 bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-colors"
                 >
-                  Mua ngay
+                  {isAffiliate ? "Mua ngay (Link liên kết)" : "Mua ngay"}
                 </button>
               </div>
             </div>

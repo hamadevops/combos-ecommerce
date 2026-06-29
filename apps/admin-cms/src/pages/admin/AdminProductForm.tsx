@@ -55,6 +55,16 @@ const schema = yup.object().shape({
   isFeatured: yup.boolean().default(false),
   isRecommended: yup.boolean().default(false),
   isActive: yup.boolean().default(false),
+  product_type: yup.string().default("purchase"),
+  affiliate_link: yup
+    .string()
+    .nullable()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .when("product_type", {
+      is: "affiliate",
+      then: (schema) => schema.required("Đường dẫn affiliate là bắt buộc khi chọn loại sản phẩm Affiliate").url("Đường dẫn affiliate phải là một URL hợp lệ"),
+      otherwise: (schema) => schema.optional(),
+    }),
   // SEO
   seoTitle: yup.string().optional(),
   seoDescription: yup.string().optional(),
@@ -175,6 +185,8 @@ const AdminProductForm = () => {
       isFeatured: false,
       isRecommended: false,
       isActive: false,
+      product_type: "purchase",
+      affiliate_link: "",
       seoTitle: "",
       seoDescription: "",
       seoKeywords: "",
@@ -224,6 +236,8 @@ const AdminProductForm = () => {
         isFeatured: Boolean(existingProduct.isFeatured),
         isRecommended: Boolean(existingProduct.isRecommended),
         isActive: Boolean(existingProduct.isActive),
+        product_type: existingProduct.productType || existingProduct.product_type || "purchase",
+        affiliate_link: existingProduct.affiliateLink || existingProduct.affiliate_link || "",
         seoTitle: existingProduct.seoTitle || "",
         seoDescription: existingProduct.seoDescription || "",
         seoKeywords: existingProduct.seoKeywords || "",
@@ -264,6 +278,8 @@ const AdminProductForm = () => {
       files: null,
       specifications: data.specifications as ProductSpecification[],
       display_order: data.displayOrder ?? undefined,
+      product_type: data.product_type,
+      affiliate_link: data.affiliate_link || null,
     };
 
     if (isEditing) {
@@ -380,11 +396,17 @@ const AdminProductForm = () => {
     const variants = getValues("variants");
     const tierVariations = getValues("tierVariations");
 
-    // 1. Save tier variations names & options (without auto-generating variants)
     if (tierVariations && tierVariations.length > 0) {
       try {
         await productApi.setTierVariations(productId, {
-          tierVariations,
+          tierVariations: tierVariations.map((t) => ({
+            id: t.id ?? undefined,
+            name: t.name || "",
+            options: t.options?.map((o) => ({
+              id: o.id ?? undefined,
+              value: o.value || "",
+            })) || [],
+          })),
           autoGenerateVariants: false,
         });
       } catch (error) {

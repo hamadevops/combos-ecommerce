@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import RichTextEditor from "@/components/ui/rich-text-editor";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, useWatch } from "react-hook-form";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Category } from "@/types/category";
 
@@ -178,6 +178,53 @@ export function ProductGeneralTab({
             )}
           />
         </div>
+      </div>
+
+      {/* Product Type (Purchase vs Affiliate) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border p-4 rounded-md bg-muted/20">
+        <div className="space-y-2">
+          <Label htmlFor="product_type">Loại sản phẩm</Label>
+          <Controller
+            name="product_type"
+            control={control}
+            render={({ field }) => (
+              <select
+                {...field}
+                id="product_type"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="purchase">Mua hàng trực tiếp (Purchase)</option>
+                <option value="affiliate">Tiếp thị liên kết (Affiliate)</option>
+              </select>
+            )}
+          />
+        </div>
+
+        {useWatch({ control, name: "product_type" }) === "affiliate" && (
+          <div className="space-y-2">
+            <Label htmlFor="affiliate_link">
+              Đường dẫn Affiliate <span className="text-red-500">*</span>
+            </Label>
+            <Controller
+              name="affiliate_link"
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <Input
+                    {...field}
+                    id="affiliate_link"
+                    placeholder="https://example.com/affiliate-url"
+                    className={error?.message ? "border-red-500" : ""}
+                    value={field.value || ""}
+                  />
+                  {error?.message && (
+                    <p className="text-xs text-red-500">{String(error.message)}</p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+        )}
       </div>
 
       {/* 7, 8, 9, 10. Prices, Stock & Display Order */}
