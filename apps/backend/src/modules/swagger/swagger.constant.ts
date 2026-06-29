@@ -1,0 +1,15 @@
+export enum AppSwaggerTag {
+  App = 'App',
+  User = 'User',
+  Auth = 'Auth',
+  Product = 'Product',
+  Category = 'Category',
+  Topic = 'Topic',
+  Post = 'Post',
+  Tag = 'Tag',
+  Permission = 'Permission',
+  Upload = 'Upload',
+  Customer = 'Customer',
+  Order = 'Order',
+  Dashboard = 'Dashboard',
+}

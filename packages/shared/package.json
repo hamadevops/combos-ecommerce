@@ -1,0 +1,19 @@
+{
+  "name": "@projects/shared",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json",
+    "check-types": "tsc --noEmit -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3"
+  }
+}

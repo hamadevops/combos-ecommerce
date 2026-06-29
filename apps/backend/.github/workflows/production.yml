@@ -1,0 +1,79 @@
+name: CI/CD APPLICATION
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-runner:
+    runs-on: self-hosted   # chạy trên self-hosted runner
+
+    environment: ecommerce
+    steps:
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Scan Sonarqube
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=ecommerce-backend-production \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=$SONAR_HOST_URL \
+            -Dsonar.login=$SONAR_TOKEN
+          
+
+      - name: Create .env file
+        run: |
+          echo "${{ vars.NODE_ENV }}" >> .env
+          echo "${{ vars.PORT }}" >> .env
+          echo "${{ secrets.DB_HOST }}" >> .env
+          echo "${{ secrets.DB_NAME }}" >> .env
+          echo "${{ secrets.DB_PASSWORD }}" >> .env
+          echo "${{ secrets.DB_PORT }}" >> .env
+          echo "${{ secrets.DB_USER }}" >> .env
+          echo "${{ secrets.BCRYPT_SALT_ROUNDS }}" >> .env
+          echo "${{ secrets.JWT_EXPIRES_IN }}" >> .env
+          echo "${{ secrets.JWT_SECRET }}" >> .env
+          echo "${{ secrets.REDIS_HOST }}" >> .env
+          echo "${{ secrets.REDIS_PORT }}" >> .env
+          echo "${{ secrets.REDIS_PASSWORD }}" >> .env
+          echo "${{ secrets.REDIS_DB_NUMBER }}" >> .env
+          echo "${{ secrets.REDIS_DB_NUMBER_CACHE }}" >> .env
+          echo "${{ secrets.ADMIN_NAME }}" >> .env
+          echo "${{ secrets.EMAIL_ADMIN }}" >> .env
+          echo "${{ secrets.PASSWORD_ADMIN }}" >> .env
+          echo "${{ secrets.MINIO_ENDPOINT }}" >> .env
+          echo "${{ secrets.MINIO_PORT }}" >> .env
+          echo "${{ secrets.MINIO_USE_SSL }}" >> .env
+          echo "${{ secrets.MINIO_ACCESS_KEY }}" >> .env
+          echo "${{ secrets.MINIO_SECRET_KEY }}" >> .env
+          echo "${{ vars.MINIO_BUCKET }}" >> .env
+          echo "${{ vars.FRONTEND_URL_CORS }}" >> .env
+      - name: BUILD & OPTIMIZE
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+          pnpm run db:up
+          rm -r node_modules
+          pnpm install --frozen-lockfile --prod
+      - name: DEPLOY
+        run: |
+          mkdir -p /home/vibecode/backend-ecommerce
+          rm -rf /home/vibecode/backend-ecommerce/*
+          cp -r dist /home/vibecode/backend-ecommerce/dist
+          cp package.json .env pnpm-lock.yaml pnpm-workspace.yaml /home/vibecode/backend-ecommerce
+          cd /home/vibecode/backend-ecommerce
+          pnpm install --frozen-lockfile --prod
+          pm2 stop backend-ecommerce || true
+          pm2 delete backend-ecommerce || true
+          pm2 start "node dist/main.js" --name backend-ecommerce
+          pm2 save
+
+          
+
+
