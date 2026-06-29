@@ -24,7 +24,7 @@ export const useProfile = () => {
   });
 
   useEffect(() => {
-    if (query.isError) {
+    if (query.isError && auth.isAuthenticated() && !logout.isPending) {
       logout.mutate();
     }
   }, [query.isError, logout]);

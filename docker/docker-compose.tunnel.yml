@@ -1,0 +1,16 @@
+services:
+  mariadb-tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: mariadb-tunnel-client
+    restart: unless-stopped
+    ports:
+      - "${TUNNEL_DB_PORT:-13306}:3306" # Maps local port to database tunnel
+    command: access tcp --hostname ${TUNNEL_DB_HOSTNAME:-mariadb.yourdomain.com} --url 0.0.0.0:3306
+
+  redis-tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: redis-tunnel-client
+    restart: unless-stopped
+    ports:
+      - "${TUNNEL_REDIS_PORT:-16379}:6379" # Maps local port to redis tunnel
+    command: access tcp --hostname ${TUNNEL_REDIS_HOSTNAME:-redis.yourdomain.com} --url 0.0.0.0:6379
