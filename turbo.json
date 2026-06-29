@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
+  // "ui": "tui",
+  "ui": "stream-with-experimental-timestamps",
   "tasks": {
     "build": {
       "dependsOn": [

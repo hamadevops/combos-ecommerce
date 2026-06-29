@@ -26,7 +26,7 @@ COPY packages/shared ./packages/shared
 COPY apps/admin ./apps/admin
 
 # Build the admin app
-RUN pnpm --filter=admin build
+RUN pnpm --filter=@projects/admin build
 
 # ================================
 # Stage 2: Production image
