@@ -1,0 +1,33 @@
+{
+  "name": "@projects/client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/client",
+  "targets": {
+    "build": {
+      "command": "pnpm run build",
+      "options": {
+        "cwd": "apps/client"
+      },
+      "outputs": ["{workspaceRoot}/dist/apps/client/.next"]
+    },
+    "serve": {
+      "command": "pnpm run dev",
+      "options": {
+        "cwd": "apps/client"
+      }
+    },
+    "start": {
+      "command": "next start",
+      "options": {
+        "cwd": "apps/client"
+      }
+    },
+    "lint": {
+      "command": "eslint .",
+      "options": {
+        "cwd": "apps/client"
+      }
+    }
+  }
+}

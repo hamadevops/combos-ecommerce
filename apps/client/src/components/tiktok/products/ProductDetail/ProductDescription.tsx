@@ -1,0 +1,24 @@
+import { HtmlContent } from "@/components/tiktok/common/HtmlContent";
+import { Product } from "@/types/product";
+
+interface ProductDescriptionProps {
+  product: Product;
+}
+
+export default function ProductDescription({ product }: ProductDescriptionProps) {
+  const description = product.description || product.shortDescription;
+
+  return (
+    <div
+      id="description"
+      className="bg-background p-4 space-y-4 border-t border-border scroll-mt-[100px]"
+    >
+      <h2 className="font-bold text-lg">Mô tả sản phẩm</h2>
+      {description ? (
+        <HtmlContent content={description} />
+      ) : (
+        <p className="text-muted-foreground text-sm leading-relaxed">Đang cập nhật mô tả...</p>
+      )}
+    </div>
+  );
+}
