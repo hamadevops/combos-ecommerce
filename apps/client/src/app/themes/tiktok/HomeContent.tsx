@@ -7,17 +7,12 @@ import ShopHeader from "@/components/tiktok/shop/ShopHeader";
 import { cn } from "@/lib/utils";
 import { useCategories } from "@/hooks/useCategories";
 import {
-  useProducts,
   useFeaturedProducts,
   useNewArrivals,
   useInfiniteProducts,
 } from "@/hooks/useProducts";
 import HomeTabContent from "@/components/tiktok/shop/tabs/HomeTabContent";
 import dynamic from "next/dynamic";
-
-// MuaBanTaiKhoan Theme Imports
-import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
-import MuabanHomeContent from "@/components/muabantaikhoan/features/home/HomeContent";
 
 const ProductsTabContent = dynamic(() => import("@/components/tiktok/shop/tabs/ProductsTabContent"));
 const CategoriesTabContent = dynamic(() => import("@/components/tiktok/shop/tabs/CategoriesTabContent"));
@@ -48,18 +43,6 @@ const Index = () => {
   const productList =
     allProducts?.pages.flatMap((page) => (page as any).data || (page as any).items || []) || [];
 
-  // Theme Switching Logic
-  const currentTheme = process.env.NEXT_PUBLIC_THEME || 'tiktok';
-
-  if (currentTheme === 'muabantaikhoan') {
-    return (
-      <DeviceLayoutWrapper>
-        <MuabanHomeContent />
-      </DeviceLayoutWrapper>
-    );
-  }
-
-  // Fallback to default Tiktok theme
   return (
     <div className="min-h-screen bg-background max-w-md mx-auto relative shadow-2xl">
       {/* Shop Header */}

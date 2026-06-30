@@ -10,6 +10,8 @@ async function getTheme(): Promise<string> {
     return cachedTheme;
   }
 
+  const fallbackTheme = process.env.NEXT_PUBLIC_THEME || "tiktok";
+
   try {
     const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3333/api/v1";
     
@@ -17,16 +19,18 @@ async function getTheme(): Promise<string> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1500);
 
+    console.log(`[Proxy] Fetching theme from: ${envUrl}/settings/public`);
     const res = await fetch(`${envUrl}/settings/public`, {
       signal: controller.signal,
-      next: { revalidate: process.env.NODE_ENV === "development" ? 1 : 10 },
+      cache: "no-store",
     });
 
     clearTimeout(timeoutId);
 
     if (res.ok) {
-      const data = await res.json();
-      const theme = data.client_theme || process.env.NEXT_PUBLIC_THEME || "tiktok";
+      const result = await res.json();
+      const theme = result.data?.client_theme || fallbackTheme;
+      console.log(`[Proxy] Fetched theme successfully: ${theme} (from client_theme: ${result.data?.client_theme})`);
       cachedTheme = theme;
       
       // 1 second cache in development, 10 seconds in production
@@ -34,12 +38,16 @@ async function getTheme(): Promise<string> {
       cacheExpiry = now + cacheTTL;
       
       return theme;
+    } else {
+      console.warn(`[Proxy] Failed to fetch theme, status: ${res.status}`);
     }
   } catch (err) {
-    console.error("Failed to fetch client theme from API, using default/env", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[Proxy] Backend is offline (${msg}). Using fallback theme: ${fallbackTheme}`);
   }
 
-  return process.env.NEXT_PUBLIC_THEME || "tiktok";
+  console.log(`[Proxy] Using fallback theme: ${fallbackTheme}`);
+  return fallbackTheme;
 }
 
 export async function proxy(request: NextRequest) {

@@ -112,7 +112,8 @@ export default async function ProductDetailPage({ params }: Props) {
     const res = await productApi.getBySlug(slug, { client: apiClient });
     product = res.data;
   } catch (e) {
-    console.error("Error fetching product for SEO:", e);
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn(`[SEO] Backend is offline (${msg}). Skip pre-fetching product for SEO.`);
   }
 
   return (

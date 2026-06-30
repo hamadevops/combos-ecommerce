@@ -27,10 +27,6 @@ import {
 } from "@/components/tiktok/products/ProductDetail";
 import Footer from "@/components/tiktok/layout/Footer";
 
-// MuaBanTaiKhoan Theme Imports
-import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
-import MuabanProductDetail from "@/components/muabantaikhoan/features/product/ProductDetail";
-
 const SECTION_IDS = ["overview", "reviews", "description", "recommendations"];
 
 const ProductDetailContent = () => {
@@ -160,67 +156,6 @@ const ProductDetailContent = () => {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const currentTheme = process.env.NEXT_PUBLIC_THEME || 'tiktok';
-
-  if (currentTheme === 'muabantaikhoan') {
-    if (isLoading) {
-      return (
-        <DeviceLayoutWrapper>
-          <div className="bg-gray-50 min-h-screen py-12 flex justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-        </DeviceLayoutWrapper>
-      );
-    }
-
-    if (isError || !product) {
-      return (
-        <DeviceLayoutWrapper>
-          <div className="min-h-screen bg-gray-50 max-w-md mx-auto flex flex-col items-center justify-center gap-4">
-            <p className="text-muted-foreground">Sản phẩm không tồn tại hoặc đã bị xóa</p>
-            <button
-              onClick={() => router.push("/")}
-              className="px-4 py-2 bg-primary text-white rounded-md font-medium"
-            >
-              Về trang chủ
-            </button>
-          </div>
-        </DeviceLayoutWrapper>
-      );
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mapProductToCard = (p: any) => ({
-      id: String(p.id),
-      name: p.name,
-      slug: p.slug,
-      thumbnail: getImageUrl(p.images?.[0]?.url) || "",
-      originalPrice: p.price,
-      currentPrice: p.salePrice || p.price,
-      discountPercent: p.discount_percent || (p.salePrice && p.price ? Math.round(((p.price - p.salePrice) / p.price) * 100) : undefined),
-      tags: p.tags?.map((t: any) => t.name) || [],
-      soldCount: p.sold_count || Math.floor(Math.random() * 100) + 10,
-    });
-
-    const relatedProducts = (relatedData as any)?.data?.map(mapProductToCard) || [];
-
-    return (
-      <DeviceLayoutWrapper>
-        <MuabanProductDetail 
-          product={product}
-          relatedProducts={relatedProducts}
-          onAddToCart={handleAddToCart}
-          onBuyNow={handleBuyNow}
-        />
-        <CheckoutForm
-          open={showCheckoutForm}
-          onOpenChange={setShowCheckoutForm}
-          totalAmount={getSelectedPrice()}
-        />
-      </DeviceLayoutWrapper>
-    );
-  }
 
   if (isLoading) {
     return (

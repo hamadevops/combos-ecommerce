@@ -3,16 +3,12 @@
 import { useParams, useRouter } from "next/navigation";
 import PageLayout from "@/components/tiktok/layout/PageLayout";
 import ProductCard from "@/components/tiktok/products/ProductCard";
-import { Filter, ChevronDown, Loader2 } from "lucide-react";
+import { Filter, Loader2 } from "lucide-react";
 import { useCategory } from "@/hooks/useCategories";
 import { useInfiniteProducts } from "@/hooks/useProducts";
 import { getImageUrl } from "@/lib/utils";
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
-
-// MuaBanTaiKhoan Theme Imports
-import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
-import MuabanCategoryDetail from "@/components/muabantaikhoan/features/category/CategoryDetail";
 
 const CategoryDetailContent = () => {
   const params = useParams();
@@ -41,7 +37,6 @@ const CategoryDetailContent = () => {
   });
 
   const categoryProducts = data?.pages.flatMap((page) => (page as any).data || []) || [];
-  const isLoading = isLoadingCategory || isLoadingProducts;
 
   // Intersection Observer for infinite scroll
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -74,65 +69,6 @@ const CategoryDetailContent = () => {
     }
     setActiveFilter(type);
   };
-
-  const currentTheme = process.env.NEXT_PUBLIC_THEME || 'tiktok';
-
-  if (currentTheme === 'muabantaikhoan') {
-    if (isLoadingCategory) {
-      return (
-        <DeviceLayoutWrapper>
-          <div className="bg-gray-50 min-h-screen py-12 flex justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
-          </div>
-        </DeviceLayoutWrapper>
-      );
-    }
-
-    const displayCategory = category || {
-      id: "dummy",
-      name: "Tài khoản, phần mềm mẫu",
-      description: "Đang hiển thị dữ liệu giả lập vì danh mục này chưa có trong Database.",
-      image: null,
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mapProductToCard = (product: any) => ({
-      id: String(product.id),
-      name: product.name,
-      slug: product.slug,
-      thumbnail: getImageUrl(product.images?.[0]?.url) || "",
-      original_price: product.price,
-      price: product.salePrice || product.price,
-      discount_percent: product.discount_percent || (product.salePrice && product.price ? Math.round(((product.price - product.salePrice) / product.price) * 100) : undefined),
-      tags: product.tags?.map((t: any) => t.name) || [],
-      sold_count: product.sold_count || Math.floor(Math.random() * 100) + 10,
-    });
-
-    const dummyProducts = [
-      { id: "s1", name: "Nâng Cấp Tinder Gold, Platinum Chính Chủ Giá Rẻ", slug: "tinder", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/tinder-247x247.png", original_price: undefined, price: 50000, discount_percent: undefined, tags: ["Pro Plus", "BH 12 tháng"], sold_count: 15 },
-      { id: "s2", name: "Tài Khoản VSCOX Pro", slug: "vsco", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Beauty-Plus-Premium-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 22 },
-      { id: "s3", name: "BeautyPlus Premium", slug: "beautyplus", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/istamp-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 45 },
-      { id: "s4", name: "App iStamp Chèn Chữ Lên Nhiều Ảnh", slug: "istamp", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Xingtu-Vip-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 12 },
-      { id: "s5", name: "Xingtu VIP", slug: "xingtu", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Meitu-Vip-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 8 },
-      { id: "s6", name: "Meitu VIP", slug: "meitu", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Canva-Pro-Vinh-Vien-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 34 },
-      { id: "s7", name: "Tài Khoản Canva Pro Vĩnh Viễn", slug: "canva", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Remini-Pro-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 56 },
-      { id: "s8", name: "Remini Pro", slug: "remini", thumbnail: "https://muataikhoanonline.com/wp-content/uploads/2024/06/Photoroom-630x331-1-247x130.webp", original_price: 100000, price: 70000, discount_percent: 30, tags: [], sold_count: 29 },
-    ];
-
-    const displayProducts = category && categoryProducts.length > 0 ? categoryProducts.map(mapProductToCard) : dummyProducts;
-    const totalProducts = category && categoryProducts.length > 0 ? ((data?.pages[0] as any)?.meta?.total || categoryProducts.length) : dummyProducts.length;
-
-    return (
-      <DeviceLayoutWrapper>
-        <MuabanCategoryDetail
-          category={displayCategory}
-          products={displayProducts}
-          isLoading={isLoadingProducts && !!category}
-          totalProducts={totalProducts}
-        />
-      </DeviceLayoutWrapper>
-    );
-  }
 
   if (isLoadingCategory) {
     return (

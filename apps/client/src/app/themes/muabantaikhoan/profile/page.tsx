@@ -1,6 +1,6 @@
 "use client";
 
-import PageLayout from "@/components/tiktok/layout/PageLayout";
+import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
 import {
   ChevronRight,
   Heart,
@@ -13,6 +13,7 @@ import {
   Gift,
   Ticket,
 } from "lucide-react";
+import Link from "next/link";
 
 const menuItems = [
   { icon: Heart, label: "Sản phẩm yêu thích", count: 12 },
@@ -27,72 +28,71 @@ const menuItems = [
 
 const Profile = () => {
   return (
-    <PageLayout headerProps={{ title: "Tài khoản", showSearch: false, showBack: true }}>
-      <div className="space-y-4 py-4">
-        {/* User Info */}
-        <div className="bg-card mx-4 rounded-xl p-4 flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-2xl">
-            👤
-          </div>
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold">Người dùng</h2>
-            <p className="text-sm text-muted-foreground">+84 xxx xxx xxx</p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground" />
-        </div>
+    <DeviceLayoutWrapper>
+      <div className="bg-gray-50 min-h-screen py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Breadcrumbs */}
+          <nav className="flex text-sm text-gray-500 mb-6">
+            <Link href="/" className="hover:text-purple-600 transition-colors">Trang chủ</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-900 font-medium">Tài khoản</span>
+          </nav>
 
-        {/* Stats */}
-        <div className="bg-card mx-4 rounded-xl p-4">
-          <div className="grid grid-cols-4 text-center">
-            <div>
-              <p className="text-xl font-bold text-primary">12</p>
-              <p className="text-xs text-muted-foreground">Đơn hàng</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Left: User Info Card */}
+            <div className="md:col-span-1 space-y-6">
+              <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center text-3xl mb-4 text-purple-600">
+                  👤
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Người dùng</h2>
+                <p className="text-sm text-gray-500 mt-0.5">+84 xxx xxx xxx</p>
+                <div className="border-t border-gray-100 w-full mt-6 pt-6 grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <p className="text-lg font-extrabold text-red-600">12</p>
+                    <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Đơn hàng</p>
+                  </div>
+                  <div>
+                    <p className="text-lg font-extrabold text-red-600">1.2k</p>
+                    <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider font-mono">Xu tích lũy</p>
+                  </div>
+                </div>
+              </div>
+
+              <button className="w-full flex items-center justify-center gap-2 py-3 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-xl transition-colors border border-red-100">
+                <LogOut className="w-4 h-4" />
+                <span>Đăng xuất tài khoản</span>
+              </button>
             </div>
-            <div>
-              <p className="text-xl font-bold text-primary">5</p>
-              <p className="text-xs text-muted-foreground">Ưu đãi</p>
-            </div>
-            <div>
-              <p className="text-xl font-bold text-primary">3</p>
-              <p className="text-xs text-muted-foreground">Voucher</p>
-            </div>
-            <div>
-              <p className="text-xl font-bold text-primary">1.2k</p>
-              <p className="text-xs text-muted-foreground">Xu</p>
+
+            {/* Right: Menu Items */}
+            <div className="md:col-span-2">
+              <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden divide-y divide-gray-100">
+                {menuItems.map((item) => (
+                  <button
+                    key={item.label}
+                    className="w-full flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-colors text-left group"
+                  >
+                    <div className="p-2 bg-gray-50 rounded-lg text-gray-500 group-hover:text-purple-600 group-hover:bg-purple-50 transition-colors">
+                      <item.icon className="w-5 h-5" />
+                    </div>
+                    <span className="flex-1 font-bold text-gray-700 text-sm md:text-base group-hover:text-gray-900">
+                      {item.label}
+                    </span>
+                    {item.count && (
+                      <span className="bg-red-50 text-red-600 text-xs font-bold px-2.5 py-0.5 rounded-full border border-red-100">
+                        {item.count}
+                      </span>
+                    )}
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Menu Items */}
-        <div className="bg-card mx-4 rounded-xl overflow-hidden">
-          {menuItems.map((item, index) => (
-            <button
-              key={item.label}
-              className={`w-full flex items-center gap-4 px-4 py-3 ${
-                index !== menuItems.length - 1 ? "border-b border-border" : ""
-              }`}
-            >
-              <item.icon className="w-5 h-5 text-muted-foreground" />
-              <span className="flex-1 text-left">{item.label}</span>
-              {item.count && (
-                <span className="bg-primary/20 text-primary text-xs px-2 py-0.5 rounded-full">
-                  {item.count}
-                </span>
-              )}
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </button>
-          ))}
-        </div>
-
-        {/* Logout */}
-        <div className="mx-4">
-          <button className="w-full flex items-center justify-center gap-2 py-3 text-destructive">
-            <LogOut className="w-5 h-5" />
-            <span>Đăng xuất</span>
-          </button>
         </div>
       </div>
-    </PageLayout>
+    </DeviceLayoutWrapper>
   );
 };
 

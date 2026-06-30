@@ -1,13 +1,15 @@
 "use client";
 
 import React from "react";
-import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
+import PageLayout from "@/components/tiktok/layout/PageLayout";
 import AboutUs from "@/components/muabantaikhoan/features/info/AboutUs";
 
 export default function AboutUsPage() {
   return (
-    <DeviceLayoutWrapper>
-      <AboutUs />
-    </DeviceLayoutWrapper>
+    <PageLayout headerProps={{ title: "Giới thiệu", showBack: true, showSearch: false }}>
+      <div className="px-4 py-2 bg-background">
+        <AboutUs />
+      </div>
+    </PageLayout>
   );
 }

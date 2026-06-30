@@ -46,7 +46,11 @@ export default function CategoryContent() {
         <div className="w-full lg:w-3/4">
           <div className="flex justify-between items-center mb-6">
             <div className="text-gray-600">Hiển thị 1-12 của 36 sản phẩm</div>
-            <select className="border rounded px-3 py-1 text-sm outline-none">
+            <select 
+              aria-label="Sắp xếp sản phẩm"
+              title="Sắp xếp sản phẩm"
+              className="border rounded px-3 py-1 text-sm outline-none"
+            >
               <option>Mới nhất</option>
               <option>Giá: Thấp đến Cao</option>
               <option>Giá: Cao đến Thấp</option>

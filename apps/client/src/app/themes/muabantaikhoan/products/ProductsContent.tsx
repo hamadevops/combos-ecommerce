@@ -1,16 +1,14 @@
 "use client";
 
-import PageLayout from "@/components/tiktok/layout/PageLayout";
-import ProductCard from "@/components/tiktok/products/ProductCard";
+import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
+import ProductCard from "@/components/muabantaikhoan/shared/cards/ProductCard";
 import { useInfiniteProducts } from "@/hooks/useProducts";
 import { Filter, ChevronDown, Loader2 } from "lucide-react";
 import { useState, useRef, useCallback } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-
-import ShopHeader from "@/components/tiktok/shop/ShopHeader";
+import { useSearchParams } from "next/navigation";
+import { getImageUrl } from "@/lib/utils";
 
 const ProductsContent = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams?.get("search") || undefined;
   const categoryIdParam = searchParams?.get("categoryId");
@@ -63,73 +61,104 @@ const ProductsContent = () => {
     setActiveFilter(type);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mapProductToCard = (p: any) => ({
+    id: String(p.id),
+    name: p.name,
+    slug: p.slug,
+    thumbnail: getImageUrl(p.images?.[0]?.url) || "",
+    originalPrice: p.price,
+    currentPrice: p.salePrice || p.price,
+    discountPercent: p.discount_percent || (p.salePrice && p.price ? Math.round(((p.price - p.salePrice) / p.price) * 100) : undefined),
+    tags: p.tags?.map((t: any) => t.name) || [],
+    soldCount: p.sold_count || 0,
+  });
+
+  const mappedProducts = products.map(mapProductToCard);
+
   return (
-    <PageLayout headerProps={{ showSearch: true, showBack: true }}>
-      <div className="space-y-4 py-4 min-h-screen">
-        {/* Filters */}
-        <div className="flex items-center gap-2 px-4 overflow-x-auto scrollbar-hide">
-          <button className="flex items-center gap-1 px-3 py-1.5 bg-secondary rounded-full text-sm whitespace-nowrap">
-            <Filter className="w-4 h-4" />
-            Bộ lọc
-          </button>
+    <DeviceLayoutWrapper>
+      <div className="bg-gray-50 min-h-screen py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Title & Toolbar */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">
+                {searchTerm ? `Kết quả tìm kiếm cho "${searchTerm}"` : "Tất cả sản phẩm"}
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Tìm thấy {products.length} sản phẩm
+              </p>
+            </div>
 
-          <button
-            onClick={() => handleSortChange("all")}
-            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${activeFilter === "all" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-          >
-            Tất cả
-          </button>
-          <button
-            onClick={() => handleSortChange("bestseller")}
-            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${activeFilter === "bestseller" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-          >
-            Bán chạy
-          </button>
-          <button
-            onClick={() => handleSortChange("newest")}
-            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${activeFilter === "newest" ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-          >
-            Mới nhất
-          </button>
-          <button
-            onClick={() =>
-              handleSortChange(activeFilter === "price_asc" ? "price_desc" : "price_asc")
-            }
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${["price_asc", "price_desc"].includes(activeFilter) ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-          >
-            Giá
-            <ChevronDown
-              className={`w-4 h-4 transition-transform ${activeFilter === "price_asc" ? "rotate-180" : ""}`}
-            />
-          </button>
-        </div>
+            {/* Filters */}
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <button className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm whitespace-nowrap transition-colors">
+                <Filter className="w-4 h-4" />
+                Bộ lọc
+              </button>
 
-        {/* Products Grid */}
-        {isLoading ? (
-          <div className="flex justify-center p-8">
-            <Loader2 className="animate-spin w-8 h-8 text-primary" />
+              <button
+                onClick={() => handleSortChange("all")}
+                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === "all" ? "bg-red-600 text-white font-medium" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}
+              >
+                Mặc định
+              </button>
+              <button
+                onClick={() => handleSortChange("bestseller")}
+                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === "bestseller" ? "bg-red-600 text-white font-medium" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}
+              >
+                Bán chạy
+              </button>
+              <button
+                onClick={() => handleSortChange("newest")}
+                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === "newest" ? "bg-red-600 text-white font-medium" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}
+              >
+                Mới nhất
+              </button>
+              <button
+                onClick={() =>
+                  handleSortChange(activeFilter === "price_asc" ? "price_desc" : "price_asc")
+                }
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${["price_asc", "price_desc"].includes(activeFilter) ? "bg-red-600 text-white font-medium" : "bg-gray-100 hover:bg-gray-200 text-gray-700"}`}
+              >
+                Giá
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${activeFilter === "price_asc" ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
           </div>
-        ) : products.length > 0 ? (
-          <>
-            <div className="grid grid-cols-2 gap-2 px-2">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
 
-            {/* Load More Trigger */}
-            <div ref={loadMoreRef} className="flex justify-center py-4">
-              {isFetchingNextPage && <Loader2 className="animate-spin w-6 h-6 text-primary" />}
-              {!hasNextPage && products.length > 0 && (
-                <p className="text-sm text-muted-foreground">Đã hiển thị tất cả sản phẩm</p>
-              )}
+          {/* Products Grid */}
+          {isLoading && products.length === 0 ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="animate-spin w-8 h-8 text-red-600" />
             </div>
-          </>
-        ) : (
-          <div className="text-center py-10 text-muted-foreground">Không tìm thấy sản phẩm nào</div>
-        )}
+          ) : mappedProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {mappedProducts.map((product) => (
+                  <ProductCard key={product.id} {...product} />
+                ))}
+              </div>
+
+              {/* Load More Trigger */}
+              <div ref={loadMoreRef} className="flex justify-center py-8">
+                {isFetchingNextPage && <Loader2 className="animate-spin w-6 h-6 text-red-600" />}
+                {!hasNextPage && products.length > 0 && (
+                  <p className="text-sm text-gray-500">Đã hiển thị tất cả sản phẩm</p>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="bg-white text-center py-16 rounded-xl border border-gray-100 text-gray-500">
+              Không tìm thấy sản phẩm nào
+            </div>
+          )}
+        </div>
       </div>
-    </PageLayout>
+    </DeviceLayoutWrapper>
   );
 };
 

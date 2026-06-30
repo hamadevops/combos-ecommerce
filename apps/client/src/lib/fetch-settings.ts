@@ -13,7 +13,8 @@ export const getShopSettings = cache(async () => {
       storeOgImage: settings?.store_og_image || settings?.store_background || settings?.store_logo || null,
     };
   } catch (error) {
-    console.error("Failed to fetch shop settings", error);
+    const msg = error instanceof Error ? error.message : String(error);
+    console.warn(`[Settings] Backend is offline (${msg}). Using fallback shop settings.`);
     return {
       storeName: "Điện máy chính hãng VN",
       storeDescription: "Điện máy chính hãng VN",

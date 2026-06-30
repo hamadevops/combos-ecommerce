@@ -9,16 +9,23 @@ const nextConfig = {
   output: "standalone",
   distDir: "../../dist/apps/client/.next",
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: (() => {
       const patterns = [
         {
+          protocol: "https",
           hostname: "images.unsplash.com",
+          pathname: "/**",
         },
         {
+          protocol: "https",
           hostname: "placehold.co",
+          pathname: "/**",
         },
         {
+          protocol: "https",
           hostname: "github.com",
+          pathname: "/**",
         },
       ];
 

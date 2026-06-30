@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayoutWrapper";
+import PageLayout from "@/components/tiktok/layout/PageLayout";
 import NewsDetail from "@/components/muabantaikhoan/features/news/NewsDetail";
 
 interface NewsDetailContentProps {
@@ -13,22 +13,24 @@ interface NewsDetailContentProps {
 const NewsDetailContent = ({ article, popularArticles, relatedArticles }: NewsDetailContentProps) => {
   if (!article) {
     return (
-      <DeviceLayoutWrapper>
-        <div className="min-h-screen flex items-center justify-center">
+      <PageLayout headerProps={{ title: "Không tìm thấy bài viết", showBack: true, showSearch: false }}>
+        <div className="min-h-screen flex items-center justify-center bg-background">
           <p className="text-gray-500 text-lg">Không tìm thấy bài viết.</p>
         </div>
-      </DeviceLayoutWrapper>
+      </PageLayout>
     );
   }
 
   return (
-    <DeviceLayoutWrapper>
-      <NewsDetail 
-        article={article}
-        popularArticles={popularArticles}
-        relatedArticles={relatedArticles}
-      />
-    </DeviceLayoutWrapper>
+    <PageLayout headerProps={{ title: article.title, showBack: true, showSearch: false }}>
+      <div className="bg-background">
+        <NewsDetail 
+          article={article}
+          popularArticles={popularArticles}
+          relatedArticles={relatedArticles}
+        />
+      </div>
+    </PageLayout>
   );
 };
 

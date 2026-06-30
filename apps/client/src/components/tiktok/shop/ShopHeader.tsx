@@ -33,6 +33,8 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
   const { getSetting } = useShopSettings();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+  const [bgError, setBgError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -61,7 +63,7 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
     <div className="relative">
       {/* Banner Section */}
       <div className="relative h-[200px] bg-card overflow-hidden">
-        {backgroundUrl ? (
+        {backgroundUrl && !bgError ? (
           <Image
             src={backgroundUrl}
             alt="Shop Background"
@@ -70,6 +72,7 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
             priority
             unoptimized
             className="object-cover"
+            onError={() => setBgError(true)}
           />
         ) : (
           <img
@@ -125,8 +128,16 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
             {/* Avatar */}
             <div className="relative flex-shrink-0">
               <div className="relative w-16 h-16 rounded-full border-2 border-white overflow-hidden bg-background">
-                {logoUrl ? (
-                  <Image src={logoUrl} alt={storeName} fill priority className="object-cover" />
+                {logoUrl && !logoError ? (
+                  <Image
+                    src={logoUrl}
+                    alt={storeName}
+                    fill
+                    priority
+                    sizes="64px"
+                    className="object-cover"
+                    onError={() => setLogoError(true)}
+                  />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
                     <span className="text-white font-bold text-xl">
