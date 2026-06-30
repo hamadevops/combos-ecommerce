@@ -2,24 +2,35 @@
 
 import React, { useState, useMemo } from "react";
 import NewsCard, { NewsCardProps } from "./NewsCard";
-import { Flame } from "lucide-react";
+import EmptyState from "@/components/tiktok/ui/EmptyState";
+import { Flame, FileText } from "lucide-react";
 
 interface NewsListProps {
   articles: NewsCardProps[];
+  categories?: string[];
 }
 
-export default function NewsList({ articles }: NewsListProps) {
+export default function NewsList({ articles, categories: propCategories }: NewsListProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("Tất cả");
 
-  // Dynamically extract categories
+  // Use backend categories if provided, otherwise extract from articles
   const categories = useMemo(() => {
+    if (propCategories && propCategories.length > 0) {
+      // Remove duplicate "Tất cả" if any, and make sure "Tất cả" is first
+      const list = new Set<string>();
+      list.add("Tất cả");
+      propCategories.forEach((cat) => {
+        if (cat) list.add(cat);
+      });
+      return Array.from(list);
+    }
     const list = new Set<string>();
     list.add("Tất cả");
     articles.forEach((art) => {
       if (art.category) list.add(art.category);
     });
     return Array.from(list);
-  }, [articles]);
+  }, [articles, propCategories]);
 
   // Filtered articles
   const filteredArticles = useMemo(() => {
@@ -55,7 +66,7 @@ export default function NewsList({ articles }: NewsListProps) {
             <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
               <Flame className="w-3 h-3 fill-white" /> Hot News
             </span>
-            <h2 className="text-lg font-extrabold leading-tight">Tin Tức Công Nghệ</h2>
+            <h2 className="text-lg font-extrabold leading-tight">Tin tức</h2>
             <p className="text-xs text-white/85">Cập nhật xu hướng và kiến thức mới nhất mỗi ngày</p>
           </div>
           {/* Decorative light circle */}
@@ -70,9 +81,11 @@ export default function NewsList({ articles }: NewsListProps) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-zinc-400 text-sm">
-            Chưa có bài viết nào thuộc danh mục này
-          </div>
+          <EmptyState
+            icon={<FileText className="w-8 h-8 text-zinc-400 dark:text-zinc-600 stroke-[1.5]" />}
+            title="Bản tin trống"
+            description="Chưa có bài viết nào thuộc danh mục này"
+          />
         )}
       </div>
     </div>

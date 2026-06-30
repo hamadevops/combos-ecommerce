@@ -7,13 +7,14 @@ import { NewsCardProps } from "@/components/tiktok/news/NewsCard";
 
 interface NewsListContentProps {
   initialArticles: NewsCardProps[];
+  categories: string[];
 }
 
-const NewsListContent = ({ initialArticles }: NewsListContentProps) => {
+const NewsListContent = ({ initialArticles, categories }: NewsListContentProps) => {
   return (
-    <PageLayout headerProps={{ title: "Tin tức công nghệ", showBack: true, showSearch: false }}>
+    <PageLayout headerProps={{ title: "Tin tức", showBack: true, showSearch: false }}>
       <div className="bg-background">
-        <NewsList articles={initialArticles} />
+        <NewsList articles={initialArticles} categories={categories} />
       </div>
     </PageLayout>
   );

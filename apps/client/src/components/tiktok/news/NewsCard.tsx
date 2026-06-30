@@ -22,7 +22,7 @@ export default function NewsCard({
   slug,
   date,
   category,
-  views = Math.floor(Math.random() * 800) + 120,
+  views = 0,
 }: NewsCardProps) {
   // Safe date parsing and formatting
   const formattedDate = () => {

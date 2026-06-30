@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title: `Chi tiết tin tức | ${storeName}`,
-    description: "Chi tiết bài viết công nghệ mới nhất",
+    description: "Chi tiết bài viết mới nhất",
   };
 }
 
