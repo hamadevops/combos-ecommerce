@@ -2,7 +2,7 @@
 
 import React from "react";
 import PageLayout from "@/components/tiktok/layout/PageLayout";
-import NewsDetail from "@/components/muabantaikhoan/features/news/NewsDetail";
+import NewsDetail from "@/components/tiktok/news/NewsDetail";
 
 interface NewsDetailContentProps {
   article: any;

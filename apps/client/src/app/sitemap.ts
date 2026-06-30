@@ -5,7 +5,7 @@ import { categoryApi } from "@/api/category";
 import { getImageUrl } from "@/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://phanphoichinhhang.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const apiClient = getPublicServerApiClient();
 
   // Static routes

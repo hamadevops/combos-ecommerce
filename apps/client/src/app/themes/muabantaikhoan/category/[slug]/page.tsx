@@ -10,7 +10,7 @@ import { getImageUrl } from "@/lib/utils";
 
 import { Metadata } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://phanphoichinhhang.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 interface Props {
   params: Promise<{ slug: string }>;

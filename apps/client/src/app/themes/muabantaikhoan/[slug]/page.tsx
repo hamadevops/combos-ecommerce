@@ -13,7 +13,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://phanphoichinhhang.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 function stripHtml(html: string | undefined | null): string {
   if (!html) return "";

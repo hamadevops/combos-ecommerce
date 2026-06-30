@@ -7,7 +7,7 @@ import DeviceLayoutWrapper from "@/components/muabantaikhoan/layout/DeviceLayout
 import MuabanCategoryList from "@/components/muabantaikhoan/features/category/CategoryList";
 import { Metadata } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://phanphoichinhhang.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { storeName } = await getShopSettings();

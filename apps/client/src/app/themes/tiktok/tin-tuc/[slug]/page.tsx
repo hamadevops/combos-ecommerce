@@ -1,29 +1,57 @@
 import NewsDetailContent from "./NewsDetailContent";
 import { getPublicServerApiClient } from "@/lib/server-api-config";
 import { postsFindOne, postsFindAll } from "@projects/shared";
+import { getShopSettings } from "@/lib/fetch-settings";
+import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const apiClient = getPublicServerApiClient();
+  let storeName = "Cửa hàng";
+  
+  try {
+    const settings = await getShopSettings();
+    storeName = settings.storeName || "Cửa hàng";
+  } catch (e) {
+    console.warn("[SEO] Failed to fetch shop settings for news detail metadata:", e);
+  }
+
   try {
     const { data: response } = await postsFindOne({ client: apiClient, path: { idOrSlug: params.slug } });
     const post = response?.data;
     if (post) {
+      const metaTitle = post.metaTitle || `${post.title} | ${storeName}`;
+      const metaDesc = post.metaDescription || post.excerpt || `Đọc bài viết ${post.title} tại ${storeName}.`;
+      
       return {
-        title: post.metaTitle || post.title,
-        description: post.metaDescription || post.excerpt,
+        title: metaTitle,
+        description: metaDesc,
+        alternates: {
+          canonical: `${BASE_URL}/tin-tuc/${params.slug}`,
+        },
         openGraph: {
-          title: post.metaTitle || post.title,
-          description: post.metaDescription || post.excerpt,
+          title: metaTitle,
+          description: metaDesc,
+          url: `${BASE_URL}/tin-tuc/${params.slug}`,
+          siteName: storeName,
+          type: "article",
+          images: post.thumbnail ? [{ url: post.thumbnail }] : [],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: metaTitle,
+          description: metaDesc,
           images: post.thumbnail ? [post.thumbnail] : [],
         },
       };
     }
   } catch (error) {
-    console.error("Error fetching metadata:", error);
+    console.warn(`[SEO] Failed to fetch post metadata for ${params.slug}:`, error);
   }
 
   return {
-    title: "Chi tiết tin tức",
+    title: `Chi tiết tin tức | ${storeName}`,
     description: "Chi tiết bài viết công nghệ mới nhất",
   };
 }
@@ -53,7 +81,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
       relatedArticles = others.slice(4, 7);
     }
   } catch (error) {
-    console.error("Error fetching post detail:", error);
+    console.warn(`[News] Failed to fetch post detail for ${params.slug}:`, error);
   }
 
   return <NewsDetailContent article={article} popularArticles={popularArticles} relatedArticles={relatedArticles} />;
