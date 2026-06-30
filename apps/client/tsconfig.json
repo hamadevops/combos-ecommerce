@@ -51,7 +51,9 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "../../dist/apps/client/.next/types/**/*.ts",
-    "../../dist/apps/client/.next/dev/types/**/*.ts"
+    "../../dist/apps/client/.next/dev/types/**/*.ts",
+    "../../dist/client/.next/types/**/*.ts",
+    "../../dist/client/.next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

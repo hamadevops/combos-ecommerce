@@ -9,7 +9,7 @@ function createWebpackConfig(options) {
     mode: 'production',
     output: {
       ...options.output,
-      path: path.resolve(__dirname, './dist'),
+      path: path.resolve(__dirname, '../../dist/apps/backend'),
     },
     externals: [
       nodeExternals({

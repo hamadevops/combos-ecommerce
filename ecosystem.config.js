@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "ecommerce-backend",
-      script: "dist/main.js",
+      script: "../../dist/apps/backend/main.js",
       cwd: "./apps/backend",
       instances: 1,
       autorestart: true,
