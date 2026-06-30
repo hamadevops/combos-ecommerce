@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Home, Grid3X3, ShoppingCart, Store, Package } from "lucide-react";
+import { Home, Grid3X3, ShoppingCart, Store, Package, Newspaper } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,7 @@ const navItems = [
   { icon: Store, label: "Trang chủ", path: "/" },
   { icon: Package, label: "Sản phẩm", path: "/san-pham" },
   { icon: Grid3X3, label: "Danh mục", path: "/danh-muc" },
-  { icon: ShoppingCart, label: "Giỏ hàng", path: "/cart" },
+  { icon: Newspaper, label: "Tin tức", path: "/tin-tuc" },
 ];
 
 const BottomNav = () => {
@@ -41,7 +41,9 @@ const BottomNav = () => {
           <div className="flex items-center justify-around px-2 h-[80px] relative z-10">
             {navItems.map((item) => {
               const isActive =
-                pathname === item.path || (item.path === "/san-pham" && pathname === "/products");
+                pathname === item.path ||
+                (item.path === "/san-pham" && pathname === "/products") ||
+                (item.path === "/tin-tuc" && pathname?.startsWith("/tin-tuc"));
 
               return (
                 <Link

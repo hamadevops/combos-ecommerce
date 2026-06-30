@@ -40,25 +40,6 @@ export default function NewsList({ articles, categories: propCategories }: NewsL
 
   return (
     <div className="bg-zinc-50 dark:bg-black min-h-screen pb-16">
-      {/* Scrollable Categories Header */}
-      <div className="sticky top-12 z-40 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-zinc-100 dark:border-zinc-900 py-3 px-4">
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedCategory === cat
-                  ? "bg-[#FE2C55] text-white shadow-sm"
-                  : "bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="px-4 py-4 space-y-4">
         {/* Banner Section */}
         <div className="bg-gradient-to-r from-[#FE2C55] to-[#25F4EE]/30 p-5 rounded-2xl text-white relative overflow-hidden shadow-sm">
@@ -71,6 +52,25 @@ export default function NewsList({ articles, categories: propCategories }: NewsL
           </div>
           {/* Decorative light circle */}
           <div className="absolute -right-8 -bottom-8 w-24 h-24 bg-white/10 rounded-full blur-xl" />
+        </div>
+
+        {/* Scrollable Categories Header (Moved below banner) */}
+        <div className="sticky top-12 z-30 bg-zinc-50/95 dark:bg-black/95 backdrop-blur-md border-y border-zinc-100 dark:border-zinc-900 py-3 px-1 -mx-4 px-4">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  selectedCategory === cat
+                    ? "bg-[#FE2C55] text-white shadow-sm"
+                    : "bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* News Feed Grid */}
