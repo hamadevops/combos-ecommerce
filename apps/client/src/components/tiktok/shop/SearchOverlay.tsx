@@ -69,6 +69,7 @@ function SearchOverlayContent({ isOpen, onClose }: SearchOverlayProps) {
   } = useProducts({
     search: debouncedKeyword || undefined,
     limit: 10,
+    enabled: isOpen && !!debouncedKeyword,
   });
 
   const products = results?.data || [];
@@ -114,7 +115,12 @@ function SearchOverlayContent({ isOpen, onClose }: SearchOverlayProps) {
             />
           </form>
           {keyword && (
-            <button onClick={() => setKeyword("")} className="p-1 shrink-0 -mr-1" type="button">
+            <button 
+              onClick={() => setKeyword("")} 
+              className="p-1 shrink-0 -mr-1" 
+              type="button"
+              aria-label="Xóa từ khóa"
+            >
               <div className="w-[18px] h-[18px] bg-muted-foreground/30 hover:bg-muted-foreground/50 transition-colors rounded-full flex items-center justify-center">
                 <X className="w-3 h-3 text-background" />
               </div>

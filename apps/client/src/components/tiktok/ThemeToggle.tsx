@@ -17,7 +17,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className={className}>
+      <Button variant="ghost" size="icon" className={className} aria-label="Thay đổi giao diện">
         <div className="h-5 w-5 opacity-0" />
       </Button>
     );
@@ -29,10 +29,10 @@ export function ThemeToggle({ className }: { className?: string }) {
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className={cn("relative", className)}
+      aria-label="Thay đổi giao diện"
     >
       <Sun className="h-5 w-5 transition-all dark:-rotate-90 dark:opacity-0" />
       <Moon className="absolute h-5 w-5 rotate-90 opacity-0 transition-all dark:rotate-0 dark:opacity-100" />
-      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }
