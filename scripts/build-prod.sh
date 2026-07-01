@@ -52,12 +52,20 @@ if [ $attempt -gt $max_attempts ]; then
 fi
 
 # 5. Build Client (requires running backend for static page generation / SSR)
-echo -e "\n${YELLOW}[4/4] Building Client (Next.js)...${CLEAR}"
+echo -e "\n${YELLOW}[4/5] Building Client (Next.js)...${CLEAR}"
 pnpm --filter @projects/client build
 
 # 6. Start/Restart Client in PM2
 echo -e "\n${YELLOW}Starting/Restarting Client with PM2...${CLEAR}"
 pm2 startOrReload ecosystem.config.js --only ecommerce-client
+
+# 7. Build Admin (Vite SPA)
+echo -e "\n${YELLOW}[5/5] Building Admin (Vite SPA)...${CLEAR}"
+pnpm --filter @projects/admin build
+
+# 8. Start/Restart Admin in PM2
+echo -e "\n${YELLOW}Starting/Restarting Admin with PM2...${CLEAR}"
+pm2 startOrReload ecosystem.config.js --only ecommerce-admin
 
 echo -e "\n${GREEN}=========================================${CLEAR}"
 echo -e "${GREEN}      DEPLOYMENT COMPLETED SUCCESSFULLY  ${CLEAR}"

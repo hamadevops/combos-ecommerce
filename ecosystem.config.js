@@ -28,5 +28,15 @@ module.exports = {
         PORT: 3000,
       },
     },
+    {
+      name: "ecommerce-admin",
+      script: "serve",
+      env: {
+        PM2_SERVE_PATH: "./dist/apps/admin",
+        PM2_SERVE_PORT: 3002,
+        PM2_SERVE_SPA: "true",
+        PM2_SERVE_HOMEPAGE: "/index.html",
+      },
+    },
   ],
 };
