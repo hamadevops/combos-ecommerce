@@ -22,15 +22,17 @@ if ! command -v pm2 &> /dev/null; then
 fi
 
 # 2. Build Backend
-echo -e "\n${YELLOW}[1/4] Building Backend...${CLEAR}"
+echo -e "\n${YELLOW}[1/5] Building Backend...${CLEAR}"
 pnpm --filter @projects/backend build
+mkdir -p dist/apps/backend
+ln -sf ../../../apps/backend/node_modules dist/apps/backend/node_modules
 
 # 3. Start/Restart Backend in PM2
-echo -e "\n${YELLOW}[2/4] Starting/Restarting Backend with PM2...${CLEAR}"
+echo -e "\n${YELLOW}[2/5] Starting/Restarting Backend with PM2...${CLEAR}"
 pm2 startOrReload ecosystem.config.js --only ecommerce-backend
 
 # 4. Wait for Backend to be online
-echo -e "\n${YELLOW}[3/4] Waiting for Backend to be online on port 3333...${CLEAR}"
+echo -e "\n${YELLOW}[3/5] Waiting for Backend to be online on port 3333...${CLEAR}"
 max_attempts=30
 attempt=1
 backend_url="http://localhost:3333"
