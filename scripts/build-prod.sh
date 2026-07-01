@@ -55,6 +55,8 @@ fi
 
 # 5. Build Client (requires running backend for static page generation / SSR)
 echo -e "\n${YELLOW}[4/5] Building Client (Next.js)...${CLEAR}"
+mkdir -p dist/apps/client
+ln -sf ../../../apps/client/node_modules dist/apps/client/node_modules
 pnpm --filter @projects/client build
 
 # 6. Start/Restart Client in PM2
