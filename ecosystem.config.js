@@ -11,6 +11,7 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: "1G",
+      kill_timeout: 10000, // Chờ tối đa 10s để đóng kết nối cũ trước khi tắt hẳn
       env: {
         NODE_ENV: "production",
         PORT: 3333,
@@ -22,10 +23,11 @@ module.exports = {
       args: "start",
       cwd: path.resolve(__dirname, "./apps/client"),
       instances: 1,
-      exec_mode: "fork",
+      exec_mode: "cluster", // Dùng cluster mode với 1 instance để hỗ trợ Zero-Downtime reload
       autorestart: true,
       watch: false,
       max_memory_restart: "2G",
+      kill_timeout: 10000, // Chờ tối đa 10s để đóng các kết nối cũ
       env: {
         NODE_ENV: "production",
         PORT: 3000,
