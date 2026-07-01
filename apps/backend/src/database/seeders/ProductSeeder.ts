@@ -23,163 +23,176 @@ export class ProductSeeder extends Seeder {
       return;
     }
 
-    // Get categories (assuming CategorySeeder ran first and created these)
-    const pinTools = await this.getOrCreateCategory(em, 'Dụng cụ pin');
-    const electTools = await this.getOrCreateCategory(em, 'Dụng cụ điện');
-    const accessories = await this.getOrCreateCategory(em, 'Phụ kiện');
-    const gardenTools = await this.getOrCreateCategory(em, 'Dụng cụ làm vườn');
-    const utilityTools = await this.getOrCreateCategory(em, 'Dụng cụ tiện ích');
-    const measureTools = await this.getOrCreateCategory(em, 'Dụng cụ đo lường');
+    // Get categories
+    const smartHome = await this.getOrCreateCategory(em, 'Đồ Gia Dụng Thông Minh');
+    const techGadgets = await this.getOrCreateCategory(em, 'Đồ Công Nghệ & Gadgets');
+    const homeLiving = await this.getOrCreateCategory(em, 'Nhà Cửa & Đời Sống');
+    const motherBaby = await this.getOrCreateCategory(em, 'Mẹ & Bé');
+    const premiumAccounts = await this.getOrCreateCategory(em, 'Tài Khoản Premium');
 
-    // 1. Máy khoan pin Hukan (Dụng cụ pin)
+    // 1. Robot Hút Bụi Ecovacs T20 OMNI
     await this.createProductWithTierVariants(em, {
-      name: 'Máy khoan pin Hukan XC5-21V',
-      slug: 'may-khoan-pin-hukan-xc5-21v',
-      description: 'Máy khoan pin Hukan công suất mạnh mẽ, động cơ không chổi than, phù hợp cho công trình.',
-      sku: 'HUKAN-XC5',
+      name: 'Robot Hút Bụi Lau Nhà Ecovacs Deebot T20 OMNI',
+      slug: 'robot-hut-bui-ecovacs-deebot-t20-omni',
+      description: 'Robot hút bụi lau nhà hàng đầu hiện nay với công nghệ giặt giẻ bằng nước nóng 55°C, lực hút cực mạnh 6000Pa, tự động đổ rác và sấy khô giẻ lau bằng khí nóng. Khả năng tránh vật cản chính xác bằng công nghệ TrueDetect 3D 3.0.',
+      sku: 'ECOVACS-T20',
       isActive: true,
       isFeatured: true,
-      categories: [pinTools],
+      categories: [smartHome],
+      productType: 'affiliate',
+      affiliateLink: 'https://shope.ee/8A9B2C3D',
       images: [
-        'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80',
-        'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80',
+        'https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80',
       ],
       tier1: {
         name: 'Phiên bản',
         options: [
-          { value: 'Thân máy (Chưa pin sạc)' },
-          { value: 'Combo 1 Pin 2Ah' },
-          { value: 'Combo 2 Pin 2Ah' },
+          { value: 'Bản Tiêu Chuẩn' },
+          { value: 'Bản Pro (Kèm Nước Lau)' },
         ],
       },
       pricing: [
-        { tier1Index: 0, price: 850000, stock: 50 },
-        { tier1Index: 1, price: 1250000, stock: 30 },
-        { tier1Index: 2, price: 1550000, salePrice: 1450000, stock: 20 },
+        { tier1Index: 0, price: 13990000, salePrice: 12990000, stock: 50 },
+        { tier1Index: 1, price: 14500000, salePrice: 13500000, stock: 30 },
       ],
     });
 
-    // 2. Máy đục bê tông Hukan (Dụng cụ điện)
+    // 2. Ghế Công Thái Học Sihoo M57
     await this.createProductWithTierVariants(em, {
-      name: 'Máy đục bê tông Hukan HK-0810',
-      slug: 'may-duc-be-tong-hukan-hk-0810',
-      description: 'Công suất 1300W, lực đập mạnh mẽ, chuyên dụng cho phá dỡ công trình.',
-      sku: 'HUKAN-HK0810',
+      name: 'Ghế Công Thái Học Ergonomic Sihoo M57',
+      slug: 'ghe-cong-thai-hoc-sihoo-m57',
+      description: 'Ghế ngồi làm việc công thái học hỗ trợ cột sống tốt nhất phân khúc, chất liệu lưới cao cấp thoáng mát, tựa tay 3D linh hoạt điều chỉnh, phù hợp cho dân văn phòng và coder ngồi làm việc thời gian dài.',
+      sku: 'SIHOO-M57',
       isActive: true,
       isFeatured: true,
-      categories: [electTools],
+      categories: [homeLiving],
+      productType: 'affiliate',
+      affiliateLink: 'https://shope.ee/9C8D7E6F',
       images: [
-        'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?w=800&q=80',
+        'https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?w=800&q=80',
       ],
       tier1: {
-        name: 'Màu sắc',
+        name: 'Kê chân',
         options: [
-          { value: 'Xám Đen' },
+          { value: 'Không Kèm Kê Chân' },
+          { value: 'Có Kèm Kê Chân' },
         ],
       },
       pricing: [
-        { tier1Index: 0, price: 1850000, stock: 15 },
+        { tier1Index: 0, price: 3250000, salePrice: 2990000, stock: 80 },
+        { tier1Index: 1, price: 3750000, salePrice: 3490000, stock: 40 },
       ],
     });
 
-    // 3. Sạc nhanh Hukan (Phụ kiện)
+    // 3. Bàn phím cơ Keychron K2 V2
     await this.createProductWithTierVariants(em, {
-      name: 'Sạc nhanh Hukan 21V',
-      slug: 'sac-nhanh-hukan-21v',
-      description: 'Sạc bàn thông minh, tự ngắt khi đầy, bảo vệ pin.',
-      sku: 'HUKAN-CHARGER-21V',
+      name: 'Bàn Phím Cơ Không Dây Keychron K2 V2 (Hot-swap)',
+      slug: 'ban-phim-co-keychron-k2-v2',
+      description: 'Bàn phím cơ compact layout 75% gọn gàng, kết nối Bluetooth đa thiết bị (Windows/Mac/iOS/Android). Thiết kế khung nhôm chắc chắn, LED RGB nhiều chế độ cực đẹp mắt và hỗ trợ thay switch nóng (Hot-swap).',
+      sku: 'KEYCHRON-K2-V2',
+      isActive: true,
+      isFeatured: true,
+      categories: [techGadgets],
+      productType: 'affiliate',
+      affiliateLink: 'https://shope.ee/1A2B3C4D',
+      images: [
+        'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&q=80',
+      ],
+      tier1: {
+        name: 'Loại Switch',
+        options: [
+          { value: 'Gateron Blue Switch' },
+          { value: 'Gateron Brown Switch' },
+          { value: 'Gateron Red Switch' },
+        ],
+      },
+      pricing: [
+        { tier1Index: 0, price: 1950000, salePrice: 1850000, stock: 20 },
+        { tier1Index: 1, price: 1950000, salePrice: 1850000, stock: 30 },
+        { tier1Index: 2, price: 1950000, salePrice: 1850000, stock: 25 },
+      ],
+    });
+
+    // 4. Tai nghe chụp tai Sony WH-1000XM5
+    await this.createProductWithTierVariants(em, {
+      name: 'Tai Nghe Chống Ồn Chủ Động Sony WH-1000XM5',
+      slug: 'tai-nghe-sony-wh-1000xm5',
+      description: 'Tai nghe chụp tai không dây chống ồn chủ động (ANC) hàng đầu từ Sony. Bộ xử lý tích hợp V1 mang lại chất lượng âm thanh đỉnh cao không lẫn tạp âm, thời lượng pin sử dụng lên đến 30 giờ và hỗ trợ sạc nhanh tiện lợi.',
+      sku: 'SONY-WH-1000XM5',
+      isActive: true,
+      isFeatured: true,
+      categories: [techGadgets],
+      productType: 'affiliate',
+      affiliateLink: 'https://shope.ee/5E6F7G8H',
+      images: [
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+      ],
+      tier1: {
+        name: 'Màu Sắc',
+        options: [
+          { value: 'Đen (Black)' },
+          { value: 'Trắng Bạc (Silver)' },
+        ],
+      },
+      pricing: [
+        { tier1Index: 0, price: 6990000, salePrice: 6490000, stock: 15 },
+        { tier1Index: 1, price: 6990000, salePrice: 6490000, stock: 15 },
+      ],
+    });
+
+    // 5. Ấm Siêu Tốc Xiaomi Smart Kettle Pro
+    await this.createProductWithTierVariants(em, {
+      name: 'Ấm Siêu Tốc Thông Minh Xiaomi Smart Kettle Pro',
+      slug: 'am-sieu-toc-xiaomi-smart-kettle-pro',
+      description: 'Ấm đun nước siêu tốc Xiaomi tích hợp màn hình LED hiển thị nhiệt độ thực tế, hỗ trợ điều chỉnh giữ ấm thông minh ở nhiều mức độ qua ứng dụng Mi Home. Chất liệu lòng ấm bằng inox 304 an toàn cho sức khỏe.',
+      sku: 'XIAOMI-KETTLE-PRO',
       isActive: true,
       isFeatured: false,
-      categories: [accessories],
+      categories: [smartHome],
+      productType: 'affiliate',
+      affiliateLink: 'https://shope.ee/2H3I4J5K',
       images: [
-        'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80',
+        'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&q=80',
       ],
       tier1: {
-        name: 'Loại chân cắm',
+        name: 'Bản sản phẩm',
         options: [
-          { value: 'Chân phổ thông' },
+          { value: 'Bản Quốc Tế' },
         ],
       },
       pricing: [
-        { tier1Index: 0, price: 250000, stock: 100 },
+        { tier1Index: 0, price: 950000, salePrice: 850000, stock: 100 },
       ],
     });
 
-    // 4. Máy cưa xích chạy pin (Dụng cụ làm vườn)
+    // 6. Tài Khoản Netflix Premium 1 Tháng
     await this.createProductWithTierVariants(em, {
-      name: 'Máy cưa xích pin Hukan CS-06',
-      slug: 'may-cua-xich-pin-hukan-cs-06',
-      description: 'Lam xích 6 inch, động cơ Brushless, cắt cành cây siêu ngọt.',
-      sku: 'HUKAN-CS06',
+      name: 'Tài Khoản Netflix Premium 1 Tháng (Slot Xem Chung)',
+      slug: 'tai-khoan-netflix-premium-1-thang',
+      description: 'Cung cấp tài khoản Netflix Premium chất lượng 4K UHD, dùng chung 1 profile cá nhân ổn định, có đặt mã PIN khóa riêng tư. Bảo hành lỗi 1 đổi 1 trọn thời gian sử dụng.',
+      sku: 'NETFLIX-PREMIUM-1M',
       isActive: true,
       isFeatured: true,
-      categories: [gardenTools, pinTools],
+      categories: [premiumAccounts],
+      productType: 'purchase',
       images: [
-        'https://images.unsplash.com/photo-1590233033200-a2497fbba24d?w=800&q=80',
+        'https://images.unsplash.com/photo-1574375927938-d5a98e8edd86?w=800&q=80',
       ],
       tier1: {
-        name: 'Gói sản phẩm',
+        name: 'Gói đăng ký',
         options: [
-          { value: 'Body (Không pin sạc)' },
-          { value: 'Trọn bộ 1 Pin 10 Cell' },
+          { value: 'Xem Chung (1 User)' },
+          { value: 'Trọn Gói (5 Users)' },
         ],
       },
       pricing: [
-        { tier1Index: 0, price: 950000, stock: 40 },
-        { tier1Index: 1, price: 1650000, stock: 25 },
-      ],
-    });
-
-    // 5. Máy rửa xe áp lực cao (Dụng cụ tiện ích)
-    await this.createProductWithTierVariants(em, {
-      name: 'Máy rửa xe chỉnh áp Hukan HK-3000',
-      slug: 'may-rua-xe-hukan-hk-3000',
-      description: 'Công suất 3000W, có chỉnh áp, 100% dây đồng.',
-      sku: 'HUKAN-HK3000',
-      isActive: true,
-      isFeatured: true,
-      categories: [utilityTools, electTools],
-      images: [
-        'https://images.unsplash.com/photo-1596265371388-43edb10632d4?w=800&q=80',
-      ],
-      tier1: {
-        name: 'Model',
-        options: [
-          { value: 'HK-3000 (Chỉnh áp)' },
-        ],
-      },
-      pricing: [
-        { tier1Index: 0, price: 2150000, stock: 30 },
-      ],
-    });
-
-    // 6. Máy cân bằng Laser (Dụng cụ đo lường)
-    await this.createProductWithTierVariants(em, {
-      name: 'Máy laser Hukan 5 tia xanh',
-      slug: 'may-laser-hukan-5-tia-xanh',
-      description: '5 tia xanh siêu sáng, phím cảm ứng, kèm chân đế.',
-      sku: 'HUKAN-LS5G',
-      isActive: true,
-      isFeatured: true,
-      categories: [measureTools],
-      images: [
-        'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80',
-      ],
-      tier1: {
-        name: 'Màu sắc máy',
-        options: [
-          { value: 'Cam' },
-          { value: 'Xanh' },
-        ],
-      },
-      pricing: [
-        { tier1Index: 0, price: 990000, stock: 50 },
-        { tier1Index: 1, price: 990000, stock: 50 },
+        { tier1Index: 0, price: 650000, salePrice: 59000, stock: 999 },
+        { tier1Index: 1, price: 280000, salePrice: 260000, stock: 100 },
       ],
     });
 
     await em.flush();
-    console.log('✓ Tool Products seeded successfully');
+    console.log('✓ Tạp Hóa Review Products seeded successfully');
   }
 
   private async getOrCreateCategory(em: EntityManager, name: string): Promise<Category> {
@@ -209,6 +222,8 @@ export class ProductSeeder extends Seeder {
       isActive: boolean;
       isFeatured: boolean;
       categories: Category[];
+      productType?: string;
+      affiliateLink?: string;
       images?: string[];
       tier1: {
         name: string;
@@ -230,8 +245,15 @@ export class ProductSeeder extends Seeder {
     const existingProduct = await em.findOne(Product, { sku: data.sku });
 
     if (existingProduct) {
-      console.log(`- Product ${data.name} already exists. Updating images...`);
-      // Remove old images specific to this product to fix broken ones
+      console.log(`- Product ${data.name} already exists. Updating properties & images...`);
+      
+      // Update basic fields
+      existingProduct.name = data.name;
+      existingProduct.description = data.description;
+      existingProduct.productType = data.productType ?? 'purchase';
+      existingProduct.affiliateLink = data.affiliateLink;
+      
+      // Remove old images specific to this product
       const oldImages = await em.find(ProductImage, { product: existingProduct });
       em.remove(oldImages);
 
@@ -261,6 +283,8 @@ export class ProductSeeder extends Seeder {
       isActive: data.isActive ? 1 : 0,
       isFeatured: data.isFeatured ? 1 : 0,
       isRecommended: 0,
+      productType: data.productType ?? 'purchase',
+      affiliateLink: data.affiliateLink,
       soldCount: 0,
       displayOrder: 0,
       createdAt: new Date(),
@@ -350,7 +374,6 @@ export class ProductSeeder extends Seeder {
       const opt2 = p.tier2Index !== undefined ? tier2Options[p.tier2Index] : undefined;
 
       const suffixParts = [opt1?.value, opt2?.value].filter(Boolean) as string[];
-      // Simple sanitized suffix to avoid huge SKUs
       const suffix = suffixParts
         .map(v => v.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 5))
         .join('-');
@@ -399,7 +422,7 @@ export class ProductSeeder extends Seeder {
     product.stock = totalStock;
     if (minSalePrice) product.salePrice = minSalePrice;
 
-    console.log(`✓ Created tool product: ${data.name}`);
+    console.log(`✓ Created product: ${data.name}`);
     return product;
   }
 }

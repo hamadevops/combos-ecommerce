@@ -4,56 +4,48 @@ import { Category } from '../entities/category.entity';
 
 export class CategorySeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
-    // 1. Dụng cụ pin
+    // 1. Đồ Gia Dụng Thông Minh
     await this.createCategory(em, {
-      name: 'Dụng cụ pin',
-      description: 'Các loại máy khoan, máy siết bu lông sử dụng pin',
+      name: 'Đồ Gia Dụng Thông Minh',
+      description: 'Các thiết bị gia dụng hiện đại, robot hút bụi, máy lọc không khí giúp tối ưu hóa cuộc sống.',
       sortOrder: 1,
-      image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80', // Yellow/Black Cordless Drill
+      image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80',
     });
 
-    // 2. Dụng cụ điện
+    // 2. Đồ Công Nghệ & Gadgets
     await this.createCategory(em, {
-      name: 'Dụng cụ điện',
-      description: 'Máy khoan, máy mài, máy cắt chạy điện',
+      name: 'Đồ Công Nghệ & Gadgets',
+      description: 'Tai nghe, bàn phím cơ, củ sạc nhanh và những món đồ chơi công nghệ không thể bỏ lỡ.',
       sortOrder: 2,
-      image: 'https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?w=800&q=80', // Heavy duty concrete drill
+      image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&q=80',
     });
 
-    // 3. Phụ kiện
+    // 3. Nhà Cửa & Đời Sống
     await this.createCategory(em, {
-      name: 'Phụ kiện',
-      description: 'Pin, sạc, mũi khoan và các phụ kiện khác',
+      name: 'Nhà Cửa & Đời Sống',
+      description: 'Nội thất, đèn ngủ thông minh, đồ trang trí góc làm việc tạo không gian đầy cảm hứng.',
       sortOrder: 3,
-      image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80', // Batteries
+      image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80',
     });
 
-    // 4. Dụng cụ làm vườn
+    // 4. Mẹ & Bé
     await this.createCategory(em, {
-      name: 'Dụng cụ làm vườn',
-      description: 'Máy cưa xích, máy cắt cỏ, dụng cụ làm vườn',
+      name: 'Mẹ & Bé',
+      description: 'Sản phẩm chăm sóc trẻ em, xe bảo vệ, bình sữa chất lượng cao cho mẹ và bé.',
       sortOrder: 4,
-      image: 'https://images.unsplash.com/photo-1590233033200-a2497fbba24d?w=800&q=80', // Chainsaw
+      image: 'https://images.unsplash.com/photo-1515488042361-404e9250afef?w=800&q=80',
     });
 
-    // 5. Dụng cụ tiện ích
+    // 5. Tài Khoản Premium
     await this.createCategory(em, {
-      name: 'Dụng cụ tiện ích',
-      description: 'Máy rửa xe, máy hút bụi và các tiện ích khác',
+      name: 'Tài Khoản Premium',
+      description: 'Các tài khoản học tập, làm việc, giải trí Premium chính hãng giá rẻ.',
       sortOrder: 5,
-      image: 'https://images.unsplash.com/photo-1596265371388-43edb10632d4?w=800&q=80', // Car wash spray
-    });
-
-    // 6. Dụng cụ đo lường
-    await this.createCategory(em, {
-      name: 'Dụng cụ đo lường',
-      description: 'Máy cân bằng laser, thước đo điện tử',
-      sortOrder: 6,
-      image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80', // Technical measurement
+      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80',
     });
 
     await em.flush();
-    console.log('✓ Categories seeded successfully (Power Tools Domain)');
+    console.log('✓ Categories seeded successfully (Tạp Hóa Review Domain)');
   }
 
   private async createCategory(

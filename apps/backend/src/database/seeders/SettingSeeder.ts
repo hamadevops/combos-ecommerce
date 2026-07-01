@@ -25,7 +25,7 @@ export class SettingSeeder extends Seeder {
       // General (Store Info)
       {
         key: 'store_name',
-        value: 'Thiên Phú Store VN',
+        value: 'Tạp Hóa Review',
         type: 'string',
         isPublic: true,
         group: 'general',
@@ -33,7 +33,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'store_logo',
-        value: 'https://placehold.co/200x200/FFD700/FFFFFF?text=TP',
+        value: '/ecommerce/tap_hoa_review_logo.svg',
         type: 'string',
         isPublic: true,
         group: 'general',
@@ -41,7 +41,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'store_description',
-        value: 'Chuyên cung cấp dụng cụ cơ khí chuyên nghiệp',
+        value: 'Kênh đánh giá sản phẩm trung thực và link mua hàng affiliate chất lượng, giá rẻ.',
         type: 'string',
         isPublic: true,
         group: 'general',
@@ -49,7 +49,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'store_rating',
-        value: '5.0',
+        value: '4.9',
         type: 'number',
         isPublic: true,
         group: 'general',
@@ -59,7 +59,7 @@ export class SettingSeeder extends Seeder {
       // Appearance (Slider & Background)
       {
         key: 'store_background',
-        value: 'https://placehold.co/800x400/333333/FFFFFF?text=Background',
+        value: 'https://images.unsplash.com/photo-1618005198143-e5283b519a7f?auto=format&fit=crop&w=1920&q=80',
         type: 'string',
         isPublic: true,
         group: 'appearance',
@@ -77,8 +77,9 @@ export class SettingSeeder extends Seeder {
       {
         key: 'home_slider',
         value: JSON.stringify([
-          { image: 'https://placehold.co/800x400/111/FFF?text=Slider1', link: '/products' },
-          { image: 'https://placehold.co/800x400/222/FFF?text=Slider2', link: '/category/electronics' },
+          { image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&h=500&q=80', link: '/category/do-gia-dung-thong-minh' },
+          { image: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1200&h=500&q=80', link: '/category/do-cong-nghe-gadgets' },
+          { image: 'https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?auto=format&fit=crop&w=1200&h=500&q=80', link: '/category/nha-cua-doi-song' }
         ]),
         type: 'json',
         isPublic: true,
@@ -89,7 +90,7 @@ export class SettingSeeder extends Seeder {
       // Contact
       {
         key: 'contact_email',
-        value: 'support@thienphustore.vn',
+        value: 'contact@taphoareview.com',
         type: 'string',
         isPublic: true,
         group: 'contact',
@@ -97,7 +98,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'contact_phone',
-        value: '1900 1234',
+        value: '0987 654 321',
         type: 'string',
         isPublic: true,
         group: 'contact',
@@ -105,7 +106,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'contact_address',
-        value: '123 Đường ABC, Quận XYZ, TP.HCM',
+        value: '195 Điện Biên Phủ, Phường 15, Quận Bình Thạnh, TP. Hồ Chí Minh',
         type: 'string',
         isPublic: true,
         group: 'contact',
@@ -123,7 +124,7 @@ export class SettingSeeder extends Seeder {
       // Social
       {
         key: 'social_facebook',
-        value: 'https://facebook.com/vibecms',
+        value: 'https://facebook.com/taphoareview',
         type: 'string',
         isPublic: true,
         group: 'social',
@@ -131,7 +132,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'social_instagram',
-        value: 'https://instagram.com/vibecms',
+        value: 'https://instagram.com/taphoareview',
         type: 'string',
         isPublic: true,
         group: 'social',
@@ -139,7 +140,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'social_zalo',
-        value: 'https://zalo.me/0909090909',
+        value: 'https://zalo.me/0987654321',
         type: 'string',
         isPublic: true,
         group: 'social',
@@ -147,7 +148,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'social_tiktok',
-        value: 'https://tiktok.com',
+        value: 'https://tiktok.com/@taphoareview',
         type: 'string',
         isPublic: true,
         group: 'social',
@@ -158,7 +159,7 @@ export class SettingSeeder extends Seeder {
       {
         key: 'footer_about',
         value:
-          'Chúng tôi cung cấp các sản phẩm thời trang chất lượng cao với giá cả hợp lý. Cam kết mang lại trải nghiệm mua sắm tốt nhất.',
+          'Tạp Hóa Review là trang chuyên đánh giá, trải nghiệm và giới thiệu các sản phẩm gia dụng, công nghệ, nhà cửa đời sống tốt nhất. Chúng tôi giúp bạn đưa ra lựa chọn mua sắm đúng đắn nhất thông qua các đánh giá khách quan và đường link mua sắm affiliate uy tín.',
         type: 'text',
         isPublic: true,
         group: 'footer',
@@ -166,7 +167,7 @@ export class SettingSeeder extends Seeder {
       },
       {
         key: 'footer_copyright',
-        value: '© 2024 Vibe CMS. All rights reserved.',
+        value: '© 2026 Tạp Hóa Review. Tất cả quyền được bảo lưu.',
         type: 'string',
         isPublic: true,
         group: 'footer',
@@ -197,22 +198,11 @@ export class SettingSeeder extends Seeder {
           updatedAt: new Date(),
         });
       } else {
-        // Update existing setting with new fields (label, description, group, type)
-        // We preserve value if we want, or reset it.
-        // Prompt implied "Migration values to seeder", so we should probably ensure the seeder values are applied.
-        // But for safety, maybe we only update label/description/group/type and keep value if it exists?
-        // Actually, seeders usually force state. Let's force update everything to match the "seeder" source of truth
-        // EXCEPT maybe value if it was user-changed? 
-        // User asked "Move value to seeder", implying seeder holds the data.
-        
-        // Let's update metadata (label, group, type) and keep value if it exists, OR update everything.
-        // I will update everything to ensure consistency as per request.
-        
         setting.label = data.label;
         setting.group = data.group;
         setting.type = data.type;
         setting.description = data.description;
-        // setting.value = data.value; // Uncomment to force reset value
+        setting.value = data.value; // Force update value
       }
       em.persist(setting);
     }
