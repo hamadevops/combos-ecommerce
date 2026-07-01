@@ -6,7 +6,6 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
   distDir: "../../dist/apps/client/.next",
   images: {
     dangerouslyAllowSVG: true,
