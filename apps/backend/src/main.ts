@@ -45,7 +45,7 @@ async function bootstrap() {
       threshold: 10 * 1024,
     }),
   );
-  AppSwaggerModule.setup(app);
+  await AppSwaggerModule.setup(app);
   app.enableShutdownHooks();
 
   const orm = app.get(MikroORM);
