@@ -28,6 +28,15 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    const isAffiliate = product.productType === "affiliate" || (product as any).product_type === "affiliate";
+    const affLink = product.affiliateLink || (product as any).affiliate_link;
+
+    if (isAffiliate && affLink) {
+      window.open(affLink, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     const existing = useCartStore.getState().items.find((i) => i.id === product.id);
     if (!existing) addItem(product);
     setSelection([product.id]);

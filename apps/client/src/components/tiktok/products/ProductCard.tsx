@@ -30,6 +30,15 @@ const ProductCard = ({ product, compact = false }: ProductCardProps) => {
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    const isAffiliate = product.productType === "affiliate" || (product as any).product_type === "affiliate";
+    const affLink = product.affiliateLink || (product as any).affiliate_link;
+
+    if (isAffiliate && affLink) {
+      window.open(affLink, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     addItem(product);
     setSelection([product.id]);
     setShowCheckout(true);

@@ -1,6 +1,27 @@
-import { MapPin, Phone, Mail, Shield, Award, Headphones } from "lucide-react";
+"use client";
+
+import { MapPin, Phone, Mail, Shield, Award } from "lucide-react";
+import { useShopSettings } from "@/hooks/useShopSettings";
 
 const Footer = () => {
+  const { getSetting } = useShopSettings();
+
+  const storeName = getSetting("store_name", "Tạp Hóa Review");
+  const footerAbout = getSetting(
+    "footer_about",
+    "Tạp Hóa Review là trang chuyên đánh giá, trải nghiệm và giới thiệu các sản phẩm gia dụng, công nghệ, nhà cửa đời sống tốt nhất. Chúng tôi giúp bạn đưa ra lựa chọn mua sắm đúng đắn nhất thông qua các đánh giá khách quan và đường link mua sắm affiliate uy tín."
+  );
+  const contactEmail = getSetting("contact_email", "contact@taphoareview.com");
+  const contactPhone = getSetting("contact_phone", "0987 654 321");
+  const contactAddress = getSetting(
+    "contact_address",
+    "195 Điện Biên Phủ, Phường 15, Quận Bình Thạnh, TP. Hồ Chí Minh"
+  );
+  const footerCopyright = getSetting(
+    "footer_copyright",
+    "© 2026 Tạp Hóa Review. Tất cả quyền được bảo lưu."
+  );
+
   return (
     <footer className="relative bg-gradient-to-b from-[#0A0A0A] to-[#111111] border-t border-white/5">
       {/* Top Gradient Accent Line */}
@@ -10,13 +31,11 @@ const Footer = () => {
       <div className="px-5 pt-8 pb-6">
         <div className="flex items-center gap-2 mb-4">
           <h3 className="text-base font-bold text-white tracking-tight">
-            CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU BẮC NINH
+            {storeName}
           </h3>
         </div>
         <p className="text-[13px] leading-relaxed text-white/50">
-          Cửa hàng chuyên phân phối dụng cụ chính hãng chuyên nghiệp, uy tín. Với nhiều năm kinh
-          nghiệm trong ngành, chúng tôi đã khẳng định được uy tín của mình thông qua việc cung cấp
-          sản phẩm chất lượng, luôn đảm bảo quyền lợi khách hàng và khâu bảo hành hàng đầu.
+          {footerAbout}
         </p>
 
         {/* Trust Badges */}
@@ -40,7 +59,7 @@ const Footer = () => {
         <h3 className="text-base font-bold text-white mb-4 tracking-tight">Địa chỉ & Liên hệ</h3>
 
         <div className="space-y-3">
-          {/* Address Hanoi */}
+          {/* Address */}
           <div className="flex items-start gap-3 group">
             <div className="mt-0.5 w-8 h-8 rounded-lg bg-[#FE2C55]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#FE2C55]/20 transition-colors">
               <MapPin className="w-4 h-4 text-[#FE2C55]" />
@@ -49,22 +68,9 @@ const Footer = () => {
               <span className="text-[11px] font-semibold text-white/30 uppercase tracking-wider">
                  Việt Nam
               </span>
-              <p className="text-[13px] text-white/60 mt-0.5">20 đường Nguyễn Du, Phường Kinh Bắc, Tỉnh Bắc Ninh</p>
+              <p className="text-[13px] text-white/60 mt-0.5">{contactAddress}</p>
             </div>
           </div>
-
-          {/* Address HCMC
-          <div className="flex items-start gap-3 group">
-            <div className="mt-0.5 w-8 h-8 rounded-lg bg-[#FE2C55]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#FE2C55]/20 transition-colors">
-              <MapPin className="w-4 h-4 text-[#FE2C55]" />
-            </div>
-            <div>
-              <span className="text-[11px] font-semibold text-white/30 uppercase tracking-wider">
-                TP.HCM
-              </span>
-              <p className="text-[13px] text-white/60 mt-0.5">Phường 16, Quận 8, TP Hồ Chí Minh</p>
-            </div>
-          </div> */}
 
           {/* Hotlines */}
           <div className="flex items-start gap-3 group">
@@ -73,18 +79,11 @@ const Footer = () => {
             </div>
             <div className="space-y-1">
               <a
-                href="tel:0386616188"
+                href={`tel:${contactPhone}`}
                 className="flex items-center gap-2 text-[13px] text-white/60 hover:text-[#FE2C55] transition-colors"
               >
-                <span className="text-[11px] text-white/30 font-medium w-16">Hotline 1</span>
-                0386 616 188
-              </a>
-              <a
-                href="tel:0386996588"
-                className="flex items-center gap-2 text-[13px] text-white/60 hover:text-[#FE2C55] transition-colors"
-              >
-                <span className="text-[11px] text-white/30 font-medium w-16">Hotline 2</span>
-                0386 996 588
+                <span className="text-[11px] text-white/30 font-medium w-16">Hotline</span>
+                {contactPhone}
               </a>
             </div>
           </div>
@@ -99,10 +98,10 @@ const Footer = () => {
                 Email
               </span>
               <a
-                href="mailto:Phanphoidienmaylbhntphcm@gmail.com"
+                href={`mailto:${contactEmail}`}
                 className="block text-[13px] text-white/60 hover:text-[#FE2C55] transition-colors mt-0.5 break-all"
               >
-                Phanphoidienmaylbhntphcm@gmail.com
+                {contactEmail}
               </a>
             </div>
           </div>
@@ -112,7 +111,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="px-5 pt-4 pb-24 bg-black/30 border-t border-white/5">
         <p className="text-[11px] text-white/25 text-center">
-          © 2026 Phân phối điện máy chính hãng.
+          {footerCopyright}
         </p>
       </div>
     </footer>

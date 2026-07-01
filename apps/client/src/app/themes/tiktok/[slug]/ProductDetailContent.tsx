@@ -91,6 +91,14 @@ const ProductDetailContent = () => {
 
   const handleBuyNow = (variant: ProductVariant | null = selectedVariant) => {
     if (product) {
+      const isAffiliate = product.productType === "affiliate" || (product as any).product_type === "affiliate";
+      const affLink = product.affiliateLink || (product as any).affiliate_link;
+
+      if (isAffiliate && affLink) {
+        window.open(affLink, "_blank", "noopener,noreferrer");
+        return;
+      }
+
       if (product.variants && product.variants.length > 0 && !variant) {
         toast.error("Vui lòng chọn phân loại hàng");
         return;
@@ -108,6 +116,11 @@ const ProductDetailContent = () => {
 
   const handleAddToCart = (variant: ProductVariant | null = selectedVariant) => {
     if (product) {
+      const isAffiliate = product.productType === "affiliate" || (product as any).product_type === "affiliate";
+      if (isAffiliate) {
+        toast.info("Sản phẩm liên kết, vui lòng nhấn Mua Ngay để mua hàng");
+        return;
+      }
       if (product.variants && product.variants.length > 0 && !variant) {
         toast.error("Vui lòng chọn phân loại hàng");
         return;
@@ -240,6 +253,7 @@ const ProductDetailContent = () => {
         price={selectedVariant ? (selectedVariant.salePrice || selectedVariant.price) : (product.salePrice || product.price)}
         onAddToCart={handleAddToCart}
         onBuyNow={handleBuyNow}
+        isAffiliate={product.productType === "affiliate" || (product as any).product_type === "affiliate"}
       />
 
       <CheckoutForm
