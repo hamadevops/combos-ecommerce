@@ -1,10 +1,13 @@
+const path = require("path");
+
 module.exports = {
   apps: [
     {
       name: "ecommerce-backend",
-      script: "../../dist/apps/backend/main.js",
-      cwd: "./apps/backend",
+      script: path.resolve(__dirname, "./dist/apps/backend/main.js"),
+      cwd: path.resolve(__dirname, "./apps/backend"),
       instances: 1,
+      exec_mode: "fork",
       autorestart: true,
       watch: false,
       max_memory_restart: "1G",
@@ -15,9 +18,9 @@ module.exports = {
     },
     {
       name: "ecommerce-client",
-      script: "node_modules/next/dist/bin/next",
+      script: path.resolve(__dirname, "./apps/client/node_modules/next/dist/bin/next"),
       args: "start",
-      cwd: "./apps/client",
+      cwd: path.resolve(__dirname, "./apps/client"),
       instances: "max",
       exec_mode: "cluster",
       autorestart: true,
@@ -32,7 +35,7 @@ module.exports = {
       name: "ecommerce-admin",
       script: "serve",
       env: {
-        PM2_SERVE_PATH: "./dist/apps/admin",
+        PM2_SERVE_PATH: path.resolve(__dirname, "./dist/apps/admin"),
         PM2_SERVE_PORT: 3002,
         PM2_SERVE_SPA: "true",
         PM2_SERVE_HOMEPAGE: "/index.html",
