@@ -11,8 +11,8 @@ import {
   ShoppingCart,
   ChevronRight,
   Shield,
-  Package,
-  Truck,
+  Tag,
+  ThumbsUp,
   Star,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -172,7 +172,7 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
       <div className="bg-gradient-to-r from-[#1a1a1a] via-[#2a2a2a] to-[#1a1a1a] px-4 py-2 flex items-center justify-center gap-2 border-b border-white/5">
         <span className="text-[10px] text-yellow-400/80">⭐</span>
         <span className="text-xs font-bold tracking-wider bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
-          Nhà Phân Phối TOP1 Toàn Quốc
+          Tổng Hợp Deal Tốt Nhất Mỗi Ngày
         </span>
         <span className="text-[10px] text-yellow-400/80">⭐</span>
       </div>
@@ -182,15 +182,15 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
         <div className="flex items-center justify-between gap-4 overflow-x-auto scrollbar-hide">
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
             <Shield className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Nhập khẩu chính ngạch</span>
+            <span>Link kiểm duyệt</span>
           </div>
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
-            <Package className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Hỗ trợ 24/7</span>
+            <Tag className="w-3.5 h-3.5 text-tiktok-cyan" />
+            <span>Deal tốt nhất</span>
           </div>
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
-            <Truck className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Giao hàng nhanh</span>
+            <ThumbsUp className="w-3.5 h-3.5 text-tiktok-cyan" />
+            <span>Review trung thực</span>
           </div>
         </div>
       </div>

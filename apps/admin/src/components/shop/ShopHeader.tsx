@@ -6,8 +6,8 @@ import {
   ShoppingCart,
   ChevronRight,
   Shield,
-  Package,
-  Truck,
+  Tag,
+  ThumbsUp,
   Star,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -137,15 +137,15 @@ const ShopHeader = ({ showBack = false }: ShopHeaderProps) => {
         <div className="flex items-center justify-between gap-4 overflow-x-auto scrollbar-hide">
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
             <Shield className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Nhập khẩu chính ngạch</span>
+            <span>Link kiểm duyệt</span>
           </div>
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
-            <Package className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Hỗ trợ 24/7</span>
+            <Tag className="w-3.5 h-3.5 text-tiktok-cyan" />
+            <span>Deal tốt nhất</span>
           </div>
           <div className="flex items-center gap-1.5 text-white/90 text-xs whitespace-nowrap">
-            <Truck className="w-3.5 h-3.5 text-tiktok-cyan" />
-            <span>Giao hàng nhanh</span>
+            <ThumbsUp className="w-3.5 h-3.5 text-tiktok-cyan" />
+            <span>Review trung thực</span>
           </div>
         </div>
       </div>
