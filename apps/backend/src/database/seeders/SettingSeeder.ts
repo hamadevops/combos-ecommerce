@@ -202,7 +202,6 @@ export class SettingSeeder extends Seeder {
         setting.group = data.group;
         setting.type = data.type;
         setting.description = data.description;
-        setting.value = data.value; // Force update value
       }
       em.persist(setting);
     }

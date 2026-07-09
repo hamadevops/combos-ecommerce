@@ -63,10 +63,12 @@ async function bootstrap() {
       console.log('Migrations completed!');
     }
 
-    console.log('Running database seeders...');
-    const seeder = orm.getSeeder();
-    await seeder.seed(DatabaseSeeder);
-    console.log('Database seeding completed!');
+    if (process.env.DB_SEED_ON_STARTUP === 'true') {
+      console.log('Running database seeders (DB_SEED_ON_STARTUP is true)...');
+      const seeder = orm.getSeeder();
+      await seeder.seed(DatabaseSeeder);
+      console.log('Database seeding completed!');
+    }
   }
 
   await app.listen(process.env.PORT ?? 3333);
