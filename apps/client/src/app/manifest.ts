@@ -5,9 +5,9 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const { storeName, storeDescription } = await getShopSettings();
 
   return {
-    name: storeDescription || `${storeName} - Hukan Professional Tool`,
-    short_name: storeName,
-    description: storeDescription,
+    name: storeName || "Dealora - Deal hời giá tốt",
+    short_name: storeName || "Dealora",
+    description: storeDescription || "Dealora là nền tảng khám phá sản phẩm và tổng hợp ưu đãi thông minh, giúp bạn dễ dàng tìm thấy những món đồ đáng mua nhất từ nhiều thương hiệu uy tín.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

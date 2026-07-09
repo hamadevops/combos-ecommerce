@@ -113,7 +113,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <JsonLd
           organization={{
-            name: settings.store_name || "Điện máy chính hãng VN",
+            name: settings.store_name || "Dealora - Deal hời giá tốt",
             description: settings.store_description,
             logo: settings.store_logo,
             url: process.env.NEXT_PUBLIC_TIMESTAMP_URL,

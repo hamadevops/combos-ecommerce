@@ -24,7 +24,7 @@ export default function JsonLd({ product, breadcrumbs, organization }: JsonLdPro
   if (product) {
     const productUrl = `${BASE_URL}/${product.slug}`;
     const productImages = product.images?.map((img) => getImageUrl(img.url)).filter(Boolean) || [];
-    const brandName = organization?.name || "Điện máy chính hãng Việt Nam";
+    const brandName = organization?.name || "Dealora - Deal hời giá tốt";
 
     const productSchema: Record<string, any> = {
       "@context": "https://schema.org",
