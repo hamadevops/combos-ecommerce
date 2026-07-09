@@ -22,7 +22,7 @@ const NewsDetailContent = ({ article, popularArticles, relatedArticles }: NewsDe
   }
 
   return (
-    <PageLayout headerProps={{ title: article.title, showBack: true, showSearch: false }}>
+    <PageLayout headerProps={{ title: "Chi tiết bài viết", showBack: true, showSearch: false }}>
       <div className="bg-background">
         <NewsDetail 
           article={article}

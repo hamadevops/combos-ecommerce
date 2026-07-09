@@ -7,7 +7,7 @@ const Footer = () => {
   const { getSetting } = useShopSettings();
 
   const storeName = getSetting("store_name", "Tạp Hóa Review");
-  const footerAbout = getSetting(
+  const footerAbout = getSetting("store_description") || getSetting(
     "footer_about",
     "Tạp Hóa Review là trang chuyên đánh giá, trải nghiệm và giới thiệu các sản phẩm gia dụng, công nghệ, nhà cửa đời sống tốt nhất. Chúng tôi giúp bạn đưa ra lựa chọn mua sắm đúng đắn nhất thông qua các đánh giá khách quan và đường link mua sắm affiliate uy tín."
   );
@@ -20,7 +20,7 @@ const Footer = () => {
   const footerCopyright = getSetting(
     "footer_copyright",
     "© 2026 Tạp Hóa Review. Tất cả quyền được bảo lưu."
-  );
+  ).replace("Tạp Hóa Review", storeName);
 
   return (
     <footer className="relative bg-gradient-to-b from-[#0A0A0A] to-[#111111] border-t border-white/5">
